@@ -3,12 +3,9 @@ const defaultWindowsState = [];
 export default (state = defaultWindowsState, action) => {
   switch(action.type){
     case 'CLOSE_TAB':
-      console.log('CLOSE_TAB',action.id);
-      console.log(state.filter((chromeWindow) => 
+      console.log('CLOSE_TAB',state.filter((chromeWindow) => 
         chromeWindow.tabs.some(({id}) => id !== action.id))
       );
-      console.log('CLOSE_TAB end');
-
       return state.filter((chromeWindow) => 
         chromeWindow.tabs.some((tab) => tab.id !== action.id));
       // let filteredArray = state.filter((chromeWindow) => 

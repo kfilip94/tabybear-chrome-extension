@@ -2,6 +2,7 @@ import React from 'react';
 import ActionBar from './ActionBar';
 import Tab from './Tab';
 import { removeWindow } from '../actions/tabs';
+import { closeWindow } from '../services/chrome-windows';
 import { connect } from 'react-redux';
 
 const Window = (props) => (
@@ -12,7 +13,7 @@ const Window = (props) => (
 		</div>
 		<button 
 			onClick={() => 
-				removeWindow(props.windowId, () => 
+				closeWindow(props.windowId, () => 
 					props.dispatch(removeWindow(props.windowId)
 				)
 			)}
