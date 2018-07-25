@@ -1,0 +1,28 @@
+.action-bar {
+  align-items: center;
+  background: $blue;
+  border-radius: 4px 4px 0 0;
+  display: flex;
+  height: 30px;
+  justify-content: space-between;
+  padding: 0 10px;
+  
+  .action-bar-container{
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    width: 30%;
+  }
+
+  .action-bar__counter {
+      align-items: center;
+      background: $grey;
+      border-radius: 6px;
+      color: $blue;
+      display: flex;
+      font-size: small;
+      height: 15px;
+      justify-content: center;
+      width: 23px;
+  }
+}

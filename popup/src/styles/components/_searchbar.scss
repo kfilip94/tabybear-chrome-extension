@@ -1,0 +1,28 @@
+.searchbar {
+  background: $dark-blue;
+    display: flex;
+    align-items: center;
+    padding: 8px 20px 20px 20px;
+
+    &__icon {
+        color: $light-blue;
+    }
+
+    &__input {
+        background: transparent;
+        border: 0;
+        // border-bottom: 1px solid white;
+        color: white;
+        font-style: italic;
+        flex-grow: 1;
+        height: 20px;
+        outline: none;
+        margin-left: 8px;
+        
+        &:placeholder {
+            color: $grey;
+            font-style: italic;
+            opacity: 0.3;
+        }
+    }
+}

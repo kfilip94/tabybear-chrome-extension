@@ -1,0 +1,22 @@
+.button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: 0;
+
+    &--cog{
+        color: $light-blue;
+        font-size: 18px;
+    }
+
+    &--plus-square{
+        color: $light-blue;
+        font-size: 18px;
+    }
+
+    &--small {
+        color: $light-blue;
+        font-size: 13px;
+    }
+
+} 

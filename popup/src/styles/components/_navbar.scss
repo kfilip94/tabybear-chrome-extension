@@ -1,0 +1,13 @@
+.navbar {
+    align-items: center;
+    background: $blue;
+    display: flex;
+    height: 38px;
+    justify-content: space-between;
+    padding: 0 10px;
+
+    &__title {
+        color: white;
+        font-size: 12px;
+    }
+}

@@ -1,0 +1,20 @@
+@import './base/_base';
+@import './components/_button';
+@import './components/_navbar';
+@import './components/_searchbar';
+@import './components/_window';
+@import './components/_window-list';
+@import './components/_action-bar';
+
+
+body {
+    background: $light-blue;
+    border-radius: 4;
+    margin: 0;
+    min-height: 450px;
+    width: 340px;
+}
+
+.app{
+    position: relative;
+}

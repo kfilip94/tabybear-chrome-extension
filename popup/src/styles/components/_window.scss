@@ -1,0 +1,17 @@
+.window {
+    border-radius: 4px;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-flow: column;
+    height: 200px;
+    margin-bottom: 20px;
+    width: 94%;
+
+    &__tab-list{
+        background: white;
+        border-radius: 0 0 4px 4px;
+        height: 100%;
+        width: 100%;
+    }
+}
+
