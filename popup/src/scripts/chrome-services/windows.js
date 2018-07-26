@@ -1,18 +1,14 @@
 const openNewWindow = (callback) => {
   /*global chrome*/
-  chrome.windows.create(null, (newWindow) => callback(newWindow));
+  chrome.windows.create(null, (newWindow) =>
+    chrome.windows.get(newWindow.id, { populate: true }, (newWindowComplete) => {
+      console.log('newWindowComplete: ',newWindowComplete);
+      callback(newWindowComplete);
+    })
+  );
 };
 
 const openSettingsPage = () => alert('Here will be settings page!');
-
-
-const countTabsInWindow = (windowId, callback) => {
-  /*global chrome*/
-  chrome.tabs.getAllInWindow(windowId, (tabs) => {
-    console.log('tabs.length: '.tabs.length);
-    callback(tabs.length);
-  });
-};
 
 const getAllWindows = (callback) => {
   /*global chrome*/
@@ -25,4 +21,4 @@ const closeWindow = (windowId, callback) => {
   chrome.windows.remove(windowId, () => callback());
 }
 
-export { openNewWindow, openSettingsPage, countTabsInWindow, getAllWindows, closeWindow };
+export { openNewWindow, openSettingsPage, getAllWindows, closeWindow};

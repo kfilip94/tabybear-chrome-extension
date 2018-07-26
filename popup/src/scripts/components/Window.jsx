@@ -2,7 +2,7 @@ import React from 'react';
 import ActionBar from './ActionBar';
 import Tab from './Tab';
 import { removeWindow } from '../actions/tabs';
-import { closeWindow } from '../services/chrome-windows';
+import { closeWindow } from '../chrome-services/windows';
 import { connect } from 'react-redux';
 
 const Window = (props) => (

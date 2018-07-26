@@ -14,8 +14,8 @@ export default (state = defaultWindowsState, action) => {
       return filteredWindows;
 
     case 'ADD_WINDOW': //OK
-      console.log('ADD_WINDOW:',[...windows, action.newWindow]);
-      return [...windows, action.newWindow];
+      console.log('ADD_WINDOW:',[...state, action.newWindow]);
+      return [...state, action.newWindow];
 
     case 'SET_ALL_WINDOWS': //OK
       console.log('ADD_WINDOWS');
