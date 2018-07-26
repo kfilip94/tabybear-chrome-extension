@@ -13,6 +13,9 @@
     "default_title": "RCR Example",
     "default_popup": "popup.html"
   },
+  "permissions": [
+    "tabs"
+  ],
   "content_scripts": [
     {
       "matches": ["*://*/*"],

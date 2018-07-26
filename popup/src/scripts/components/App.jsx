@@ -5,6 +5,7 @@ import Searchbar from './SearchBar';
 import Window from './Window'
 import { setWindows } from '../actions/tabs';
 import { openNewWindow, getAllWindows } from '../services/chrome-windows';
+import selectTabs from '../selectors/tabs';
 
 class App extends Component {
 
@@ -17,6 +18,7 @@ class App extends Component {
   }
 
   render() {
+    console.log('this props windows', this.props.windows);
     return (
       <div className="app">
         <Navbar
@@ -26,7 +28,7 @@ class App extends Component {
         <Searchbar />
         <div className="window-list">
           {this.props.windows && this.props.windows.map(
-            (chromeWindow, id) => (<Window key={ chromeWindow.id } tabs={chromeWindow.tabs} windowId={chromeWindow.id}/>)
+            (chromeWindow) => (<Window key={ chromeWindow.id } tabs={chromeWindow.tabs} windowId={chromeWindow.id}/>)
           )}
         </div>
       </div>
@@ -35,8 +37,9 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => {
+  console.log('selectTabs:',selectTabs(state.windows, state.filters));
   return {
-    windows: state.windows
+    windows: selectTabs(state.windows, state.filters)
   };
 };
 

@@ -16,7 +16,7 @@ const countTabsInWindow = (windowId, callback) => {
 
 const getAllWindows = (callback) => {
   /*global chrome*/
-  chrome.windows.getAll({ populate : true }, (windowsArr) => {
+  chrome.windows.getAll({populate: true}, (windowsArr) => {
     callback(windowsArr);
   });
 };

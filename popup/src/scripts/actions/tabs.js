@@ -17,3 +17,4 @@ export const addWindow = ( newWindow = {}) => ({
   type: 'ADD_WINDOW',
   newWindow
 });
+

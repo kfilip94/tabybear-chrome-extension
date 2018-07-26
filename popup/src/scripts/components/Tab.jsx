@@ -4,7 +4,7 @@ import { closeTab } from '../actions/tabs';
 
 const Tab = (props) => (
   <div>
-    {props.tab.id}
+    >{props.tab.title}
     <button onClick={() => {
       console.log('remove click!');
       chrome.tabs.remove(props.tab.id, () => {
