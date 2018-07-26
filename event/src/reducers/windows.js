@@ -2,32 +2,22 @@ const defaultWindowsState = [];
 
 export default (state = defaultWindowsState, action) => {
   switch(action.type){
-    case 'CLOSE_TAB':
-      console.log('CLOSE_TAB',state.filter((chromeWindow) => 
-        chromeWindow.tabs.some(({id}) => id !== action.id))
+    case 'REMOVE_TAB': //OK
+      const filteredWindows = state.map(chromeWindow => 
+        Object.assign({}, chromeWindow,{
+          'tabs': chromeWindow.tabs.filter((tab) => 
+            tab.id !== action.id
+          )
+        })
       );
-      return state.filter((chromeWindow) => 
-        chromeWindow.tabs.some((tab) => tab.id !== action.id));
-      // let filteredArray = state.filter((chromeWindow) => 
-      //   chromeWindow.tabs.some((tab) => tab.id !== action.id))
-      //   .map(tab => {
-      //     let newWindow = Object.assign({}, chromeWindow); // copies element
-      //     return newWindow.tabs.filter(tab => tab.id !== action.id);
-      // });
-      // console.log('CLOSE_TAB');
-      // // chrome.tabs.remove(action.id, () => console.log('removed!'));
-      // console.log(state.filter((chromeWindow, key) => {
-      //   chromeWindow.tabs.filter(({ id }) => id !== action.id)
-      // }));
-      // return state.map((chromeWindow, key) => {
-      //   chromeWindow.tabs.filter(({ id }) => id !== action.id)
-      // });
+      console.log('filtered id: ',action.id ,' after close:',filteredWindows);
+      return filteredWindows;
 
-    case 'ADD_WINDOW':
+    case 'ADD_WINDOW': //OK
       console.log('ADD_WINDOW:',[...windows, action.newWindow]);
       return [...windows, action.newWindow];
 
-    case 'SET_ALL_WINDOWS':
+    case 'SET_ALL_WINDOWS': //OK
       console.log('ADD_WINDOWS');
       return action.windows;
 

@@ -1,5 +1,5 @@
-export const closeTab = (id) => ({
-  type: 'CLOSE_TAB',
+export const removeTab = (id) => ({
+  type: 'REMOVE_TAB',
   id
 });
 

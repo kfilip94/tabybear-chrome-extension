@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { closeTab } from '../actions/tabs';
+import { removeTab } from '../actions/tabs';
 
 const Tab = (props) => (
   <div>
@@ -9,7 +9,7 @@ const Tab = (props) => (
       console.log('remove click!');
       chrome.tabs.remove(props.tab.id, () => {
         console.log('callback');
-        props.dispatch(closeTab({id: props.tab.id}));
+        props.dispatch(removeTab(props.tab.id));
       });
     }}>remove</button>
   </div>
