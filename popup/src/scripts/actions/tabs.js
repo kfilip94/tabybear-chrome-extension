@@ -18,3 +18,8 @@ export const addWindow = ( newWindow = {}) => ({
   newWindow
 });
 
+export const updateTab = (id, updatedTab) => ({
+  type: 'UPDATE_TAB',
+  id,
+  updatedTab
+});

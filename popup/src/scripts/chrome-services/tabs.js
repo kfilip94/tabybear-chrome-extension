@@ -10,4 +10,9 @@ const setTabActive = (tabId, callback) => {
   chrome.tabs.update(tabId, { active: true }, callback())
 };
 
-export { countTabsInWindow, setTabActive };
+const pinTab = (tabId, pinned, callback) => {
+  chrome.tabs.update(tabId, { pinned: !pinned }, (updatedTab) => callback(updatedTab));
+};
+
+
+export { countTabsInWindow, setTabActive, pinTab };
