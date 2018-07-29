@@ -21,11 +21,7 @@ const ActionBar = (props) => (
           className="button button--small"
           title="Close window with all tabs"
           icon={faPlus}
-          onClick={() => 
-            closeWindow(props.windowId, () => 
-              props.dispatch(removeWindow(props.windowId)
-            )
-          )}
+          handleClick={() => closeWindow(props.windowId, () => props.dispatch(removeWindow(props.windowId)))}
         />
     </div>
   </div>

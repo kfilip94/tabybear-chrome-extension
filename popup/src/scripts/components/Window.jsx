@@ -11,15 +11,6 @@ const Window = (props) => (
 		<div className="window__tab-list" >
 		  { props.tabs.map((tab) => (<Tab key={tab.id} tab={tab}/>)) }
 		</div>
-		<button 
-			onClick={() => 
-				closeWindow(props.windowId, () => 
-					props.dispatch(removeWindow(props.windowId)
-				)
-			)}
-		>
-			Remove Window
-		</button>
 	</div>
 );
 

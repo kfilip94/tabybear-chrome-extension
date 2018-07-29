@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import Navbar from './Navbar';
 import Searchbar from './SearchBar';
 import Window from './Window'
-import { setWindows } from '../actions/tabs';
+import { addWindow, setWindows } from '../actions/tabs';
 import { openNewWindow, getAllWindows } from '../chrome-services/windows';
 import selectTabs from '../selectors/tabs';
 
@@ -23,7 +23,8 @@ class App extends Component {
       <div className="app">
         <Navbar
           handleOpenNewWindow={() => {
-            openNewWindow((newWindow) => this.props.dispatch(addWindow(newWindow)))
+            console.log('handleOpenNewWindow');
+            openNewWindow((newWindow) => this.props.dispatch(addWindow(newWindow)));
           }}
           handleOpenSettingsPage={() => console.log('open settings page')}
         />

@@ -1,11 +1,12 @@
 const openNewWindow = (callback) => {
   /*global chrome*/
-  chrome.windows.create(null, (newWindow) =>
-    chrome.windows.get(newWindow.id, { populate: true }, (newWindowComplete) => {
-      console.log('newWindowComplete: ',newWindowComplete);
-      callback(newWindowComplete);
-    })
-  );
+  console.log('HUJ');
+  chrome.windows.create(null, (newWindow) => {
+    chrome.tabs.query({ windowId: newWindow.id }, (tabsInWindow) => {
+      console.log('newWindow:',{...newWindow, tabs: tabsInWindow});
+      callback({...newWindow, tabs: tabsInWindow});
+    });
+  });
 };
 
 const openSettingsPage = () => alert('Here will be settings page!');

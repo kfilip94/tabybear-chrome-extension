@@ -1,7 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const Button = props => (
+const Button = (props) => (
   <div>
     <button
       className={props.className}

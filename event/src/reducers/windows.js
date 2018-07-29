@@ -13,7 +13,7 @@ export default (state = defaultWindowsState, action) => {
       console.log('filtered id: ',action.id ,' after close:',filteredWindows);
       return filteredWindows;
 
-    case 'UPDATE_TAB':
+    case 'UPDATE_TAB': //OK
       console.log('UPDATE_TAB');
       const updatedWindows = state.map(chromeWindow => 
         Object.assign({}, chromeWindow,{
@@ -31,6 +31,18 @@ export default (state = defaultWindowsState, action) => {
     case 'ADD_WINDOW': //OK
       console.log('ADD_WINDOW:',[...state, action.newWindow]);
       return [...state, action.newWindow];
+
+    case 'ADD_TAB': //OK
+      const updatedWindows3 = state.map(chromeWindow => {
+        if(chromeWindow.id === action.tab.windowId){
+          return {...chromeWindow, tabs: [...chromeWindow.tabs, action.tab]};
+        } else {
+          return chromeWindow;
+        }
+      });
+      console.log('after add tab:',updatedWindows3);
+      return updatedWindows3;
+
 
     case 'SET_ALL_WINDOWS': //OK
       console.log('ADD_WINDOWS');

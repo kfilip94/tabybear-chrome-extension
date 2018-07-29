@@ -1,8 +1,9 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
-import { setTextFilter } from '../actions/filters'
+import { setTextFilter } from '../actions/filters';
+import Button from './Button';
 
 const Searchbar = (props) => (
   <div className="searchbar">
@@ -17,6 +18,14 @@ const Searchbar = (props) => (
       value={props.filters.text}
       onChange={(e) => props.dispatch(setTextFilter(e.target.value))}
     />
+    { props.filters.text &&
+      <Button 
+        className="button button--small"
+        title="Clear"
+        icon={faTimesCircle}
+        handleClick={() => props.dispatch(setTextFilter())}
+      />
+    }
   </div>
 );
 
