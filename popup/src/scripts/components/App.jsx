@@ -20,7 +20,7 @@ class App extends Component {
   render() {
     console.log('this props windows', this.props.windows);
     return (
-      <div className="app">
+      <div className='app'>
         <Navbar
           handleOpenNewWindow={() => {
             console.log('handleOpenNewWindow');

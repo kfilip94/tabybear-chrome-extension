@@ -29,4 +29,9 @@ export const setWindows = ( { windows } ) => ({
   windows
 });
 
+export const clearActive = (windowId) => ({
+  type: 'CLEAR_ACTIVE',
+  windowId
+});
+
 

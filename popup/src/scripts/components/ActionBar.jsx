@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from './Button';
-import { faEdit, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import { removeWindow } from '../actions/tabs';
 import { closeWindow } from '../chrome-services/windows';
@@ -20,7 +20,7 @@ const ActionBar = (props) => (
         <Button 
           className="button button--small"
           title="Close window with all tabs"
-          icon={faPlus}
+          icon={faTimes}
           handleClick={() => closeWindow(props.windowId, () => props.dispatch(removeWindow(props.windowId)))}
         />
     </div>

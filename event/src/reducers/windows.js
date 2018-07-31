@@ -43,6 +43,14 @@ export default (state = defaultWindowsState, action) => {
       console.log('after add tab:',updatedWindows3);
       return updatedWindows3;
 
+    case 'CLEAR_ACTIVE':
+      console.log('CLEAR_ACTIVE');
+      return state.map(chromeWindow => {
+        if(chromeWindow.id === action.windowId)
+          return {...chromeWindow, tabs: chromeWindow.tabs.map((tab) => { return {...tab, active: false };})};
+        else
+          return chromeWindow
+      });
 
     case 'SET_ALL_WINDOWS': //OK
       console.log('ADD_WINDOWS');

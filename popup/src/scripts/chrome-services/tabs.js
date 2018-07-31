@@ -4,7 +4,8 @@ export const countTabsInWindow = (windowId, callback) => {
 };
 
 export const setTabActive = (tabId, callback) => {
-  chrome.tabs.update(tabId, { active: true }, callback())
+  console.log('setTabActive')
+  chrome.tabs.update(tabId, { active: true }, (updatedTab) => callback(updatedTab));
 };
 
 export const pinTab = (tabId, pinned, callback) => {
@@ -15,7 +16,7 @@ export const closeTab = (tabId, callback) => {
   chrome.tabs.remove(tabId, () => callback());
 };
 
-export const openNewTab = (callback) => {
-  chrome.tabs.create(null, (newTab) => callback(newTab))
+export const openNewTab = (windowId, callback) => {
+  chrome.tabs.create({windowId: windowId, active: false}, (newTab) => callback(newTab));
 };
 

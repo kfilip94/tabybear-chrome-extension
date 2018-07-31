@@ -12,13 +12,17 @@
     width: 70%;
   }
 
-  &__close {
-
+  &__bold {
+    font-weight: bold;
   }
 
   &:hover {
     background: $grey;
     cursor: pointer;
+
+    & .tab-checkbox .tab-checkbox__pin-btn{
+      display: block;
+    }
   }
 }
 
@@ -42,8 +46,21 @@
 
   &__pin-btn {
     bottom: 0;
-    color: $blue;
+    color: $light-blue;
+    display: none;
     position: absolute;
     right: 0;
   }
+
+  &__pin-btn--pinned {
+    color: $blue;
+    display: block;
+  }
+
+  // &__pin-btn {
+  //   bottom: 0;
+  //   color: $blue;
+  //   position: absolute;
+  //   right: 0;
+  // }
 }

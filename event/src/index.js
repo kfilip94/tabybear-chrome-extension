@@ -1,7 +1,7 @@
 import { createStore } from 'redux';
 import rootReducer from './reducers';
 import { wrapStore } from 'react-chrome-redux';
-import { addWindow, addTab, removeTab, removeWindow } from '../../popup/src/scripts/actions/tabs';
+import { addWindow, addTab, removeTab, removeWindow, clearActive, updateTab } from '../../popup/src/scripts/actions/tabs';
 
 const store = createStore(rootReducer, {});
 
@@ -24,3 +24,8 @@ chrome.tabs.onCreated.addListener((newTab) =>
 chrome.tabs.onRemoved.addListener((tabId) => 
   store.dispatch(removeTab(tabId))
 );
+
+chrome.tabs.onActivated.addListener(({tabId, windowId}) => {
+  store.dispatch(clearActive(windowId));
+  store.dispatch(updateTab(tabId, {active: true}));
+});

@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbtack } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
@@ -10,7 +11,9 @@ const TabCheckbox = (props) => (
     <img src={props.tab.favIconUrl} className="tab-checkbox__icon"/>
     <FontAwesomeIcon 
       icon={faThumbtack} 
-      className="tab-checkbox__pin-btn"
+      className={classNames("tab-checkbox__pin-btn" , {
+        "tab-checkbox__pin-btn--pinned": props.tab.pinned
+      })}
       onClick={() => {
         console.log('props.tab.id:',props.tab.id,' ,props.tab.pinned:',props.tab.pinned);
         pinTab(props.tab.id, props.tab.pinned, (updatedTab) => props.dispatch(updateTab(props.tab.id, updatedTab)));
