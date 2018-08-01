@@ -16,7 +16,7 @@ const Tab = (props) => /*{
       <TabCheckbox tab={props.tab}/>
       <span 
         className={classNames("tab__title" , {
-          "tab__bold": props.tab.active
+          "tab__title--bold": props.tab.active
         })}
         onClick={() => 
           setTabActive(props.tab.id, (updatedTab) => {

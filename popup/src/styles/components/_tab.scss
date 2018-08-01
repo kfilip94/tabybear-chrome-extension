@@ -10,17 +10,28 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     width: 70%;
+
+    &--bold{
+      font-weight: bold;
+    }
   }
 
-  &__bold {
-    font-weight: bold;
+  &__close {
+    color: $blue;
+    display: none;
+    margin: 8px;
   }
 
   &:hover {
-    background: $grey;
+    background: $light-grey;
     cursor: pointer;
 
     & .tab-checkbox .tab-checkbox__btn{
+      display: block;
+    }
+
+
+    .tab__close {
       display: block;
     }
   }

@@ -15,7 +15,7 @@ const Window = (props) => (
 			className="window__bottom-btn"
 			onClick={() => openNewTab(props.windowId, (newTab) => props.dispatch(addTab(newTab)))}
 		>
-			Open new tab
+			+ Open new tab
 		</button>
 	</div>
 );

@@ -10,8 +10,24 @@
     &__tab-list{
         background: white;
         border-radius: 0 0 4px 4px;
-        height: 100%;
-        width: 100%;
+        overflow-y: scroll;
+        max-height: 350px;
+        width: auto;
+    }
+
+    &__bottom-btn {
+        background: white;
+        border: 0px;
+        border-radius: 0 0 4px 4px;
+        border-top: 1px solid $grey;
+        color: $blue;
+        cursor: pointer;
+        outline: 0;
+        padding: 6px 0;
+
+        &:hover{
+            color: $light-blue;
+        }
     }
 }
 
