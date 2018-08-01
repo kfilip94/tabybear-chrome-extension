@@ -34,4 +34,8 @@ export const clearActive = (windowId) => ({
   windowId
 });
 
-
+export const updateAllIndexInWindow = (windowId, indexArr) => ({
+  type: 'UPDATE_INDEXES',
+  windowId,
+  indexArr
+});

@@ -1,7 +1,8 @@
 import { createStore } from 'redux';
 import rootReducer from './reducers';
 import { wrapStore } from 'react-chrome-redux';
-import { addWindow, addTab, removeTab, removeWindow, clearActive, updateTab } from '../../popup/src/scripts/actions/tabs';
+import { addWindow, addTab, removeTab, removeWindow, clearActive, updateTab, updateAllIndexInWindow } from '../../popup/src/scripts/actions/tabs';
+import { getAllIndexInWindow } from '../../popup/src/scripts/chrome-services/tabs';
 
 const store = createStore(rootReducer, {});
 
@@ -30,14 +31,17 @@ chrome.tabs.onActivated.addListener(({tabId, windowId}) => {
   store.dispatch(updateTab(tabId, {active: true}));
 });
 
-chrome.tabs.onUpdated.addListener((tabId, updates, tab) => {
-  console.log('tabId:',tabId);
-  console.log('updates:',updates);
-  console.log('tab:',tab);
-  store.dispatch(updateTab(tabId, updates)); 
-})
-
-
-chrome.tabs.onReplaced.addListener((addedTabId, removedTabId) => {
-  console.log('tab:',addedTabId,' replaced!');
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  store.dispatch(updateTab(tabId, changeInfo)); 
 });
+
+chrome.tabs.onMoved.addListener((tabId, movedInfo) => {
+  getAllIndexInWindow(movedInfo.windowId, (indexArr) => {
+    store.dispatch(updateAllIndexInWindow(movedInfo.windowId, indexArr)); 
+  });
+});
+
+
+// chrome.tabs.onReplaced.addListener((addedTabId, removedTabId) => {
+//   console.log('tab:',addedTabId,' replaced!');
+// });

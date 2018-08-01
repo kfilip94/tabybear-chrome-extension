@@ -51,6 +51,21 @@ export default (state = defaultWindowsState, action) => {
         else
           return chromeWindow
       });
+    
+    case 'UPDATE_INDEXES':
+      console.log('UPDATE_INDEXES');
+      return state.map(chromeWindow => {
+            if(chromeWindow.id === action.windowId) {
+              const updatedTabs = chromeWindow.tabs.map((tab) => {
+                const updateInfo = action.indexArr.find(({id}) => tab.id === id);
+                return {...tab, index: updateInfo.index }  
+              });
+              return {...chromeWindow, tabs: updatedTabs};
+            }
+            else 
+              return chromeWindow;
+      });
+      // console.log('UPDATE_INDEXES:',updatedWindow2);
 
     case 'SET_ALL_WINDOWS': //OK
       console.log('ADD_WINDOWS');

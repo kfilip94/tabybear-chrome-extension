@@ -7,6 +7,7 @@ export default(windows, { text }) => {
       {
         'tabs': chromeWindow.tabs.filter((tab) => 
           tab.title.toLowerCase().includes(text.toLowerCase()))
+          .sort((tabOne, tabTwo) => tabOne.index > tabTwo.index ? 1 : -1)
       }
     );
     return newWindow;

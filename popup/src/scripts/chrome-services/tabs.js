@@ -23,3 +23,10 @@ export const openNewTab = (windowId, callback) => {
 export const muteTab = (tabId, muted, callback) => {
   chrome.tabs.update(tabId, { muted: !muted }, (updatedTab) => callback(updatedTab));
 };
+
+export const getAllIndexInWindow = (windowId, callback) => {
+  chrome.tabs.query({windowId: windowId}, (tabs) => {
+    const indexArr = tabs.map(({id, index}) => { return { id,  index }; });
+    callback(indexArr);
+  });
+};
