@@ -20,3 +20,6 @@ export const openNewTab = (windowId, callback) => {
   chrome.tabs.create({windowId: windowId, active: false}, (newTab) => callback(newTab));
 };
 
+export const muteTab = (tabId, muted, callback) => {
+  chrome.tabs.update(tabId, { muted: !muted }, (updatedTab) => callback(updatedTab));
+};

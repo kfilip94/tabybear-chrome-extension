@@ -20,7 +20,7 @@
     background: $grey;
     cursor: pointer;
 
-    & .tab-checkbox .tab-checkbox__pin-btn{
+    & .tab-checkbox .tab-checkbox__btn{
       display: block;
     }
   }
@@ -39,28 +39,34 @@
   position: relative;
   width: 30px;
 
-  &__icon {
+  &__favicon {
     height: 16px;
     width: 16px;
   }
 
-  &__pin-btn {
-    bottom: 0;
+  &__btn {
     color: $light-blue;
     display: none;
     position: absolute;
-    right: 0;
   }
 
-  &__pin-btn--pinned {
+  &__btn--pin {
+    right: -3px;
+    transform: rotate(45deg);
+    top: -3px;
+  }
+
+  &__btn--mute {
+    bottom: -3px;
+    right: -3px;
+
+    &:after{
+      content: 'x';
+    }
+  }
+
+  &__btn--enabled {
     color: $blue;
     display: block;
   }
-
-  // &__pin-btn {
-  //   bottom: 0;
-  //   color: $blue;
-  //   position: absolute;
-  //   right: 0;
-  // }
 }
