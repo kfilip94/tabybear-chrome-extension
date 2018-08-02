@@ -11,8 +11,12 @@
     white-space: nowrap;
     width: 70%;
 
-    &--bold{
+    &--bold {
       font-weight: bold;
+    }
+
+    &--checked {
+      color: $green;
     }
   }
 
@@ -51,9 +55,12 @@
   width: 30px;
 
   &__favicon {
+    color: $green;
+    font-size: 16px;
     height: 16px;
     width: 16px;
   }
+
 
   &__btn {
     color: $light-blue;

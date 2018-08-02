@@ -23,9 +23,9 @@ module.exports = {
         loader: 'babel-loader',
         exclude: /(node_modules)/,
         include: path.join(__dirname, 'src'),
-        query: {
-          presets: ['es2015', 'react']
-        }
+        // query: {
+        //   presets: ['es2015', 'react']
+        // }
       },
       {
         test: /\.s?css$/,

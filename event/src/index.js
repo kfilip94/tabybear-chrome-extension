@@ -18,9 +18,9 @@ chrome.windows.onCreated.addListener((newWindow) =>
   store.dispatch(addWindow(newWindow))
 );  
 
-chrome.tabs.onCreated.addListener((newTab) =>
-  store.dispatch(addTab(newTab))
-);
+// chrome.tabs.onCreated.addListener((newTab) =>
+//   store.dispatch(addTab(newTab))
+// );
 
 chrome.tabs.onRemoved.addListener((tabId) => 
   store.dispatch(removeTab(tabId))

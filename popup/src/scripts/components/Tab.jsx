@@ -13,10 +13,11 @@ const Tab = (props) => /*{
   });
   return*/ (
     <div className="tab">
-      <TabCheckbox tab={props.tab}/>
+      <TabCheckbox tab={props.tab} isChecked={props.isChecked}/>
       <span 
         className={classNames("tab__title" , {
-          "tab__title--bold": props.tab.active
+          "tab__title--bold": props.tab.active,
+          "tab__title--checked": props.isChecked
         })}
         onClick={() => 
           setTabActive(props.tab.id, (updatedTab) => {
@@ -37,6 +38,10 @@ const Tab = (props) => /*{
     </div>
   );
 //};
+const mapStateToProps = (state, props) => {
+  return {
+    isChecked: state.checkedTabs.includes(props.tab.id)
+  };
+};
 
-
-export default connect()(Tab);
+export default connect(mapStateToProps)(Tab);
