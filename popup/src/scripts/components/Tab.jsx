@@ -7,11 +7,7 @@ import TabCheckbox from './TabCheckbox';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import Button from './Button';
 
-const Tab = (props) => /*{
-  let tabTitleClass = classNames("tab__title" , {
-    "tab__bold": props.tab.active
-  });
-  return*/ (
+const Tab = (props) => (
     <div className="tab">
       <TabCheckbox tab={props.tab} isChecked={props.isChecked}/>
       <span 
@@ -36,11 +32,11 @@ const Tab = (props) => /*{
         handleClick={() => closeTab(props.tab.id, () => props.dispatch(removeTab(props.tab.id)))}
       />
     </div>
-  );
-//};
+);
+
 const mapStateToProps = (state, props) => {
   return {
-    isChecked: state.checkedTabs.includes(props.tab.id)
+    isChecked: state.checkedTabs.some(({ id }) => id === props.tab.id)
   };
 };
 

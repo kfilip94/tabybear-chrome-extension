@@ -3,8 +3,8 @@ const openNewWindow = (callback) => {
   console.log('HUJ');
   chrome.windows.create(null, (newWindow) => {
     chrome.tabs.query({ windowId: newWindow.id }, (tabsInWindow) => {
-      console.log('newWindow:',{...newWindow, tabs: tabsInWindow});
-      callback({...newWindow, tabs: tabsInWindow});
+      // console.log('newWindow:',{...newWindow, tabs: tabsInWindow});
+      // callback({...newWindow, tabs: tabsInWindow});
     });
   });
 };
@@ -18,8 +18,13 @@ const getAllWindows = (callback) => {
   });
 };
 
+
+const getAllWindowsPromise = () => new Promise((resolve, reject) => {
+  chrome.windows.getAll({populate: true}, resolve);
+});
+
 const closeWindow = (windowId, callback) => {
   chrome.windows.remove(windowId, () => callback());
 }
 
-export { openNewWindow, openSettingsPage, getAllWindows, closeWindow};
+export { openNewWindow, openSettingsPage, getAllWindows, closeWindow, getAllWindowsPromise};

@@ -1,4 +1,24 @@
+import { closeTab, pinTab } from '../../../popup/src/scripts/chrome-services/tabs';
+
+
 const defaultWindowsState = [];
+
+// const updateTab = (windows = [], tabId, updatedTab) => {
+//   console.log('otrzymany state:',windows,'');
+
+//   return windows.map(chromeWindow => {
+//       console.log('chromeWindow:',chromeWindow);
+//       Object.assign({}, chromeWindow,{
+//         'tabs': chromeWindow.tabs.map((tab) => {
+//           if(tab.id === tabId) 
+//             return {...tab, ...updatedTab };
+//           else
+//             return tab;
+//         })
+//       })
+//     }
+//   );
+// };
 
 export default (state = defaultWindowsState, action) => {
   switch(action.type){
@@ -12,6 +32,9 @@ export default (state = defaultWindowsState, action) => {
       );
       console.log('filtered id: ',action.id ,' after close:',filteredWindows);
       return filteredWindows;
+    case 'GET_ALL_WINDOWS':
+      console.log('GET_ALL_WINDOWS');
+      return action.windows;
 
     case 'UPDATE_TAB': //OK
       console.log('UPDATE_TAB');
@@ -27,6 +50,13 @@ export default (state = defaultWindowsState, action) => {
       );
       console.log('filtered id: ',action.id ,' after update:',updatedWindows);
       return updatedWindows;
+    case 'PIN_TAB':
+      // pinTab(action.id, action.pinned, (updatedTab) => {
+      //   let newState = updateTab(state, action.id, updatedTab);
+      //   return newState;
+      // });
+      console.log('PIN TAB IN REDUCER!');
+      return state;
 
     case 'ADD_WINDOW': //OK
       console.log('ADD_WINDOW:',[...state, action.newWindow]);
@@ -74,6 +104,20 @@ export default (state = defaultWindowsState, action) => {
     case 'REMOVE_WINDOW': //OK
       console.log('REMOVE_WINDOW');
       return state.filter(({id}) => id !== action.id);
+
+
+    case 'REMOVE_TABS':
+      closeTab(action.idArr, () => {
+        let filteredWindows = state.map(chromeWindow => 
+          Object.assign({}, chromeWindow,{
+            'tabs': chromeWindow.tabs.filter((tab) => 
+              !action.idArr.includes(tab.id)
+            )
+          })
+        );
+        console.log('REMOVE_TABS:',filteredWindows);
+        return filteredWindows;
+      });
 
     default:
       console.log('DEFAULT'. state);

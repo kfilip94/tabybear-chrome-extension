@@ -6,15 +6,11 @@ import Window from './Window'
 import { addWindow, setWindows } from '../actions/tabs';
 import { openNewWindow, getAllWindows } from '../chrome-services/windows';
 import selectTabs from '../selectors/tabs';
-
+import {getWindows } from '../actions/aliases';
 class App extends Component {
-
   componentDidMount() {
-    console.log('componentDidMount!');
-    getAllWindows((windows) => {
-      this.setState({ windows });
-      this.props.dispatch(setWindows({windows}));
-    });
+    console.log('getWindows():');
+    this.props.dispatch(getWindows());
   }
 
   render() {
@@ -23,7 +19,6 @@ class App extends Component {
       <div className='app'>
         <Navbar
           handleOpenNewWindow={() => {
-            console.log('handleOpenNewWindow');
             openNewWindow((newWindow) => this.props.dispatch(addWindow(newWindow)));
           }}
           handleOpenSettingsPage={() => console.log('open settings page')}
@@ -40,7 +35,6 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log('selectTabs:',selectTabs(state.windows, state.filters));
   return {
     windows: selectTabs(state.windows, state.filters)
   };

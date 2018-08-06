@@ -1,20 +1,22 @@
-const defaultCheckedTabsState = {
-  checkedTabs: []
-};
+const defaultCheckedTabsState = [];
 
 export default (state = defaultCheckedTabsState, action) => {
   switch(action.type){
     case 'CHECK_TAB':
-      return [ ...state, action.id];
+      return [ ...state, { id: action.id, windowId: action.windowId }];
     
     case 'CHECK_MULTIPLE':
       return [ ...state, ...action.checkedTabs];
 
     case 'UNCHECK_MULTIPLE':
-      return state.filter(id => !action.uncheckedTabs.find(id));
+      console.log('UNCHECK_MULTIPLE:',state);
+      console.log('UNCHECK_MULTIPLE:',state.map((checkedTab) => { id: checkedTab.id}));
+
+      return [];
 
     case 'UNCHECK_TAB':
-      return state.filter(id => id !== action.id);
+      console.log('UNCHECK_TAB');
+      return state.filter(({id}) => id !== action.id);
     
     case 'CLEAR':
       return [];

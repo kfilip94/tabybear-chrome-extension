@@ -1,6 +1,7 @@
-export const checkTab = (id) => ({
+export const checkTab = (id, windowId) => ({
   type: 'CHECK_TAB',
-  id
+  id,
+  windowId
 });
 
 export const uncheckTab = (id) => ({
@@ -8,20 +9,11 @@ export const uncheckTab = (id) => ({
   id
 });
 
-// case 'CHECK_TAB':
-// return [ ...state, action.id];
+export const uncheckTabs = (idArr) => ({
+  type: 'UNCHECK_MULTIPLE',
+  idArr
+});
 
-// case 'CHECK_MULTIPLE':
-// return [ ...state, ...action.checkedTabs];
-
-// case 'UNCHECK_MULTIPLE':
-// return state.filter(id => !action.uncheckedTabs.find(id));
-
-// case 'UNCHECK_TAB':
-// return state.filter(id => id !== action.id);
-
-// case 'CLEAR':
-// return [];
-
-// default:
-// return state;
+export const clearSelection = () => ({
+  type: 'CLEAR'
+});

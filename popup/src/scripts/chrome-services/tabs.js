@@ -9,8 +9,16 @@ export const setTabActive = (tabId, callback) => {
 };
 
 export const pinTab = (tabId, pinned, callback) => {
-  chrome.tabs.update(tabId, { pinned: !pinned }, (updatedTab) => callback(updatedTab));
+  return chrome.tabs.update(tabId, { pinned: !pinned }, (updatedTab) => callback(updatedTab));
 };
+
+// export const pinTabPromise = (tabId, pinned, callback) => {
+//   return chrome.tabs.update(tabId, { pinned: !pinned }, (updatedTab) => callback(updatedTab));
+// };
+
+export const pinTabPromise = (tabId, pinned) => new Promise((resolve, reject) => {
+  chrome.tabs.update(tabId, { pinned: !pinned }, resolve);
+});
 
 export const closeTab = (tabId, callback) => {
   chrome.tabs.remove(tabId, () => callback());

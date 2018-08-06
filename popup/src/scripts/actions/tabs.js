@@ -14,6 +14,10 @@ export const removeTab = (id) => ({
   id
 });
 
+export const removeTabs = (idArr) => ({
+  type: 'REMOVE_TABS',
+  idArr
+});
 export const addWindow = ( newWindow = {}) => ({
   type: 'ADD_WINDOW',
   newWindow
@@ -24,8 +28,19 @@ export const removeWindow = (id) => ({
   id
 });
 
+export const pinTab = (id, pinned) => ({
+  type: 'PIN_TAB',
+  id, 
+  pinned
+});
+
 export const setWindows = ( { windows } ) => ({
   type: 'SET_ALL_WINDOWS',
+  windows
+});
+
+export const getAllWindows = ( { windows } ) => ({
+  type: 'GET_ALL_WINDOWS',
   windows
 });
 

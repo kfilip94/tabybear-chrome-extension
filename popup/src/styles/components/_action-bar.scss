@@ -12,6 +12,11 @@
     display: flex;
     justify-content: space-between;
     width: 30%;
+
+    .actions {
+      display: flex;
+      align-items: center;
+    }
   }
 
   .action-bar__counter {
@@ -24,5 +29,9 @@
       height: 15px;
       justify-content: center;
       width: 23px;
+  }
+
+  &--green {
+    background: $green;
   }
 }

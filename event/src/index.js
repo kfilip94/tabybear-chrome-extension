@@ -1,10 +1,16 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk'
+import { aliases } from '../../popup/src/scripts/actions/aliases';
 import rootReducer from './reducers';
-import { wrapStore } from 'react-chrome-redux';
+import { wrapStore, alias } from 'react-chrome-redux';
 import { addWindow, addTab, removeTab, removeWindow, clearActive, updateTab, updateAllIndexInWindow } from '../../popup/src/scripts/actions/tabs';
 import { getAllIndexInWindow } from '../../popup/src/scripts/chrome-services/tabs';
 
-const store = createStore(rootReducer, {});
+const store = createStore(
+  rootReducer,
+  {},
+  applyMiddleware(alias(aliases), thunk)
+);
 
 wrapStore(store, {
   portName: 'tabsManageStore'

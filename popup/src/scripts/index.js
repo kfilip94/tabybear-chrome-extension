@@ -13,8 +13,7 @@ const proxyStore = new Store({
 
 console.log(proxyStore);
 
-proxyStore.ready().then(() => {console.log('sadasd');
-
+proxyStore.ready().then(() => {
   render(
      <Provider store={proxyStore}><App /></Provider>
     ,document.getElementById('app'));
