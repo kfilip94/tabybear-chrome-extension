@@ -3,8 +3,8 @@ import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbtack, faVolumeOff, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
-import { updateTab } from '../actions/tabs';
-import { pinTab, muteTab } from '../chrome-services/tabs';
+import { pinTabRequest, updateTab } from '../actions/tabs';
+import { muteTab } from '../chrome-services/tabs';
 import { checkTab, uncheckTab } from '../actions/checkedTabs';
 
 const TabCheckbox = (props) => (
@@ -29,6 +29,7 @@ const TabCheckbox = (props) => (
           })}
           onClick={() => {
             console.log('props.tab.id:', props.tab.id,' ,props.tab.pinned:', props.tab.pinned);
+            props.dispatch(pinTabRequest(props.tab.id, !props.tab.pinned));
             // pinTab(props.tab.id, props.tab.pinned, (updatedTab) => props.dispatch(updateTab(props.tab.id, updatedTab)));
           }}
         />

@@ -3,14 +3,13 @@ import { connect } from 'react-redux';
 import Navbar from './Navbar';
 import Searchbar from './SearchBar';
 import Window from './Window'
-import { addWindow, setWindows } from '../actions/tabs';
-import { openNewWindow, getAllWindows } from '../chrome-services/windows';
+import { setWindowsRequest  } from '../actions/windows';
+import { openNewWindow } from '../chrome-services/windows';
 import selectTabs from '../selectors/tabs';
-import {getWindows } from '../actions/aliases';
+
 class App extends Component {
   componentDidMount() {
-    console.log('getWindows():');
-    this.props.dispatch(getWindows());
+    this.props.dispatch(setWindowsRequest());
   }
 
   render() {

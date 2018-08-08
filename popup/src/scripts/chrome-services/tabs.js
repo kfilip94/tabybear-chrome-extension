@@ -1,3 +1,9 @@
+export const pinTabPromise = (tabId, pinned) => new Promise(resolve => {
+  chrome.tabs.update(tabId, { pinned: pinned }, (updatedTab) => resolve(updatedTab));
+});
+
+
+
 export const countTabsInWindow = (windowId, callback) => {
   /*global chrome*/
   chrome.tabs.getAllInWindow(windowId, (tabs) => callback(tabs.length));
@@ -12,13 +18,7 @@ export const pinTab = (tabId, pinned, callback) => {
   return chrome.tabs.update(tabId, { pinned: !pinned }, (updatedTab) => callback(updatedTab));
 };
 
-// export const pinTabPromise = (tabId, pinned, callback) => {
-//   return chrome.tabs.update(tabId, { pinned: !pinned }, (updatedTab) => callback(updatedTab));
-// };
 
-export const pinTabPromise = (tabId, pinned) => new Promise((resolve, reject) => {
-  chrome.tabs.update(tabId, { pinned: !pinned }, resolve);
-});
 
 export const closeTab = (tabId, callback) => {
   chrome.tabs.remove(tabId, () => callback());

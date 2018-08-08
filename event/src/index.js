@@ -1,15 +1,31 @@
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk'
-import { aliases } from '../../popup/src/scripts/actions/aliases';
+import aliases from './aliases';
 import rootReducer from './reducers';
 import { wrapStore, alias } from 'react-chrome-redux';
 import { addWindow, addTab, removeTab, removeWindow, clearActive, updateTab, updateAllIndexInWindow } from '../../popup/src/scripts/actions/tabs';
 import { getAllIndexInWindow } from '../../popup/src/scripts/chrome-services/tabs';
+import { createLogger } from 'redux-logger';
+
+const initialState = {
+  windows: [],
+  checkedTabs: [],
+  filters: {
+    text: ''
+  }
+};
+const logger = createLogger({
+  collapsed: true,
+});
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(
   rootReducer,
-  {},
-  applyMiddleware(alias(aliases), thunk)
+  initialState,
+  composeEnhancers(
+    applyMiddleware(alias(aliases), thunk, logger)
+  )
 );
 
 wrapStore(store, {

@@ -1,4 +1,16 @@
-const openNewWindow = (callback) => {
+export const  getAllWindowsPromise = new Promise(resolve =>
+  chrome.windows.getAll({populate: true}, (windows) => {
+    resolve(windows)
+  }),
+);
+  
+export const removeWindowPromise = (windowId) => new Promise(resolve =>
+  chrome.windows.remove(windowId, () => resolve())
+);
+
+
+
+export const openNewWindow = (callback) => {
   /*global chrome*/
   console.log('HUJ');
   chrome.windows.create(null, (newWindow) => {
@@ -9,22 +21,4 @@ const openNewWindow = (callback) => {
   });
 };
 
-const openSettingsPage = () => alert('Here will be settings page!');
-
-const getAllWindows = (callback) => {
-  /*global chrome*/
-  chrome.windows.getAll({populate: true}, (windowsArr) => {
-    callback(windowsArr);
-  });
-};
-
-
-const getAllWindowsPromise = () => new Promise((resolve, reject) => {
-  chrome.windows.getAll({populate: true}, resolve);
-});
-
-const closeWindow = (windowId, callback) => {
-  chrome.windows.remove(windowId, () => callback());
-}
-
-export { openNewWindow, openSettingsPage, getAllWindows, closeWindow, getAllWindowsPromise};
+// export const openSettingsPage = () => alert('Here will be settings page!');

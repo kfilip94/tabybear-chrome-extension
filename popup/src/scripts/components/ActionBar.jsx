@@ -1,10 +1,9 @@
 import React from "react";
+import { connect } from "react-redux";
 import classNames from "classnames";
 import Button from "./Button";
 import { faEdit, faTimes } from "@fortawesome/free-solid-svg-icons";
-import { connect } from "react-redux";
-import { removeWindow } from "../actions/tabs";
-import { closeWindow } from "../chrome-services/windows";
+import { removeWindowRequest } from "../actions/windows";
 import EditActionBar from './EditActionBar';
 
 class ActionBar extends React.Component {
@@ -29,11 +28,7 @@ class ActionBar extends React.Component {
             className="button button--small"
             title="Close window with all tabs"
             icon={faTimes}
-            handleClick={() =>
-              closeWindow(this.props.windowId, () =>
-                this.props.dispatch(removeWindow(this.props.windowId))
-              )
-            }
+            handleClick={() => this.props.dispatch(removeWindowRequest(this.props.windowId))}
           />
         </div>
       </div>

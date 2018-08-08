@@ -9,6 +9,8 @@ export const updateTab = (id, updatedTab) => ({
   updatedTab
 });
 
+
+
 export const removeTab = (id) => ({
   type: 'REMOVE_TAB',
   id
@@ -18,31 +20,15 @@ export const removeTabs = (idArr) => ({
   type: 'REMOVE_TABS',
   idArr
 });
-export const addWindow = ( newWindow = {}) => ({
-  type: 'ADD_WINDOW',
-  newWindow
-});
 
-export const removeWindow = (id) => ({
-  type: 'REMOVE_WINDOW',
-  id
-});
 
-export const pinTab = (id, pinned) => ({
-  type: 'PIN_TAB',
+export const pinTabRequest = (id, pinned) => ({
+  type: 'PIN_TAB_REQUEST',
   id, 
   pinned
 });
 
-export const setWindows = ( { windows } ) => ({
-  type: 'SET_ALL_WINDOWS',
-  windows
-});
 
-export const getAllWindows = ( { windows } ) => ({
-  type: 'GET_ALL_WINDOWS',
-  windows
-});
 
 export const clearActive = (windowId) => ({
   type: 'CLEAR_ACTIVE',

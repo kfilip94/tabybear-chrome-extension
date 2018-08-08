@@ -1,24 +1,6 @@
-import { closeTab, pinTab } from '../../../popup/src/scripts/chrome-services/tabs';
-
+import { closeTab } from '../../../popup/src/scripts/chrome-services/tabs';
 
 const defaultWindowsState = [];
-
-// const updateTab = (windows = [], tabId, updatedTab) => {
-//   console.log('otrzymany state:',windows,'');
-
-//   return windows.map(chromeWindow => {
-//       console.log('chromeWindow:',chromeWindow);
-//       Object.assign({}, chromeWindow,{
-//         'tabs': chromeWindow.tabs.map((tab) => {
-//           if(tab.id === tabId) 
-//             return {...tab, ...updatedTab };
-//           else
-//             return tab;
-//         })
-//       })
-//     }
-//   );
-// };
 
 export default (state = defaultWindowsState, action) => {
   switch(action.type){
@@ -32,9 +14,9 @@ export default (state = defaultWindowsState, action) => {
       );
       console.log('filtered id: ',action.id ,' after close:',filteredWindows);
       return filteredWindows;
-    case 'GET_ALL_WINDOWS':
-      console.log('GET_ALL_WINDOWS');
-      return action.windows;
+    // case 'GET_ALL_WINDOWS':
+    //   console.log('GET_ALL_WINDOWS');
+    //   return action.windows;
 
     case 'UPDATE_TAB': //OK
       console.log('UPDATE_TAB');
@@ -97,7 +79,7 @@ export default (state = defaultWindowsState, action) => {
       });
       // console.log('UPDATE_INDEXES:',updatedWindow2);
 
-    case 'SET_ALL_WINDOWS': //OK
+    case 'SET_WINDOWS': //OK
       console.log('ADD_WINDOWS');
       return action.windows;
 
