@@ -12,7 +12,12 @@ const proxyStore = new Store({
 });
 
 console.log(proxyStore);
-
+// const unsubscribe = proxyStore.subscribe(() => {
+//   unsubscribe(); // make sure to only fire once
+//   render(
+//     <Provider store={proxyStore}><App /></Provider>, document.getElementById('app')
+//   );
+// });
 proxyStore.ready().then(() => {
   render(
      <Provider store={proxyStore}><App /></Provider>

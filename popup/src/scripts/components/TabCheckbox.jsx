@@ -3,8 +3,7 @@ import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbtack, faVolumeOff, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
-import { pinTabRequest, updateTab } from '../actions/tabs';
-import { muteTab } from '../chrome-services/tabs';
+import { pinTabRequest, muteTabRequest } from '../actions/tabs';
 import { checkTab, uncheckTab } from '../actions/checkedTabs';
 
 const TabCheckbox = (props) => (
@@ -27,20 +26,14 @@ const TabCheckbox = (props) => (
           className={classNames("tab-checkbox__btn", "tab-checkbox__btn--pin" , {
             "tab-checkbox__btn--enabled": props.tab.pinned
           })}
-          onClick={() => {
-            console.log('props.tab.id:', props.tab.id,' ,props.tab.pinned:', props.tab.pinned);
-            props.dispatch(pinTabRequest(props.tab.id, !props.tab.pinned));
-            // pinTab(props.tab.id, props.tab.pinned, (updatedTab) => props.dispatch(updateTab(props.tab.id, updatedTab)));
-          }}
+          onClick={() => props.dispatch(pinTabRequest(props.tab.id, !props.tab.pinned))}
         />
         <FontAwesomeIcon 
           icon={faVolumeOff} 
           className={classNames("tab-checkbox__btn", "tab-checkbox__btn--mute" , {
             "tab-checkbox__btn--enabled": props.tab.mutedInfo.muted
           })}
-          onClick={() => 
-            muteTab(props.tab.id, props.tab.mutedInfo.muted, (updatedTab) => props.dispatch(updateTab(props.tab.id, updatedTab)))
-          }
+          onClick={() => props.dispatch(muteTabRequest(props.tab.id, !props.tab.mutedInfo.muted))}
         />
       </div>
 );

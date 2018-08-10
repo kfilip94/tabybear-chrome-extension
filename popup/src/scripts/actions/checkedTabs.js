@@ -4,6 +4,13 @@ export const checkTab = (id, windowId) => ({
   windowId
 });
 
+export const selectWindow = (windowId, tabIdArr, isChecked) => ({
+  type: 'SELECT_WINDOW',
+  windowId,
+  tabIdArr,
+  isChecked
+});
+
 export const uncheckTab = (id) => ({
   type: 'UNCHECK_TAB',
   id
@@ -17,3 +24,4 @@ export const uncheckTabs = (idArr) => ({
 export const clearSelection = () => ({
   type: 'CLEAR'
 });
+

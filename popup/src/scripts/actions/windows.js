@@ -1,9 +1,9 @@
-export const addWindowRequest = () => ({
-  type: 'ADD_WINDOW_REQUEST'
+export const createWindowRequest = () => ({
+  type: 'CREATE_WINDOW_REQUEST'
 });
 
-export const addWindow = ( newWindow = {}) => ({
-  type: 'ADD_WINDOW',
+export const createWindow = ( newWindow = {}) => ({
+  type: 'CREATE_WINDOW',
   newWindow
 });
 

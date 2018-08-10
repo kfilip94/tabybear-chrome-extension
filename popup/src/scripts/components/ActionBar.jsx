@@ -2,11 +2,16 @@ import React from "react";
 import { connect } from "react-redux";
 import classNames from "classnames";
 import Button from "./Button";
-import { faEdit, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faTimes, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { removeWindowRequest } from "../actions/windows";
 import EditActionBar from './EditActionBar';
+import { selectWindow } from '../actions/checkedTabs';
 
 class ActionBar extends React.Component {
+  handleSelectAll = () => {
+    this.props.dispatch(selectWindow(this.props.windowId, this.props.allTabsInWindows, this.props.tabsCount !== this.props.checkedTabs));
+  };
+
   render() {
     return (
       <div
@@ -15,10 +20,20 @@ class ActionBar extends React.Component {
         })}
       >
         <div className="action-bar-container">
+          <Button
+            className="button button--small"
+            title="Select all tabs in window"
+            icon={faCheckCircle}
+            handleClick={this.handleSelectAll}
+          />
           {this.props.isInEditMode && <EditActionBar windowId={this.props.windowId} />}
         </div>
         <div className="action-bar-container">
-          <span className="action-bar__counter">{this.props.tabsCount}</span>
+          <span className="action-bar__counter">
+            {
+              this.props.isInEditMode ? `${this.props.checkedTabs}/${this.props.tabsCount}` : this.props.tabsCount
+            }
+          </span>
           <Button
             className="button button--small"
             title="Manage tabs in this window"
@@ -43,9 +58,10 @@ const mapStateToProps = (state, props) => {
     isInEditMode: state.checkedTabs.some(({ windowId }) => {
       return windowId === props.windowId;
     }),
-    checkedTabsInWindow: state.checkedTabs
-      .filter(({ windowId }) => windowId === props.windowId)
-      .map(({ id }) => id)
+    allTabsInWindows: state.windows.find(({ id }) => id === props.windowId).tabs.map(({id}) => (id)),
+    areAllWindowSelected: state.windows.find(({ id }) => id === props.windowId).tabs.length === state.checkedTabs.filter(({ windowId }) => windowId === props.windowId).length,
+    checkedTabs: state.checkedTabs.filter(({ windowId }) => windowId === props.windowId).length
+
   };
 };
 

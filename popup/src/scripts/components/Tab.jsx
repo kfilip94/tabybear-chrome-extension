@@ -1,8 +1,7 @@
 import React from 'react';
 import classNames from 'classnames'
 import { connect } from 'react-redux';
-import { removeTab, clearActive, updateTab } from '../actions/tabs';
-import { setTabActive, closeTab } from '../chrome-services/tabs';
+import { removeTabRequest, setTabActiveRequest, clearActive } from '../actions/tabs';
 import TabCheckbox from './TabCheckbox';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import Button from './Button';
@@ -15,12 +14,10 @@ const Tab = (props) => (
           "tab__title--bold": props.tab.active,
           "tab__title--checked": props.isChecked
         })}
-        onClick={() => 
-          setTabActive(props.tab.id, (updatedTab) => {
-            console.log('active!');
-            props.dispatch(clearActive(props.tab.windowId));
-            props.dispatch(updateTab(props.tab.id, updatedTab));
-          })
+        onClick={() => {
+          props.dispatch(clearActive(props.tab.windowId));
+          props.dispatch(setTabActiveRequest(props.tab.id))
+        }
       }
         title={props.tab.title}
       >
@@ -29,7 +26,7 @@ const Tab = (props) => (
       <Button 
         className="button button--small tab__close"
         icon={faTimes}
-        handleClick={() => closeTab(props.tab.id, () => props.dispatch(removeTab(props.tab.id)))}
+        handleClick={() => props.dispatch(removeTabRequest(props.tab.id))}
       />
     </div>
 );

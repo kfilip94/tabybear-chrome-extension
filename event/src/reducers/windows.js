@@ -1,5 +1,3 @@
-import { closeTab } from '../../../popup/src/scripts/chrome-services/tabs';
-
 const defaultWindowsState = [];
 
 export default (state = defaultWindowsState, action) => {
@@ -14,9 +12,7 @@ export default (state = defaultWindowsState, action) => {
       );
       console.log('filtered id: ',action.id ,' after close:',filteredWindows);
       return filteredWindows;
-    // case 'GET_ALL_WINDOWS':
-    //   console.log('GET_ALL_WINDOWS');
-    //   return action.windows;
+
 
     case 'UPDATE_TAB': //OK
       console.log('UPDATE_TAB');
@@ -32,22 +28,19 @@ export default (state = defaultWindowsState, action) => {
       );
       console.log('filtered id: ',action.id ,' after update:',updatedWindows);
       return updatedWindows;
-    case 'PIN_TAB':
-      // pinTab(action.id, action.pinned, (updatedTab) => {
-      //   let newState = updateTab(state, action.id, updatedTab);
-      //   return newState;
-      // });
-      console.log('PIN TAB IN REDUCER!');
-      return state;
 
     case 'ADD_WINDOW': //OK
       console.log('ADD_WINDOW:',[...state, action.newWindow]);
       return [...state, action.newWindow];
 
-    case 'ADD_TAB': //OK
+    case 'CREATE_TAB': //OK
       const updatedWindows3 = state.map(chromeWindow => {
         if(chromeWindow.id === action.tab.windowId){
-          return {...chromeWindow, tabs: [...chromeWindow.tabs, action.tab]};
+          if(chromeWindow.tabs.every(({id}) => id !== action.tab.id)){
+            return {...chromeWindow, tabs: [...chromeWindow.tabs, action.tab]};
+          } else {
+            return chromeWindow;
+          }
         } else {
           return chromeWindow;
         }
@@ -64,8 +57,8 @@ export default (state = defaultWindowsState, action) => {
           return chromeWindow
       });
     
-    case 'UPDATE_INDEXES':
-      console.log('UPDATE_INDEXES');
+    case 'UPDATE_TABS_ORDER':
+      console.log('UPDATE_TABS_ORDER');
       return state.map(chromeWindow => {
             if(chromeWindow.id === action.windowId) {
               const updatedTabs = chromeWindow.tabs.map((tab) => {
@@ -77,10 +70,9 @@ export default (state = defaultWindowsState, action) => {
             else 
               return chromeWindow;
       });
-      // console.log('UPDATE_INDEXES:',updatedWindow2);
 
     case 'SET_WINDOWS': //OK
-      console.log('ADD_WINDOWS');
+      console.log('SET_WINDOWS');
       return action.windows;
 
     case 'REMOVE_WINDOW': //OK
@@ -89,17 +81,15 @@ export default (state = defaultWindowsState, action) => {
 
 
     case 'REMOVE_TABS':
-      closeTab(action.idArr, () => {
-        let filteredWindows = state.map(chromeWindow => 
+        const filteredWindows4 = state.map(chromeWindow => 
           Object.assign({}, chromeWindow,{
             'tabs': chromeWindow.tabs.filter((tab) => 
               !action.idArr.includes(tab.id)
             )
           })
         );
-        console.log('REMOVE_TABS:',filteredWindows);
-        return filteredWindows;
-      });
+        console.log('REMOVE_TABS:',filteredWindows4);
+        return filteredWindows4;
 
     default:
       console.log('DEFAULT'. state);

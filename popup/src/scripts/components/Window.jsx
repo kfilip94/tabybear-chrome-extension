@@ -1,7 +1,7 @@
 import React from 'react';
 import ActionBar from './ActionBar';
 import Tab from './Tab';
-import { addTab } from '../actions/tabs';
+import { createTabRequest } from '../actions/tabs';
 import { openNewTab } from '../chrome-services/tabs';
 import { connect } from 'react-redux';
 
@@ -13,7 +13,7 @@ const Window = (props) => (
 		</div>
 		<button
 			className="window__bottom-btn"
-			onClick={() => openNewTab(props.windowId, (newTab) => props.dispatch(addTab(newTab)))}
+			onClick={() => props.dispatch(createTabRequest(props.windowId))}
 		>
 			+ Open new tab
 		</button>

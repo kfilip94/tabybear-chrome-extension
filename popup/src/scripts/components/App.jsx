@@ -9,7 +9,11 @@ import selectTabs from '../selectors/tabs';
 
 class App extends Component {
   componentDidMount() {
+    console.log('component did mount!');
     this.props.dispatch(setWindowsRequest());
+    chrome.windows.getAll({ populate: true }, (windows) => {
+      console.log('what i have here:',windows);
+    });
   }
 
   render() {
