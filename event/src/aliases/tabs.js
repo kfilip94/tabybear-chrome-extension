@@ -1,12 +1,12 @@
-import { createTab, removeTab, updateTab, clearActive, removeTabs } from '../../../popup/src/scripts/actions/tabs';
+import * as actions from '../../../popup/src/scripts/actions/tabs';
+import * as promises from '../chrome-services/tabs';
 import { clearSelection } from '../../../popup/src/scripts/actions/checkedTabs';
-import { createTabPromise, muteTabPromise, pinTabPromise, setTabActivePromise, removeTabPromise } from '../../../popup/src/scripts/chrome-services/tabs';
 
 //CREATE TAB
 const createTabAlias = (originalAction) => {
   return (dispatch) => {
-    return createTabPromise(originalAction.windowId)
-      .then((tab) => dispatch(createTab(tab)));
+    return promises.createTabPromise(originalAction.windowId)
+      .then((tab) => dispatch(actions.createTab(tab)));
   };
 };
 
@@ -14,26 +14,25 @@ const createTabAlias = (originalAction) => {
 //UPDATE TAB
 const muteTabAlias = (originalAction) => {
   return (dispatch) => {
-    return muteTabPromise(originalAction.id, originalAction.muted)
-      .then((updatedTab) => {
-        return dispatch(updateTab(originalAction.id, updatedTab)); 
-      });
+    return promises.muteTabPromise(originalAction.id, originalAction.muted)
+      .then((updatedTab) => dispatch(actions.updateTab(originalAction.id, updatedTab))
+    );
   };
 };
 
 const pinTabAlias = (originalAction) => {
   return (dispatch) => {
-    return pinTabPromise(originalAction.id, originalAction.pinned)
+    return promises.pinTabPromise(originalAction.id, originalAction.pinned)
       .then((updatedTab) => {
-        return dispatch(updateTab(originalAction.id, updatedTab)); 
+        return dispatch(actions.updateTab(originalAction.id, updatedTab)); 
       });
   };
 };
 
 const setTabActiveAlias = (originalAction) => {
   return (dispatch) => {
-    return setTabActivePromise(originalAction.id)
-      .then((updatedTab) => dispatch(updateTab(originalAction.id, updatedTab))
+    return promises.setTabActivePromise(originalAction.id)
+      .then((updatedTab) => dispatch(actions.updateTab(originalAction.id, updatedTab))
     );
   };
 };
@@ -41,15 +40,15 @@ const setTabActiveAlias = (originalAction) => {
 //REMOVE TAB
 const removeTabAlias = (originalAction) => {
   return (dispatch) => {
-    return removeTabPromise(originalAction.id)
-      .then(() => dispatch(removeTab(originalAction.id)));
+    return promises.removeTabPromise(originalAction.id)
+      .then(() => dispatch(actions.removeTab(originalAction.id)));
   };
 };
 
 const removeTabsAlias = (originalAction) => {
   return (dispatch) => {
-    return removeTabPromise(originalAction.idArr)
-      .then(() => dispatch(removeTabs(originalAction.idArr)))
+    return promises.removeTabPromise(originalAction.idArr)
+      .then(() => dispatch(actions.removeTabs(originalAction.idArr)))
       .then(() => dispatch(clearSelection()));
   };
 };

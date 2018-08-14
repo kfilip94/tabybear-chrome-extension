@@ -22,11 +22,3 @@ export const removeTabPromise = (tabId) =>
   new Promise(resolve => 
     chrome.tabs.remove(tabId, () => resolve())
   );
-
-export const getTabsOrderPromise = (windowId) => 
-  new Promise(resolve =>
-    chrome.tabs.query(({ windowId }), (tabs) => {
-      const indexArr = tabs.map(({id, index}) => ({ id,  index }));
-      resolve(indexArr);
-    })
-  );

@@ -10,7 +10,6 @@ export default (state = defaultWindowsState, action) => {
           )
         })
       );
-      console.log('filtered id: ',action.id ,' after close:',filteredWindows);
       return filteredWindows;
 
 
@@ -18,28 +17,32 @@ export default (state = defaultWindowsState, action) => {
       console.log('UPDATE_TAB');
       const updatedWindows = state.map(chromeWindow => 
         Object.assign({}, chromeWindow,{
-          'tabs': chromeWindow.tabs.map((tab) => {
+          'tabs': chromeWindow.tabs ? chromeWindow.tabs.map((tab) => {
             if(tab.id === action.id) 
               return {...tab, ...action.updatedTab };
             else
               return tab;
-          })
+          }) : []
         })
       );
-      console.log('filtered id: ',action.id ,' after update:',updatedWindows);
       return updatedWindows;
 
-    case 'ADD_WINDOW': //OK
-      console.log('ADD_WINDOW:',[...state, action.newWindow]);
+    case 'CREATE_WINDOW': //OK
+      console.log('CREATE_WINDOW:',[...state, action.newWindow]);
       return [...state, action.newWindow];
 
     case 'CREATE_TAB': //OK
       const updatedWindows3 = state.map(chromeWindow => {
         if(chromeWindow.id === action.tab.windowId){
-          if(chromeWindow.tabs.every(({id}) => id !== action.tab.id)){
-            return {...chromeWindow, tabs: [...chromeWindow.tabs, action.tab]};
-          } else {
-            return chromeWindow;
+          if(chromeWindow.tabs){
+            if(chromeWindow.tabs.every(({id}) => id !== action.tab.id)){
+              return {...chromeWindow, tabs: [...chromeWindow.tabs, action.tab]};
+            } else {
+              return chromeWindow;
+            }
+          }
+          else {
+            return {...chromeWindow, tabs: [action.tab]};
           }
         } else {
           return chromeWindow;

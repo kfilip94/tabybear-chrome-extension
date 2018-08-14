@@ -3,7 +3,9 @@ import thunk from 'redux-thunk'
 import aliases from './aliases';
 import rootReducer from './reducers';
 import { wrapStore, alias } from 'react-chrome-redux';
-import { createTab, removeTab, removeWindow, clearActive, updateTab, updateTabsOrderRequest } from '../../popup/src/scripts/actions/tabs';
+import { createTab, removeTab, clearActive, updateTab, updateTabsOrderRequest } from '../../popup/src/scripts/actions/tabs';
+import { createWindow, removeWindow } from '../../popup/src/scripts/actions/windows';
+
 import { createLogger } from 'redux-logger';
 
 const initialState = {
@@ -31,13 +33,15 @@ wrapStore(store, {
   portName: 'tabsManageStore'
 });
 
-// chrome.windows.onRemoved.addListener((windowId) => 
-//   store.dispatch(removeWindow(windowId))
-// );
+chrome.windows.onRemoved.addListener((windowId) => {
+  console.log('windows.onRemoved');
+  store.dispatch(removeWindow(windowId));
+});
 
-// chrome.windows.onCreated.addListener((newWindow) =>
-//   store.dispatch(addWindow(newWindow))
-// );  
+chrome.windows.onCreated.addListener((newWindow) => {
+  console.log('windows.onCreated');
+  store.dispatch(createWindow(newWindow));
+});  
 
 chrome.tabs.onCreated.addListener((newTab) => {
   console.log('tabs.onCreated');

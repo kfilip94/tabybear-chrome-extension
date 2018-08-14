@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import Navbar from './Navbar';
 import Searchbar from './SearchBar';
 import Window from './Window'
-import { setWindowsRequest  } from '../actions/windows';
-import { openNewWindow } from '../chrome-services/windows';
+import { setWindowsRequest, createWindowRequest  } from '../actions/windows';
 import selectTabs from '../selectors/tabs';
 
 class App extends Component {
@@ -21,9 +20,7 @@ class App extends Component {
     return (
       <div className='app'>
         <Navbar
-          handleOpenNewWindow={() => {
-            openNewWindow((newWindow) => this.props.dispatch(addWindow(newWindow)));
-          }}
+          handleOpenNewWindow={() => this.props.dispatch(createWindowRequest())}
           handleOpenSettingsPage={() => console.log('open settings page')}
         />
         <Searchbar />

@@ -34,17 +34,6 @@ export const setTabActiveRequest = (id) => ({
   id
 });
 
-export const updateTabsOrderRequest = (windowId) => ({
-  type: 'UPDATE_TABS_ORDER_REQUEST',
-  windowId
-});
-
-export const updateTabsOrder = (windowId, indexArr) => ({
-  type: 'UPDATE_TABS_ORDER',
-  windowId,
-  indexArr
-});
-
 
 //REMOVE TAB
 export const removeTabRequest = (id) => ({

@@ -2,7 +2,6 @@ import React from 'react';
 import ActionBar from './ActionBar';
 import Tab from './Tab';
 import { createTabRequest } from '../actions/tabs';
-import { openNewTab } from '../chrome-services/tabs';
 import { connect } from 'react-redux';
 
 const Window = (props) => (

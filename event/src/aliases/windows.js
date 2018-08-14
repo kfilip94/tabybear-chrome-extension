@@ -1,13 +1,19 @@
-import { setWindows, removeWindow } from '../../../popup/src/scripts/actions/windows';
-import { updateTabsOrder } from '../../../popup/src/scripts/actions/tabs';
-import { getAllWindowsPromise, removeWindowPromise } from '../../../popup/src/scripts/chrome-services/windows';
-import { getTabsOrderPromise } from '../../../popup/src/scripts/chrome-services/tabs';
+import * as actions  from '../../../popup/src/scripts/actions/windows';
+import * as promises from '../chrome-services/windows';
+
+//CREATE WINDOW
+const createWindowAlias = (originalAction) => {
+  return (dispatch) => {
+    return promises.createWindowPromise()
+      .then((newWindow) => dispatch(actions.createWindow(newWindow)))
+  };
+};
 
 //GET ALL WINDOWS
 const setWindowsAlias = (originalAction) => {
   return (dispatch) => {
-    return getAllWindowsPromise()
-      .then((windows) => dispatch(setWindows(windows)) 
+    return promises.getAllWindowsPromise()
+      .then((windows) => dispatch(actions.setWindows(windows)) 
     );
   };
 };
@@ -15,23 +21,25 @@ const setWindowsAlias = (originalAction) => {
 //UPDATE TAB ORDER IN WINDOW
 const updateTabsOrderAlias = (originalAction) => {
   return (dispatch) => {
-    return getTabsOrderPromise(originalAction.windowId)
-      .then((tabsIndexesArr) => dispatch(updateTabsOrder(originalAction.windowId, tabsIndexesArr))
+    return promises.getTabsOrderPromise(originalAction.windowId)
+      .then((tabsIndexesArr) => dispatch(actions.updateTabsOrder(originalAction.windowId, tabsIndexesArr))
     );
   };
 };
 
-//CLOSE WINDOW
+//REMOVE WINDOW
 const removeWindowAlias = (originalAction) => {
   return (dispatch) => {
-    return removeWindowPromise(originalAction.id)
-      .then(() => dispatch(removeWindow(originalAction.id))
+    return promises.removeWindowPromise(originalAction.id)
+      .then(() => dispatch(actions.removeWindow(originalAction.id))
     );
   };
 };
 
 export default {
+  'CREATE_WINDOW_REQUEST': createWindowAlias,
   'SET_WINDOWS_REQUEST': setWindowsAlias,
   'UPDATE_TABS_ORDER_REQUEST': updateTabsOrderAlias, 
   'REMOVE_WINDOW_REQUEST': removeWindowAlias
+ 
 };
