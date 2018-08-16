@@ -1,24 +1,70 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import ActionBar from './ActionBar';
 import Tab from './Tab';
 import { createTabRequest } from '../actions/tabs';
-import { connect } from 'react-redux';
+import { Droppable, Draggable } from 'react-beautiful-dnd';
 
-const Window = (props) => (
-	<div className="window">
-		<ActionBar windowId={props.windowId} />
-		<div className="window__tab-list" >
-		  { props.tabs.map((tab) => (<Tab key={tab.id} tab={tab}/>)) }
-		</div>
-		<button
-			className="window__bottom-btn"
-			onClick={() => props.dispatch(createTabRequest(props.windowId))}
-		>
-			+ Open new tab
-		</button>
-	</div>
-);
+const getListStyle = isDraggingOver => ({
+	// background: isDraggingOver ? 'lightblue' : 'lightgrey',
+	// padding: '4px',
+	// width: 250,
+});
 
+const getItemStyle = (isDragging, draggableStyle) => ({
+  // some basic styles to make the items look a bit nicer
+  userSelect: 'none',
+  padding: '10px',
+  margin: '0 0 10px 0',
 
+  // change background colour if dragging
+  background: isDragging ? 'lightgreen' : 'grey',
 
-export default connect()(Window);
+  // styles we need to apply on draggables
+  ...draggableStyle,
+});
+
+class Window extends React.Component {
+	render() {
+		return(
+			<div className="window">
+				<ActionBar windowId={this.props.windowId} className="window__tab-list"/>
+				<Droppable droppableId={this.props.windowId}>
+					{(provided, snapshot) => (
+						<div
+							ref={provided.innerRef}
+              style={getListStyle(snapshot.isDraggingOver)}
+						>
+							{this.props.tabs.map((tab) => (
+								<Draggable key={tab.id} draggableId={tab.id} index={tab.index}>
+									{(provided, snapshot) => (
+										<div
+											ref={provided.innerRef}
+											style={getItemStyle(
+												snapshot.isDragging,
+												provided.draggableProps.style
+											)}
+											{...provided.draggableProps}
+											{...provided.dragHandleProps}
+										>
+											<Tab key={tab.id} tab={tab}/>
+										</div>
+									)}
+								</Draggable>
+							))}
+						</div>
+					)}
+				</Droppable>
+				
+				<button
+					className="window__bottom-btn"
+					onClick={() => this.props.dispatch(createTabRequest(this.props.windowId))}
+				>
+					+ Open new tab
+				</button>
+			</div>
+		)
+	};
+};
+
+export default Window;

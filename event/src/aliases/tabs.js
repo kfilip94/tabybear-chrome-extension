@@ -1,5 +1,9 @@
 import * as actions from '../../../popup/src/scripts/actions/tabs';
+import * as actionsWindows from '../../../popup/src/scripts/actions/windows';
+
 import * as promises from '../chrome-services/tabs';
+import * as promisesWindows from '../chrome-services/windows';
+
 import { clearSelection } from '../../../popup/src/scripts/actions/checkedTabs';
 
 //CREATE TAB
@@ -37,6 +41,15 @@ const setTabActiveAlias = (originalAction) => {
   };
 };
 
+const moveTabAlias = (originalAction) => {
+  return (dispatch) => {
+    return promises.moveTabPromise(originalAction.id, originalAction.windowId, originalAction.index)
+      // .then((tab) => promisesWindows.getTabsOrderPromise(originalAction.windowId))
+      // .then((tabsIndexesArr) => dispatch(actionsWindows.updateTabsOrder(originalAction.windowId, tabsIndexesArr))
+    // );
+  };
+};
+
 //REMOVE TAB
 const removeTabAlias = (originalAction) => {
   return (dispatch) => {
@@ -58,6 +71,7 @@ export default {
   'MUTE_TAB_REQUEST': muteTabAlias,
   'PIN_TAB_REQUEST': pinTabAlias,
   'SET_TAB_ACTIVE_REQUEST': setTabActiveAlias,
+  'MOVE_TAB_REQUEST': moveTabAlias,
   'REMOVE_TAB_REQUEST': removeTabAlias,
   'REMOVE_TABS_REQUEST': removeTabsAlias,
 };

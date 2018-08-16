@@ -22,3 +22,8 @@ export const removeTabPromise = (tabId) =>
   new Promise(resolve => 
     chrome.tabs.remove(tabId, () => resolve())
   );
+
+export const moveTabPromise = (tabId, windowId, index) =>
+  new Promise(resolve => 
+    chrome.tabs.move(tabId, {windowId, index}, (tab) => resolve(tab))
+  );

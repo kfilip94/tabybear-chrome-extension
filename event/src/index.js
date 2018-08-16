@@ -3,8 +3,8 @@ import thunk from 'redux-thunk'
 import aliases from './aliases';
 import rootReducer from './reducers';
 import { wrapStore, alias } from 'react-chrome-redux';
-import { createTab, removeTab, clearActive, updateTab, updateTabsOrderRequest } from '../../popup/src/scripts/actions/tabs';
-import { createWindow, removeWindow } from '../../popup/src/scripts/actions/windows';
+import { createTab, removeTab, clearActive, updateTab } from '../../popup/src/scripts/actions/tabs';
+import { createWindow, removeWindow, updateTabsOrderRequest } from '../../popup/src/scripts/actions/windows';
 
 import { createLogger } from 'redux-logger';
 

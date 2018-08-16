@@ -39,6 +39,10 @@ export const clearActive = (windowId) => ({
   windowId
 });
 
+export const moveTabRequest = (id, windowId, index) => ({
+  type: 'MOVE_TAB_REQUEST',
+  id, windowId, index
+});
 
 //REMOVE TAB
 export const removeTabRequest = (id) => ({
