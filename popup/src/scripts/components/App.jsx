@@ -13,32 +13,68 @@ class App extends React.Component {
     console.log('component did mount!');
     this.props.setWindows();
   };
-  wololo(id, windowId, index) {
-    this.props.moveTab(id, windowId, index);
+  wololo(id, windowId, newWindowId, index) {
+    this.props.moveTab(id, windowId, newWindowId, index);
   };
 
-  onDragEnd(result) {
-    console.log('APP: onDragEnd:',result);
-    this.wololo(
-      result.draggableId, 
-      result.destination.droppableId, 
-      result.destination.index
-    );
-    // // dropped outside the list
-    // if (!result.destination) {
-    //   return;
-    // }
+  // onDragEnd(result) {
+  //   console.log('APP: onDragEnd:',result);
+  //   this.wololo(
+  //     result.draggableId, 
+  //     result.destination.droppableId, 
+  //     result.destination.index
+  //   );
 
-    // const items = reorder(
-    //   this.state.items,
-    //   result.source.index,
-    //   result.destination.index
-    // );
 
-    // this.setState({
-    //   items,
-    // });
-  };
+  //   const { source, destination } = result;
+
+  //   // dropped outside the list
+  //   if (!destination) {
+  //       return;
+  //   }
+
+  //   if (source.droppableId === destination.droppableId) {
+  //       const items = reorder(
+  //           this.getList(source.droppableId),
+  //           source.index,
+  //           destination.index
+  //       );
+
+  //       let state = { items };
+
+  //       if (source.droppableId === 'droppable2') {
+  //           state = { selected: items };
+  //       }
+
+  //       this.setState(state);
+  //   } else {
+  //       const result = move(
+  //           this.getList(source.droppableId),
+  //           this.getList(destination.droppableId),
+  //           source,
+  //           destination
+  //       );
+
+  //       this.setState({
+  //           items: result.droppable,
+  //           selected: result.droppable2
+  //       });
+  //   }
+  //   // // dropped outside the list
+  //   // if (!result.destination) {
+  //   //   return;
+  //   // }
+
+  //   // const items = reorder(
+  //   //   this.state.items,
+  //   //   result.source.index,
+  //   //   result.destination.index
+  //   // );
+
+  //   // this.setState({
+  //   //   items,
+  //   // });
+  // };
 
 
   render() {
@@ -49,6 +85,7 @@ class App extends React.Component {
 
         this.wololo(
           result.draggableId, 
+          result.source.droppableId,
           result.destination.droppableId, 
           result.destination.index
         );
@@ -72,7 +109,7 @@ class App extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return{
-    moveTab: (id, windowId, index) => {dispatch(moveTabRequest(id, windowId, index))},
+    moveTab: (id, windowId, newWindowId, index) => {dispatch(moveTabRequest(id, windowId, newWindowId, index))},
     setWindows: () => {dispatch(setWindowsRequest())}
   };
 };

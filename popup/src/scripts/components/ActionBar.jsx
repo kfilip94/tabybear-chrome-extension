@@ -36,11 +36,6 @@ class ActionBar extends React.Component {
           </span>
           <Button
             className="button button--small"
-            title="Manage tabs in this window"
-            icon={faEdit}
-          />
-          <Button
-            className="button button--small"
             title="Close window with all tabs"
             icon={faTimes}
             handleClick={() => this.props.dispatch(removeWindowRequest(this.props.windowId))}

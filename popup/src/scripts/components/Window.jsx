@@ -12,16 +12,16 @@ const getListStyle = isDraggingOver => ({
 });
 
 const getItemStyle = (isDragging, draggableStyle) => ({
-  // some basic styles to make the items look a bit nicer
-  userSelect: 'none',
-  padding: '10px',
-  margin: '0 0 10px 0',
+  // // some basic styles to make the items look a bit nicer
+  // userSelect: 'none',
+  // padding: '10px',
+  // margin: '0 0 10px 0',
 
-  // change background colour if dragging
-  background: isDragging ? 'lightgreen' : 'grey',
+  // // change background colour if dragging
+  // background: isDragging ? 'lightgreen' : 'grey',
 
-  // styles we need to apply on draggables
-  ...draggableStyle,
+  // // styles we need to apply on draggables
+  // ...draggableStyle,
 });
 
 class Window extends React.Component {

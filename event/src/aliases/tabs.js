@@ -4,7 +4,7 @@ import * as actionsWindows from '../../../popup/src/scripts/actions/windows';
 import * as promises from '../chrome-services/tabs';
 import * as promisesWindows from '../chrome-services/windows';
 
-import { clearSelection } from '../../../popup/src/scripts/actions/checkedTabs';
+import { clearSelection, uncheckTab, uncheckTabs } from '../../../popup/src/scripts/actions/checkedTabs';
 
 //CREATE TAB
 const createTabAlias = (originalAction) => {
@@ -43,10 +43,19 @@ const setTabActiveAlias = (originalAction) => {
 
 const moveTabAlias = (originalAction) => {
   return (dispatch) => {
-    return promises.moveTabPromise(originalAction.id, originalAction.windowId, originalAction.index)
-      // .then((tab) => promisesWindows.getTabsOrderPromise(originalAction.windowId))
-      // .then((tabsIndexesArr) => dispatch(actionsWindows.updateTabsOrder(originalAction.windowId, tabsIndexesArr))
-    // );
+    console.log('originalAction:',originalAction);
+    if(originalAction.windowId !== originalAction.newWindowId){
+      return promises.moveTabPromise(originalAction.id, originalAction.newWindowId, originalAction.index)
+        .then((tab) => dispatch(actions.moveTab(tab.id, originalAction.windowId, originalAction.newWindowId, tab)))
+        .then(() => promisesWindows.getTabsOrderPromise(originalAction.newWindowId))
+        .then((tabsIndexesArr) => dispatch(actionsWindows.updateTabsOrder(originalAction.newWindowId, tabsIndexesArr)))
+        .then(() => promisesWindows.getTabsOrderPromise(originalAction.windowId))
+        .then((tabsIndexesArr) => dispatch(actionsWindows.updateTabsOrder(originalAction.windowId, tabsIndexesArr)))
+    } else {
+      return promises.moveTabPromise(originalAction.id, originalAction.newWindowId, originalAction.index)
+        .then((tab) => promisesWindows.getTabsOrderPromise(originalAction.windowId))
+        .then((tabsIndexesArr) => dispatch(actionsWindows.updateTabsOrder(originalAction.windowId, tabsIndexesArr)))
+    }
   };
 };
 
@@ -54,15 +63,17 @@ const moveTabAlias = (originalAction) => {
 const removeTabAlias = (originalAction) => {
   return (dispatch) => {
     return promises.removeTabPromise(originalAction.id)
-      .then(() => dispatch(actions.removeTab(originalAction.id)));
+      .then(() => dispatch(actions.removeTab(originalAction.id)))
+      .then(() => dispatch(uncheckTab(originalAction.id)));
   };
 };
 
 const removeTabsAlias = (originalAction) => {
   return (dispatch) => {
+    console.log(originalAction.idArr);
     return promises.removeTabPromise(originalAction.idArr)
       .then(() => dispatch(actions.removeTabs(originalAction.idArr)))
-      .then(() => dispatch(clearSelection()));
+      .then(() => dispatch(uncheckTabs(originalAction.idArr)));
   };
 };
 

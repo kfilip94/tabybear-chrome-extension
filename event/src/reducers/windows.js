@@ -30,6 +30,17 @@ export default (state = defaultWindowsState, action) => {
     case 'CREATE_WINDOW': //OK
       console.log('CREATE_WINDOW:',[...state, action.newWindow]);
       return [...state, action.newWindow];
+      
+    case 'MOVE_TAB':
+      return state.map(chromeWindow => {
+        if(chromeWindow.id === action.windowId) {
+          return {...chromeWindow, tabs: chromeWindow.tabs.filter((tab) => tab.id !== action.id)};
+        } else if(chromeWindow.id === action.newWindowId) {
+          return {...chromeWindow, tabs: [...chromeWindow.tabs, action.tab]}
+        } else {
+          return chromeWindow;
+        }
+      });
 
     case 'CREATE_TAB': //OK
       const updatedWindows3 = state.map(chromeWindow => {

@@ -21,6 +21,8 @@ class EditActionBar extends React.Component {
   };
 
   handleCloseTabs = () => {
+    console.log('handleCloseTabs.');
+    console.log('this.props.checkedTabsInWindow:', this.props.checkedTabsInWindow);
     this.props.dispatch(removeTabsRequest(this.props.checkedTabsInWindow));
   };
 
@@ -44,7 +46,7 @@ class EditActionBar extends React.Component {
           className="button button--small"
           title="Close selected tabs"
           icon={faTimes}
-          handlesClick={this.handleCloseTabs}
+          handleClick={this.handleCloseTabs}
         />
       </div>
     )
