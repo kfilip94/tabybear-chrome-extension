@@ -7,16 +7,6 @@ export const createWindow = ( newWindow = {}) => ({
   newWindow
 });
 
-export const removeWindowRequest = (id) => ({
-  type: 'REMOVE_WINDOW_REQUEST',
-  id
-});
-
-export const removeWindow = (id) => ({
-  type: 'REMOVE_WINDOW',
-  id
-});
-
 export const setWindowsRequest = () => ({
   type: 'SET_WINDOWS_REQUEST',
 });
@@ -35,4 +25,14 @@ export const updateTabsOrder = (windowId, indexArr) => ({
   type: 'UPDATE_TABS_ORDER',
   windowId,
   indexArr
+});
+
+export const removeWindowRequest = (id) => ({
+  type: 'REMOVE_WINDOW_REQUEST',
+  id
+});
+
+export const removeWindow = (id) => ({
+  type: 'REMOVE_WINDOW',
+  id
 });

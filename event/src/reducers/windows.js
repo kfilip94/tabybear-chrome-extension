@@ -99,3 +99,4 @@ export default (state = defaultWindowsState, action) => {
       return state;
   };
 };
+

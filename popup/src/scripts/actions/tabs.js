@@ -34,6 +34,11 @@ export const setTabActiveRequest = (id) => ({
   id
 });
 
+export const clearActive = (windowId) => ({
+  type: 'CLEAR_ACTIVE',
+  windowId
+});
+
 
 //REMOVE TAB
 export const removeTabRequest = (id) => ({
@@ -55,11 +60,4 @@ export const removeTabs = (idArr) => ({
   type: 'REMOVE_TABS',
   idArr
 });
-
-
-export const clearActive = (windowId) => ({
-  type: 'CLEAR_ACTIVE',
-  windowId
-});
-
 
