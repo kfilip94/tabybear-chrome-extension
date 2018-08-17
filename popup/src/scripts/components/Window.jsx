@@ -9,6 +9,8 @@ const getListStyle = isDraggingOver => ({
 	// background: isDraggingOver ? 'lightblue' : 'lightgrey',
 	// padding: '4px',
 	// width: 250,
+	maxHeight: '400px',
+	overflowY: 'scroll'
 });
 
 const getItemStyle = (isDragging, draggableStyle) => ({
@@ -28,8 +30,8 @@ class Window extends React.Component {
 	render() {
 		return(
 			<div className="window">
-				<ActionBar windowId={this.props.windowId} className="window__tab-list"/>
-				<Droppable droppableId={this.props.windowId}>
+				<ActionBar windowId={this.props.windowId} />
+				<Droppable droppableId={this.props.windowId} className="window__tab-list">
 					{(provided, snapshot) => (
 						<div
 							ref={provided.innerRef}

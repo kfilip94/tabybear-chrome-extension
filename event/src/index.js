@@ -46,11 +46,13 @@ chrome.windows.onCreated.addListener((newWindow) => {
 chrome.tabs.onCreated.addListener((newTab) => {
   console.log('tabs.onCreated');
   store.dispatch(createTab(newTab));
+  updateNumberOfTabsFromApi();
 });
 
 chrome.tabs.onRemoved.addListener((tabId) => {
   console.log('tabs.onRemoved');
   store.dispatch(removeTab(tabId))
+  updateNumberOfTabsFromApi();
 });
 
 chrome.tabs.onActivated.addListener(({tabId, windowId}) => {
@@ -61,7 +63,7 @@ chrome.tabs.onActivated.addListener(({tabId, windowId}) => {
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   console.log('tabs.onUpdated');
-  store.dispatch(updateTab(tabId, changeInfo)); 
+  store.dispatch(updateTab(tabId, changeInfo));
 });
 
 chrome.tabs.onMoved.addListener((tabId, movedInfo) => {
@@ -69,7 +71,18 @@ chrome.tabs.onMoved.addListener((tabId, movedInfo) => {
   store.dispatch(updateTabsOrderRequest(movedInfo.windowId));
 });
 
+const updateBadgeText = (numberOfTabs) => {
+  numberOfTabs = numberOfTabs > 999 ? '999+' : `${numberOfTabs}`;
+  chrome.browserAction.setBadgeText({text: numberOfTabs });
+}
 
-// chrome.tabs.onReplaced.addListener((addedTabId, removedTabId) => {
-//   console.log('tab:',addedTabId,' replaced!');
-// });
+const getNumberOfTabsFromStore = () => {
+  return store.getState().windows.reduce((acc, windowTwo) => acc + windowTwo.tabs.length, 0);
+}
+
+const updateNumberOfTabsFromApi = () => {
+  chrome.tabs.query({}, (tabs) => updateBadgeText(tabs.length))
+}
+
+chrome.browserAction.setBadgeBackgroundColor({ color: [41, 62, 82, 1] });
+updateNumberOfTabsFromApi();
