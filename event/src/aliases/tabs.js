@@ -36,9 +36,10 @@ const pinTabAlias = (originalAction) => {
 const setTabActiveAlias = (originalAction) => {
   return (dispatch) => {
     return promises.setTabActivePromise(originalAction.id)
-      .then((updatedTab) => dispatch(actions.updateTab(originalAction.id, updatedTab))
-    );
-  };
+      .then((updatedTab) => dispatch(actions.updateTab(originalAction.id, updatedTab)))
+      .then(({updatedTab}) => promisesWindows.setWindowActivePromise(updatedTab.windowId))
+      .then(({id}) => dispatch(actionsWindows.setWindowActive(id)));
+    };
 };
 
 const moveTabAlias = (originalAction) => {

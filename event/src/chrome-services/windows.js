@@ -20,3 +20,7 @@ export const getTabsOrderPromise = (windowId) => new Promise(resolve =>
     resolve(indexArr);
   })
 );
+
+export const setWindowActivePromise = (windowId) => new Promise(resolve => 
+  chrome.windows.update(windowId, { focused: true, state: 'normal' }, (chromeWindow) => resolve(chromeWindow))
+);

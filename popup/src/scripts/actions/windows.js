@@ -16,6 +16,11 @@ export const setWindows = (windows) => ({
   windows
 });
 
+export const setWindowActive = (id) => ({
+  type: 'SET_WINDOW_ACTIVE',
+  id
+})
+
 export const updateTabsOrderRequest = (windowId) => ({
   type: 'UPDATE_TABS_ORDER_REQUEST',
   windowId

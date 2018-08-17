@@ -71,6 +71,15 @@ export default (state = defaultWindowsState, action) => {
           return chromeWindow
       });
     
+    case 'SET_WINDOW_ACTIVE':
+      return state.map(chromeWindow => {
+        if(chromeWindow.id === action.id) {
+          return {...chromeWindow, focused: true}  
+        } else {
+          return {...chromeWindow, focused: false}  
+        }
+      });
+
     case 'UPDATE_TABS_ORDER':
       console.log('UPDATE_TABS_ORDER');
       return state.map(chromeWindow => {

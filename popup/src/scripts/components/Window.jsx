@@ -67,4 +67,4 @@ class Window extends React.Component {
 	};
 };
 
-export default Window;
+export default connect()(Window);

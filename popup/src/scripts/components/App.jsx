@@ -78,7 +78,6 @@ class App extends React.Component {
 
 
   render() {
-    console.log('this props windows', this.props.windows);
     return (
       <DragDropContext onDragEnd={(result) => {
         console.log('APP: onDragEnd:',result);
@@ -92,7 +91,7 @@ class App extends React.Component {
       }} >
         <div className='app'>
           <Navbar
-            handleOpenNewWindow={() => this.props.dispatch(createWindowRequest())}
+            handleOpenNewWindow={() => this.props.createWindow()}
             handleOpenSettingsPage={() => console.log('open settings page')}
           />
           <Searchbar />
@@ -108,9 +107,10 @@ class App extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return{
-    moveTab: (id, windowId, newWindowId, index) => {dispatch(moveTabRequest(id, windowId, newWindowId, index))},
-    setWindows: () => {dispatch(setWindowsRequest())}
+  return {
+    createWindow: () => { dispatch(createWindowRequest()) },
+    moveTab: (id, windowId, newWindowId, index) => { dispatch(moveTabRequest(id, windowId, newWindowId, index)) },
+    setWindows: () => { dispatch(setWindowsRequest()) }
   };
 };
 
