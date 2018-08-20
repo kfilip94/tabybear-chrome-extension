@@ -13,8 +13,15 @@
     "default_title": "RCR Example",
     "default_popup": "popup.html"
   },
+  "options_ui": {
+    "page": "options.html",
+    "chrome_style": false
+  },
+
   "permissions": [
-    "tabs", "bookmarks"
+    "tabs",
+    "bookmarks", 
+    "storage"
   ],
   "content_scripts": [
     {

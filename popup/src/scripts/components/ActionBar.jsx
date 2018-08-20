@@ -46,17 +46,23 @@ class ActionBar extends React.Component {
   }
 }
 
+const countTabsInWindow = (state, windowId) => {
+  try {
+    return state.windows.find(({ id }) => id === windowId).tabs.length;
+  } catch(error) {
+    return 0;
+  }
+}
+
 const mapStateToProps = (state, props) => {
   return {
-    tabsCount: state.windows.find(({ id }) => id === props.windowId).tabs
-      .length,
+    tabsCount: countTabsInWindow(state, props.windowId),
     isInEditMode: state.checkedTabs.some(({ windowId }) => {
       return windowId === props.windowId;
     }),
     allTabsInWindows: state.windows.find(({ id }) => id === props.windowId).tabs.map(({id}) => (id)),
     areAllWindowSelected: state.windows.find(({ id }) => id === props.windowId).tabs.length === state.checkedTabs.filter(({ windowId }) => windowId === props.windowId).length,
     checkedTabs: state.checkedTabs.filter(({ windowId }) => windowId === props.windowId).length
-
   };
 };
 

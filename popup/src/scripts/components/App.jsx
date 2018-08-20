@@ -92,7 +92,16 @@ class App extends React.Component {
         <div className='app'>
           <Navbar
             handleOpenNewWindow={() => this.props.createWindow()}
-            handleOpenSettingsPage={() => console.log('open settings page')}
+            handleOpenSettingsPage={() => {
+              if (chrome.runtime.openOptionsPage) {
+                console.log('SETTINGS PAGE: RUNTIME');
+                chrome.runtime.openOptionsPage();
+              } else {
+                console.log('SETTINGS PAGE: window');
+                window.open(chrome.runtime.getURL('html/settings.html'));
+              }
+            }
+          }
           />
           <Searchbar />
           <div className="window-list">
