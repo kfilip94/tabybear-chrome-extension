@@ -8,16 +8,10 @@ import { createBookmarkRequest } from '../actions/bookmarks';
 
 class EditActionBar extends React.Component {
   handlePinMultipleTabs = () => {
-    console.log('this.props.checkedTabs:',this.props.checkedTabs);
-    this.props.checkedTabs.forEach(({id}) => {
-      console.log('id:',id);
-     this.props.dispatch(pinTabRequest(id, !this.props.areAllTabsPinned));
-  });
-
-    // this.props.checkedTabsInWindow.filter(({windowId}) => windowId === this.props.windowId).forEach(id => {
-    //     console.log('id:',id);
-    //    this.props.dispatch(pinTabRequest(id, !this.props.areAllTabsPinned));
-    // });
+    this.props.checkedTabsInWindow.forEach(tabId => {
+      const tabToPin = this.props.windows.find(({id}) => this.props.windowId === id).tabs.find(({id}) => id === tabId);
+      this.props.dispatch(pinTabRequest(tabToPin.id, !this.props.areAllTabsPinned));
+    });
   };
 
   handleAddMultipleBookmarks = () => {
@@ -68,7 +62,7 @@ const mapStateToProps = (state, props) => {
     checkedTabs: state.checkedTabs.filter(({ windowId }) => windowId === props.windowId),
     checkedTabsInWindow: checkedTabsInWindow(state.checkedTabs, props),
     areAllTabsPinned: 
-      state.windows.find(({ windowId }) => windowId === props.id)
+      state.windows.find(({ id }) => id === props.windowId)
         .tabs.filter(({id}) => checkedTabsInWindow(state.checkedTabs, props).includes(id))
         .every(({pinned}) => pinned),
   };
