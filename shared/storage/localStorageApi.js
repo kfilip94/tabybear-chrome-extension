@@ -1,22 +1,22 @@
-export const newTabUrlSetting = () => new Promise(resolve =>
+export const getNewTabUrlSetting = () => new Promise(resolve =>
 	chrome.storage.sync.get(["newTabUrl"], (items) => resolve(items.newTabUrl))
   );
 
-export const bookmarsFolderSetting = () => new Promise(resolve =>
+export const getBookmarsFolderSetting = () => new Promise(resolve =>
 	chrome.storage.sync.get(["newBookmarkFolderId"], (items) => resolve(items.newBookmarkFolderId))
   );
 
 export const setSettings = (newTabUrl, newBookmarkFolderId) => new Promise(resolve => {
   chrome.storage.sync.set({
-    "newTabUrl": newTabUrl,
+    "newTabUrl": validateUrl(newTabUrl),
     "newBookmarkFolderId": newBookmarkFolderId
-  }, () => resolve(newTabUrl, newBookmarkFolderId))
+  }, () => resolve(validateUrl(newTabUrl), newBookmarkFolderId))
 });
   
 export const setNewTabUrlSetting = (newTabUrl) => new Promise(resolve => {
   chrome.storage.sync.set({
-    "newTabUrl": newTabUrl,
-  }, () => resolve(newTabUrl))
+    "newTabUrl":  validateUrl(newTabUrl),
+  }, () => resolve(validateUrl(newTabUrl)))
 });
   
 export const setBookmarksFolderId = (newBookmarkFolderId) => new Promise(resolve => 
@@ -26,7 +26,7 @@ export const setBookmarksFolderId = (newBookmarkFolderId) => new Promise(resolve
 );
 
 export const restoreDefaultSettings = () => {
-  const newTabUrl = "http://google.com";
+  const newTabUrl = "https://google.com";
   const newBookmarkFolderId = "1";
   setSettings(newTabUrl, newBookmarkFolderId);
 };
@@ -37,7 +37,7 @@ export const getSettings = () => new Promise(resolve =>
 
 export const getBookmarksTree = () => new Promise(resolve =>
   chrome.bookmarks.getTree((bookmarksTree) => {
-    const bookmarksFolders = getFolders(bookmarksTree);
+    const bookmarksFolders = getFolders(bookmarksTree).filter(({id}) => id !== "0");
     console.log('bookmarksFolders:');
     console.log(bookmarksFolders);
     resolve(bookmarksFolders);
@@ -52,3 +52,6 @@ export const getFolders = (childrens) => {
   ));
 };
 
+const validateUrl = (url) => {
+  return url.startsWith('http://') || url.startsWith('https://') ? url : `http://${url}`;
+}
