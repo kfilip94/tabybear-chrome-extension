@@ -17,6 +17,14 @@ export default (state = defaultCheckedTabsState, action) => {
     case 'CLEAR':
       return [];
     
+    case 'UPDATE_WINDOW_ID':
+      return state.map((checkedTab) => {
+        if(checkedTab.id === action.id)
+          return {id: checkedTab.id, windowId: action.windowId}
+        else
+          return checkedTab; 
+      });
+
     case 'SELECT_WINDOW':
       if(action.isChecked){
         const checkedTabsArr = action.tabIdArr.map(id => ({id: id, windowId: action.windowId}));

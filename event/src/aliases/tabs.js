@@ -4,7 +4,7 @@ import * as actionsWindows from '../../../popup/src/scripts/actions/windows';
 import * as promises from '../chrome-services/tabs';
 import * as promisesWindows from '../chrome-services/windows';
 
-import { clearSelection, uncheckTab, uncheckTabs } from '../../../popup/src/scripts/actions/checkedTabs';
+import { updateWindowId, uncheckTab, uncheckTabs } from '../../../popup/src/scripts/actions/checkedTabs';
 
 //CREATE TAB
 const createTabAlias = (originalAction) => {
@@ -48,6 +48,7 @@ const moveTabAlias = (originalAction) => {
     if(originalAction.windowId !== originalAction.newWindowId){
       return promises.moveTabPromise(originalAction.id, originalAction.newWindowId, originalAction.index)
         .then((tab) => dispatch(actions.moveTab(tab.id, originalAction.windowId, originalAction.newWindowId, tab)))
+        .then(() => dispatch(updateWindowId(originalAction.id, originalAction.newWindowId)))
         .then(() => promisesWindows.getTabsOrderPromise(originalAction.newWindowId))
         .then((tabsIndexesArr) => dispatch(actionsWindows.updateTabsOrder(originalAction.newWindowId, tabsIndexesArr)))
         .then(() => promisesWindows.getTabsOrderPromise(originalAction.windowId))

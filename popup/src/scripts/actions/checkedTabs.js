@@ -25,3 +25,8 @@ export const clearSelection = () => ({
   type: 'CLEAR'
 });
 
+export const updateWindowId = (id, windowId) => ({
+  type: 'UPDATE_WINDOW_ID',
+  id,
+  windowId
+});
