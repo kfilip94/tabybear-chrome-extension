@@ -36,3 +36,10 @@ export const updateWindowId = (id, windowId) => ({
   id,
   windowId
 });
+
+export const updateMultipleWindowId = (idArr, windowId) => ({
+  type: 'UPDATE_MULTIPLE_WINDOW_ID',
+  idArr,
+  windowId
+});
+

@@ -4,7 +4,7 @@ import * as actionsWindows from '../../../popup/src/scripts/actions/windows';
 import * as promises from '../chrome-services/tabs';
 import * as promisesWindows from '../chrome-services/windows';
 
-import { updateWindowId, uncheckTab, uncheckTabs } from '../../../popup/src/scripts/actions/checkedTabs';
+import { updateWindowId, updateMultipleWindowId, uncheckTab, uncheckTabs } from '../../../popup/src/scripts/actions/checkedTabs';
 
 //CREATE TAB
 const createTabAlias = (originalAction) => {
@@ -61,6 +61,25 @@ const moveTabAlias = (originalAction) => {
   };
 };
 
+const moveTabsAlias = (originalAction) => {
+  return (dispatch) => {
+    console.log('originalAction:',originalAction);
+    if(originalAction.windowId !== originalAction.newWindowId){
+      return promises.moveTabsPromise(originalAction.checkedTabs, originalAction.newWindowId, originalAction.startIndex)
+        .then((tabArr) => dispatch(actions.moveTabs(originalAction.checkedTabs, originalAction.newWindowId, tabArr)))
+        .then(() => dispatch(updateMultipleWindowId(originalAction.checkedTabs.map(({id}) => id), originalAction.newWindowId)))
+        .then(() => promisesWindows.getTabsOrderPromise(originalAction.newWindowId))
+        .then((tabsIndexesArr) => dispatch(actionsWindows.updateTabsOrder(originalAction.newWindowId, tabsIndexesArr)))
+        // .then(() => promisesWindows.getTabsOrderPromise(originalAction.windowId))
+        // .then((tabsIndexesArr) => dispatch(actionsWindows.updateTabsOrder(originalAction.windowId, tabsIndexesArr)))
+    } else {
+      return promises.moveTabPromise(originalAction.id, originalAction.newWindowId, originalAction.index)
+        .then((tab) => promisesWindows.getTabsOrderPromise(originalAction.windowId))
+        .then((tabsIndexesArr) => dispatch(actionsWindows.updateTabsOrder(originalAction.windowId, tabsIndexesArr)))
+    }
+  };
+};
+
 //REMOVE TAB
 const removeTabAlias = (originalAction) => {
   return (dispatch) => {
@@ -85,6 +104,7 @@ export default {
   'PIN_TAB_REQUEST': pinTabAlias,
   'SET_TAB_ACTIVE_REQUEST': setTabActiveAlias,
   'MOVE_TAB_REQUEST': moveTabAlias,
+  'MOVE_TABS_REQUEST': moveTabsAlias,
   'REMOVE_TAB_REQUEST': removeTabAlias,
   'REMOVE_TABS_REQUEST': removeTabsAlias,
 };

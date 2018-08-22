@@ -6,11 +6,12 @@ import { createTabRequest } from '../actions/tabs';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 
 const getListStyle = isDraggingOver => ({
-	// background: isDraggingOver ? 'lightblue' : 'lightgrey',
-	// padding: '4px',
+ 	// padding: '4px',
 	// width: 250,
 	// maxHeight: '400px',
 	// overflowY: 'scroll'
+	background: isDraggingOver ? '#C2C9DE' : 'white',
+
 });
 
 const getItemStyle = (isDragging, draggableStyle) => ({
@@ -20,10 +21,15 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   // margin: '0 0 10px 0',
 
   // // change background colour if dragging
-  // background: isDragging ? 'lightgreen' : 'grey',
-
+	// background: isDragging ? 'lightgreen' : 'grey',
+	color: 'white',
+	border: '2px solid grey',
   // // styles we need to apply on draggables
-  // ...draggableStyle,
+	// ...draggableStyle,
+	// ':after': {
+	// 	content: 'hello!',
+
+	// }
 });
 
 class Window extends React.Component {
@@ -31,7 +37,7 @@ class Window extends React.Component {
 		return(
 			<div className="window">
 				<ActionBar windowId={this.props.windowId} />
-				<Droppable droppableId={this.props.windowId} className="window__tab-list">
+				<Droppable droppableId={`${this.props.windowId}`} className="window__tab-list">
 					{(provided, snapshot) => (
 						<div
 							ref={provided.innerRef}
@@ -50,6 +56,7 @@ class Window extends React.Component {
 											{...provided.dragHandleProps}
 										>
 											<Tab key={tab.id} tab={tab}/>
+											{provided.placeholder}
 										</div>
 									)}
 								</Draggable>

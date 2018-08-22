@@ -42,7 +42,36 @@ export default (state = defaultWindowsState, action) => {
         }
       });
 
-    case 'CREATE_TAB': //OK
+
+    case 'MOVE_TABS':
+      //1. remove old tabs by checkedTas state
+
+      //tablica id windowsow bez powtorzen
+      const checkedTabsIdArr = action.checkedTabs.map(({id}) => id);
+      console.log('chekedTabsIdArr:',checkedTabsIdArr);
+
+      const checkedWindowsIdArr = [...new Set(action.checkedTabs.map(({windowId}) => windowId))];
+      console.log('checkedWindowsIdArr:',checkedWindowsIdArr);
+
+      const removedOldTabsState = state.map(chromeWindow => {
+        if(checkedWindowsIdArr.includes(chromeWindow.id)) {
+          return {...chromeWindow, tabs: chromeWindow.tabs.filter((tab) => !checkedTabsIdArr.includes(tab.id))};
+        } else {
+          return chromeWindow;
+        }});
+      
+      console.log('removedOldTabsState:',removedOldTabsState)
+
+      //2. add moved tabs to widnows
+      return removedOldTabsState.map(chromeWindow => {
+        if(chromeWindow.id === action.newWindowId) {
+          return {...chromeWindow, tabs: [...chromeWindow.tabs, ...action.tabArr]}
+        } else {
+          return chromeWindow;
+        }
+      });
+
+    case 'CREATE_TAB': //OK 
       const updatedWindows3 = state.map(chromeWindow => {
         if(chromeWindow.id === action.tab.windowId){
           if(chromeWindow.tabs){

@@ -4,7 +4,7 @@ import Navbar from './Navbar';
 import Searchbar from './SearchBar';
 import Window from './Window'
 import { setWindowsRequest, createWindowRequest  } from '../actions/windows';
-import { moveTabRequest  } from '../actions/tabs';
+import { moveTabRequest, moveTabsRequest } from '../actions/tabs';
 import selectTabs from '../selectors/tabs';
 import { DragDropContext } from 'react-beautiful-dnd';
 
@@ -13,8 +13,12 @@ class App extends React.Component {
     console.log('component did mount!');
     this.props.setWindows();
   };
+
   wololo(id, windowId, newWindowId, index) {
-    this.props.moveTab(id, windowId, newWindowId, index);
+    if(this.props.checkedTabs.map(({id}) => id).includes(id))
+      this.props.moveTabs(this.props.checkedTabs, parseInt(newWindowId), index);
+    else
+      this.props.moveTab(id, parseInt(windowId),  parseInt(newWindowId), index);
   };
 
   // onDragEnd(result) {
@@ -119,6 +123,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     createWindow: () => { dispatch(createWindowRequest()) },
     moveTab: (id, windowId, newWindowId, index) => { dispatch(moveTabRequest(id, windowId, newWindowId, index)) },
+    moveTabs: (checkedTabs, newWindowId, index) => { dispatch(moveTabsRequest(checkedTabs, newWindowId, index)) },
+
     setWindows: () => { dispatch(setWindowsRequest()) }
   };
 };
@@ -126,7 +132,8 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   return {
-    windows: selectTabs(state.windows, state.filters)
+    windows: selectTabs(state.windows, state.filters),
+    checkedTabs: state.checkedTabs
   };
 };
 

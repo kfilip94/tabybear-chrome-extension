@@ -20,6 +20,14 @@ export default (state = defaultCheckedTabsState, action) => {
     case 'CLEAR':
       return [];
     
+    case 'UPDATE_MULTIPLE_WINDOW_ID':
+      return state.map((checkedTab) => {
+        if(action.idArr.includes(checkedTab.id))
+          return {id: checkedTab.id, windowId: action.windowId}
+        else
+          return checkedTab; 
+      });
+
     case 'UPDATE_WINDOW_ID':
       return state.map((checkedTab) => {
         if(checkedTab.id === action.id)
