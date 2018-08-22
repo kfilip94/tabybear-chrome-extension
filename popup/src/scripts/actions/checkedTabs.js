@@ -21,6 +21,12 @@ export const uncheckTabs = (idArr) => ({
   idArr
 });
 
+export const clearWindowSelection = (windowId) => ({
+  type: 'CLEAR_WINDOW',
+  windowId
+});
+
+
 export const clearSelection = () => ({
   type: 'CLEAR'
 });

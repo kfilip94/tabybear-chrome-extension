@@ -5,6 +5,7 @@ import { faTimes, faThumbtack, faStar } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux';
 import { pinTabRequest, removeTabsRequest } from '../actions/tabs';
 import { createBookmarkRequest } from '../actions/bookmarks';
+import { clearWindowSelection } from '../actions/checkedTabs';
 
 class EditActionBar extends React.Component {
   handlePinMultipleTabs = () => {
@@ -19,6 +20,8 @@ class EditActionBar extends React.Component {
       const tabToBookmark = this.props.windows.find(({id}) => this.props.windowId === id).tabs.find(({id}) => id === tabId);
       this.props.dispatch(createBookmarkRequest(tabToBookmark.title, tabToBookmark.url));
     });
+
+    this.props.dispatch(clearWindowSelection(this.props.windowId));
   };
 
   handleCloseTabs = () => {
