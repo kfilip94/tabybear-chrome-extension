@@ -31,7 +31,8 @@ export default (state = defaultCheckedTabsState, action) => {
     case 'SELECT_WINDOW':
       if(action.isChecked){
         const checkedTabsArr = action.tabIdArr.map(id => ({id: id, windowId: action.windowId}));
-        return [...new Set([...state, ...checkedTabsArr])];
+        const filteredState = state.filter(({windowId}) => windowId !== action.windowId);
+        return [...filteredState, ...checkedTabsArr];
       }
       else {
         return state.filter(({id}) => !action.tabIdArr.includes(id));
