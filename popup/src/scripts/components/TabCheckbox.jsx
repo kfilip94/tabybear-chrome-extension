@@ -2,41 +2,44 @@ import React from 'react';
 import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbtack, faVolumeOff, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-import { connect } from 'react-redux';
-import { pinTabRequest, muteTabRequest } from '../actions/tabs';
-import { checkTab, uncheckTab } from '../actions/checkedTabs';
 
-const TabCheckbox = (props) => (
+const pinTabBtnClassNames = isPinned => 
+  classNames("tab-checkbox__btn", "tab-checkbox__btn--pin" , {
+    "tab-checkbox__btn--enabled": isPinned
+  })
+
+const muteTabClassNames = isMuted =>
+  classNames("tab-checkbox__btn", "tab-checkbox__btn--mute" , {
+    "tab-checkbox__btn--enabled": isMuted
+  })
+
+const TabCheckbox = props => (
       <div className="tab-checkbox">
         {!props.isChecked ? 
           <img 
             src={props.tab.favIconUrl} 
             className="tab-checkbox__favicon"
-            onClick={() => props.dispatch(checkTab(props.tab.id, props.tab.windowId))}
+            onClick={props.handleCheckTab}
           />
           :
           <FontAwesomeIcon 
             icon={faCheckCircle} 
             className="tab-checkbox__favicon"
-            onClick={() => props.dispatch(uncheckTab(props.tab.id))}
+            onClick={props.handleUncheckTab}
           />
         }
         <FontAwesomeIcon 
           icon={faThumbtack} 
-          className={classNames("tab-checkbox__btn", "tab-checkbox__btn--pin" , {
-            "tab-checkbox__btn--enabled": props.tab.pinned
-          })}
-          onClick={() => props.dispatch(pinTabRequest(props.tab.id, !props.tab.pinned))}
+          className={pinTabBtnClassNames(props.tab.pinned)}
+          onClick={props.handlePinTab}
         />
         <FontAwesomeIcon 
           icon={faVolumeOff} 
-          className={classNames("tab-checkbox__btn", "tab-checkbox__btn--mute" , {
-            "tab-checkbox__btn--enabled": props.tab.mutedInfo.muted
-          })}
-          onClick={() => props.dispatch(muteTabRequest(props.tab.id, !props.tab.mutedInfo.muted))}
+          className={muteTabClassNames(props.tab.mutedInfo.muted)}
+          onClick={props.handleMuteTab}
         />
       </div>
 );
 
 
-export default connect()(TabCheckbox);
+export default TabCheckbox;

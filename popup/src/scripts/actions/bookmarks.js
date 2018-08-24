@@ -9,3 +9,9 @@ export const createBookmark = (title, url) => ({
   title,
   url
 });
+
+export const createMultipleBookmarksRequest = (bookmarkDataArr, windowId) => ({ 
+  type: 'CREATE_MULTIPLE_BOOKMARKS_REQUEST',
+  bookmarkDataArr,
+  windowId
+});

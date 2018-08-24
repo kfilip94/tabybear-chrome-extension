@@ -3,11 +3,8 @@ import { getNewTabUrlSetting } from '../../../shared/storage/localStorageApi';
 export const createTabPromise = (windowId) => 
   new Promise(resolve =>
     getNewTabUrlSetting()
-      .then((newTabUrl) => {
-        console.log('newTabUrl:',newTabUrl);
-        chrome.tabs.create({ windowId: windowId, active: false, url: newTabUrl }, 
-          (newTab) => resolve(newTab)
-        );}
+      .then((newTabUrl) => 
+        chrome.tabs.create({ windowId: windowId, active: false, url: newTabUrl }, (newTab) => resolve(newTab))
       )
   );
 

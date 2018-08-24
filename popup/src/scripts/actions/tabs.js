@@ -17,9 +17,21 @@ export const updateTab = (id, updatedTab) => ({
   updatedTab
 });
 
+export const updateMultipleTabs = (updatedTabIdArr, updatedTab) => ({
+  type: 'UPDATE_MULTIPLE_TABS',
+  updatedTabIdArr,
+  updatedTab
+});
+
 export const pinTabRequest = (id, pinned) => ({
   type: 'PIN_TAB_REQUEST',
   id, 
+  pinned
+});
+
+export const pinMultipleTabsRequest = (idArr, pinned) => ({
+  type: 'PIN_MULTIPLE_TABS_REQUEST',
+  idArr, 
   pinned
 });
 
@@ -29,9 +41,14 @@ export const muteTabRequest = (id, muted) => ({
   muted
 });
 
-export const setTabActiveRequest = (id) => ({
+export const setTabActiveRequest = (id, windowId) => ({
   type: 'SET_TAB_ACTIVE_REQUEST',
-  id
+  id, windowId
+});
+
+export const setTabActive = (id, windowId) => ({
+  type: 'SET_TAB_ACTIVE',
+  id, windowId
 });
 
 export const clearActive = (windowId) => ({

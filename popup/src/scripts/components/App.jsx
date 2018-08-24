@@ -9,131 +9,115 @@ import selectTabs from '../selectors/tabs';
 import { DragDropContext } from 'react-beautiful-dnd';
 
 class App extends React.Component {
+  state = {
+    isDragging: false
+  };
+
   componentDidMount() {
     console.log('component did mount!');
     this.props.setWindows();
   };
 
-  wololo(id, windowId, newWindowId, index) {
-    if(this.props.checkedTabs.map(({id}) => id).includes(id))
-      this.props.moveTabs(this.props.checkedTabs, parseInt(newWindowId), index);
-    else
-      this.props.moveTab(id, parseInt(windowId),  parseInt(newWindowId), index);
+  handleOpenSettingsPage() {
+    if (chrome.runtime.openOptionsPage)
+      chrome.runtime.openOptionsPage();
+    else 
+      window.open(chrome.runtime.getURL('html/settings.html'));
+  }
+
+  onDragStart() {
+    this.setState(() => ({ isDragging: true }));
+  }
+
+  onDragEnd({draggableId, source, destination}) {
+    console.log('APP: onDragEnd');
+    this.setState(() => ({ isDragging: false }));
+    console.log('draggableId:',draggableId, ', source:',source, ', destination:',destination);
+    // result.draggableId, 
+    // result.source.droppableId,
+    // result.destination.droppableId, 
+    // result.destination.index
+
+    if(destination && destination.droppableId){
+      const tabId = parseInt(draggableId);
+      const newWindowId = parseInt(destination.droppableId);
+
+      if(this.props.checkeTabsIds.includes(parseInt(tabId))){
+        this.props.moveTabs(this.props.checkedTabs, newWindowId, destination.index);
+      }
+      else {
+        const windowId = parseInt(source.droppableId);
+        this.props.moveTab(tabId, windowId,  newWindowId, destination.index);
+      }
+    } else {
+      return;
+    }
   };
-
-  // onDragEnd(result) {
-  //   console.log('APP: onDragEnd:',result);
-  //   this.wololo(
-  //     result.draggableId, 
-  //     result.destination.droppableId, 
-  //     result.destination.index
-  //   );
-
-
-  //   const { source, destination } = result;
-
-  //   // dropped outside the list
-  //   if (!destination) {
-  //       return;
-  //   }
-
-  //   if (source.droppableId === destination.droppableId) {
-  //       const items = reorder(
-  //           this.getList(source.droppableId),
-  //           source.index,
-  //           destination.index
-  //       );
-
-  //       let state = { items };
-
-  //       if (source.droppableId === 'droppable2') {
-  //           state = { selected: items };
-  //       }
-
-  //       this.setState(state);
-  //   } else {
-  //       const result = move(
-  //           this.getList(source.droppableId),
-  //           this.getList(destination.droppableId),
-  //           source,
-  //           destination
-  //       );
-
-  //       this.setState({
-  //           items: result.droppable,
-  //           selected: result.droppable2
-  //       });
-  //   }
-  //   // // dropped outside the list
-  //   // if (!result.destination) {
-  //   //   return;
-  //   // }
-
-  //   // const items = reorder(
-  //   //   this.state.items,
-  //   //   result.source.index,
-  //   //   result.destination.index
-  //   // );
-
-  //   // this.setState({
-  //   //   items,
-  //   // });
-  // };
 
 
   render() {
     return (
-      <DragDropContext onDragEnd={(result) => {
-        console.log('APP: onDragEnd:',result);
-
-        this.wololo(
-          result.draggableId, 
-          result.source.droppableId,
-          result.destination.droppableId, 
-          result.destination.index
-        );
-      }} >
+      <DragDropContext 
+        onDragStart={() => {
+          console.log('onDragStart');
+         this.setState(() => ({ isDragging: true }));      
+        }}
+        onDragEnd={({draggableId, source, destination}) => {
+            console.log('APP: onDragEnd');
+            this.setState(() => ({ isDragging: false }));
+            console.log('draggableId:',draggableId, ', source:',source, ', destination:',destination);
+            // result.draggableId, 
+            // result.source.droppableId,
+            // result.destination.droppableId, 
+            // result.destination.index
+        
+            if(destination && destination.droppableId){
+              const tabId = parseInt(draggableId);
+              const newWindowId = parseInt(destination.droppableId);
+        
+              if(this.props.checkeTabsIds.includes(parseInt(tabId))){
+                this.props.moveTabs(this.props.checkedTabs, newWindowId, destination.index);
+              }
+              else {
+                const windowId = parseInt(source.droppableId);
+                this.props.moveTab(tabId, windowId,  newWindowId, destination.index);
+              }
+            } else {
+              return;
+            }
+        }}
+      >
         <div className='app'>
           <Navbar
-            handleOpenNewWindow={() => this.props.createWindow()}
-            handleOpenSettingsPage={() => {
-              if (chrome.runtime.openOptionsPage) {
-                console.log('SETTINGS PAGE: RUNTIME');
-                chrome.runtime.openOptionsPage();
-              } else {
-                console.log('SETTINGS PAGE: window');
-                window.open(chrome.runtime.getURL('html/settings.html'));
-              }
-            }
-          }
+            handleCreateWindow={() => this.props.createWindow()}
+            handleOpenSettingsPage={this.handleOpenSettingsPage}
           />
           <Searchbar />
           <div className="window-list">
-            {this.props.windows && this.props.windows.map(
-              (chromeWindow) => (<Window key={ chromeWindow.id } tabs={chromeWindow.tabs} windowId={chromeWindow.id}/>)
+            {this.props.windows && this.props.windows.map((chromeWindow) => 
+              <Window key={chromeWindow.id} tabs={chromeWindow.tabs} windowId={chromeWindow.id}  isDragging={this.state.isDragging} />
             )}
           </div>
         </div>
       </DragDropContext>
     );
-  }
-}
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
     createWindow: () => { dispatch(createWindowRequest()) },
     moveTab: (id, windowId, newWindowId, index) => { dispatch(moveTabRequest(id, windowId, newWindowId, index)) },
     moveTabs: (checkedTabs, newWindowId, index) => { dispatch(moveTabsRequest(checkedTabs, newWindowId, index)) },
-
     setWindows: () => { dispatch(setWindowsRequest()) }
   };
 };
 
-
 const mapStateToProps = (state) => {
   return {
     windows: selectTabs(state.windows, state.filters),
-    checkedTabs: state.checkedTabs
+    checkedTabs: state.checkedTabs,
+    checkeTabsIds: state.checkedTabs.map(({id}) => id)
   };
 };
 

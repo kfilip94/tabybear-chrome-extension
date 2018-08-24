@@ -42,6 +42,31 @@ export default (state = defaultWindowsState, action) => {
         }
       });
 
+    case 'SET_TAB_ACTIVE': 
+      return state.map(chromeWindow => {
+        if(chromeWindow.id === action.windowId) {
+          const tabs = chromeWindow.tabs.map((tab) => {
+              return {...tab, 'active': tab.id === action.id }
+          });
+          return {...chromeWindow, 'tabs': tabs};
+        } else {
+          return chromeWindow;
+        }
+      });
+    
+    case 'UPDATE_MULTIPLE_TABS':
+      return  state.map(chromeWindow => 
+        Object.assign({}, chromeWindow,{
+          'tabs': chromeWindow.tabs ? chromeWindow.tabs.map((tab) => {
+            if(action.updatedTabIdArr.includes(tab.id)){
+              console.log('includes:',tab.id);
+              return  {...tab, ...action.updatedTab };
+            }
+            else
+              return tab;
+          }) : []
+        })
+      );
 
     case 'MOVE_TABS':
       //1. remove old tabs by checkedTas state

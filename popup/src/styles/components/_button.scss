@@ -3,7 +3,9 @@
     border: none;
     cursor: pointer;
     outline: 0;
-
+    color: $white;
+    font-size: 13px;
+    
     &--cog{
         color: $white;
         font-size: 18px;
@@ -15,8 +17,7 @@
     }
 
     &--small {
-        color: $white;
-        font-size: 13px;
+       
     }
 
 } 

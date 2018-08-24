@@ -6,26 +6,20 @@ import { createTabRequest } from '../actions/tabs';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 
 const getListStyle = isDraggingOver => ({
- 	// padding: '4px',
-	// width: 250,
-	// maxHeight: '400px',
-	// overflowY: 'scroll'
-	background: isDraggingOver ? '#C2C9DE' : 'white',
-
+	border: isDraggingOver ? '1px solid' : '0',
 });
 
 const getItemStyle = (isDragging, draggableStyle) => ({
   // // some basic styles to make the items look a bit nicer
-  // userSelect: 'none',
-  // padding: '10px',
-  // margin: '0 0 10px 0',
+  userSelect: 'none',
+  padding: '10px',
+  margin: '0 0 10px 0',
 
   // // change background colour if dragging
-	// background: isDragging ? 'lightgreen' : 'grey',
-	color: 'white',
-	border: '2px solid grey',
+	background: isDragging ? 'lightgreen' : 'grey',
+	...draggableStyle,
+
   // // styles we need to apply on draggables
-	// ...draggableStyle,
 	// ':after': {
 	// 	content: 'hello!',
 
@@ -34,6 +28,7 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 
 class Window extends React.Component {
 	render() {
+		
 		return(
 			<div className="window">
 				<ActionBar windowId={this.props.windowId} />
@@ -43,8 +38,10 @@ class Window extends React.Component {
 							ref={provided.innerRef}
               style={getListStyle(snapshot.isDraggingOver)}
 						>
-							{this.props.tabs.map((tab) => (
-								<Draggable key={tab.id} draggableId={tab.id} index={tab.index}>
+							{this.props.tabs.map((tab) => { 
+
+								return(
+								<Draggable key={`${tab.id}`} draggableId={`${tab.id}`} index={tab.index}>
 									{(provided, snapshot) => (
 										<div
 											ref={provided.innerRef}
@@ -55,14 +52,15 @@ class Window extends React.Component {
 											{...provided.draggableProps}
 											{...provided.dragHandleProps}
 										>
-											<Tab key={tab.id} tab={tab}/>
-											{provided.placeholder}
+											<Tab key={tab.id} tab={tab} isDragging={snapshot.isDragging} isWindowDragging={this.props.isDragging}/>
 										</div>
 									)}
-								</Draggable>
-							))}
+								</Draggable>);}
+							)}
+							{provided.placeholder}
 						</div>
 					)}
+
 				</Droppable>
 				
 				<button
