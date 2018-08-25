@@ -33,11 +33,14 @@ const TabCheckbox = props => (
           className={pinTabBtnClassNames(props.tab.pinned)}
           onClick={props.handlePinTab}
         />
-        <FontAwesomeIcon 
-          icon={faVolumeOff} 
+        <div 
           className={muteTabClassNames(props.tab.mutedInfo.muted)}
           onClick={props.handleMuteTab}
-        />
+        >
+          <FontAwesomeIcon 
+            icon={faVolumeOff} 
+          />
+        </div>
       </div>
 );
 

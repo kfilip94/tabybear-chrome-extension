@@ -55,7 +55,7 @@
     cursor: pointer;
 
     & .tab-checkbox .tab-checkbox__btn{
-      display: block;
+      display: flex;
     }
 
 
@@ -102,14 +102,21 @@
   &__btn--mute {
     bottom: -3px;
     right: -3px;
-
+    align-items: center;
     &:after{
       content: 'x';
+      font-size: 8px;
+      font-weight: bold;
+      
     }
   }
 
   &__btn--enabled {
     color: $blue;
-    display: block;
+    display: flex;
+
+    &:after{
+      content: 'X';
+    }
   }
 }
