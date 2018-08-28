@@ -29,7 +29,10 @@ export default (state = defaultWindowsState, action) => {
 
     case 'CREATE_WINDOW': //OK
       console.log('CREATE_WINDOW:',[...state, action.newWindow]);
-      return [...state, action.newWindow];
+      if(state.map(({id}) => id).includes(action.newWindow.id))
+        return state;
+      else
+        return [...state, action.newWindow];
       
     case 'MOVE_TAB':
       return state.map(chromeWindow => {

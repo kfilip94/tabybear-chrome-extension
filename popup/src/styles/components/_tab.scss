@@ -22,7 +22,7 @@
     justify-content: center;
   }
   &--dragged {
-    visibility: hidden;
+    display: none;
   }
 
   &__title {
@@ -78,6 +78,8 @@
   position: relative;
   width: 30px;
 
+
+
   &__favicon {
     color: $green;
     font-size: 16px;
@@ -91,6 +93,10 @@
     color: $light-blue;
     display: none;
     position: absolute;
+
+    &:hover {
+      color: $blue;
+    }
   }
 
   &__btn--pin {
@@ -101,7 +107,7 @@
 
   &__btn--mute {
     bottom: -3px;
-    right: -3px;
+    right: -4px;
     align-items: center;
     &:after{
       content: 'x';

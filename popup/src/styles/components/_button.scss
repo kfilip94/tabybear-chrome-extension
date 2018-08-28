@@ -2,6 +2,7 @@
     background: none;
     border: none;
     cursor: pointer;
+    display: flex;
     outline: 0;
     color: $white;
     font-size: 13px;
@@ -16,8 +17,13 @@
         font-size: 18px;
     }
 
-    &--small {
-       
+    &--white {
+        &:hover {
+            color: $blue;
+            transition: all 100ms;
+        }
     }
+    transition: all 100ms;
 
+    
 } 

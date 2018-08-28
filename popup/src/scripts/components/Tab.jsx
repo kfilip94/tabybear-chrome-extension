@@ -29,7 +29,7 @@ const Tab = props => (
         handleClick={() => props.setTabActive(props.tab.id, props.tab.windowId)} 
       />
       <Button 
-        className="button tab__close"
+        className="tab__close"
         icon={faTimes}
         handleClick={() => props.removeTab(props.tab.id)}
       />

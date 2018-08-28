@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Button = (props) => (
   <button
-    className="button"
+    className={`button ${props.className}`}
     onClick={ props.handleClick }
     title={ props.title }
   >

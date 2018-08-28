@@ -5,7 +5,7 @@
   display: flex;
   height: 34px;
   justify-content: space-between;
-  padding: 0 10px;
+  padding: 0 18px;
   position: -webkit-sticky;
   position: sticky;
   top: 0;
@@ -16,9 +16,24 @@
     display: flex;
     justify-content: space-between;
 
+    .split{
+      height: 15px;
+      margin: 0 4px;
+      color: $white;
+      width: 1px;
+      border-left: 1px solid $white;
+    }
+
     .actions {
+      // border-left: 1px solid $blue;
       display: flex;
       align-items: center;
+
+    }
+
+    .actions--edit {
+
+
     }
   }
 
@@ -29,12 +44,20 @@
       color: $blue;
       display: flex;
       font-weight: bold;
-      font-size: small;
+      font-size: x-small;
       height: 15px;
       justify-content: center;
-      padding: 2px 4px;
+      padding: 0 6px;
+      margin-right: 8px;
       width: auto;
+
+      &--edit {
+        background: $blue;
+        color: $grey;
+      }
   }
+
+
 
   &--green {
     background: $green;

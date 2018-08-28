@@ -53,7 +53,12 @@ class App extends React.Component {
       return;
     }
   };
-
+	shouldComponentUpdate(nextProps) {
+    if (this.props.windows === nextProps.windows) {
+      return false;
+    }
+    return true;
+  }
 
   render() {
     return (
@@ -82,8 +87,6 @@ class App extends React.Component {
                 const windowId = parseInt(source.droppableId);
                 this.props.moveTab(tabId, windowId,  newWindowId, destination.index);
               }
-            } else {
-              return;
             }
         }}
       >
@@ -94,9 +97,13 @@ class App extends React.Component {
           />
           <Searchbar />
           <div className="window-list">
-            {this.props.windows && this.props.windows.map((chromeWindow) => 
-              <Window key={chromeWindow.id} tabs={chromeWindow.tabs} windowId={chromeWindow.id}  isDragging={this.state.isDragging} />
-            )}
+            {this.props.windows && this.props.windows.length != 0 ?
+               this.props.windows.map((chromeWindow) => 
+                <Window key={chromeWindow.id} tabs={chromeWindow.tabs} windowId={chromeWindow.id}  isDragging={this.state.isDragging} />
+              )
+              :
+              <p>I didn't found anything :(</p>
+            }
           </div>
         </div>
       </DragDropContext>

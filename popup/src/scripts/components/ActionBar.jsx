@@ -10,11 +10,14 @@ import { pinMultipleTabsRequest, removeTabsRequest } from '../actions/tabs';
 import { createMultipleBookmarksRequest } from '../actions/bookmarks';
 import { clearWindowSelection } from '../actions/checkedTabs';
 
-const actionBarClassNames = (isEditModeEnabled) => 
+const actionBarClassNames = isEditModeEnabled => 
   classNames("action-bar", { "action-bar--green": isEditModeEnabled })
 
+const counterClassNames = isEditModeEnabled =>
+  classNames("action-bar__counter", { "action-bar__counter--edit": isEditModeEnabled})
 
-  
+const selectAllClassNames = isEditModeEnabled =>
+  classNames()
 class ActionBar extends React.Component {
   
   handleSelectAll = () => this.props.checkAllTabsInWindow(this.props.windowId, this.props.allTabsIdsInWindows, !this.props.areAllTabsInWindowChecked);
@@ -30,6 +33,7 @@ class ActionBar extends React.Component {
       <div className={actionBarClassNames(this.props.isEditModeEnabled)}>
         <div className="action-bar-container">
           <Button
+            className={this.props.isEditModeEnabled ? "button--white" : ""}
             title="Select all tabs in window"
             icon={faCheckCircle}
             handleClick={this.handleSelectAll}
@@ -37,6 +41,7 @@ class ActionBar extends React.Component {
           { this.props.isEditModeEnabled && 
             <EditActionBar 
               windowId={this.props.windowId}
+              isEditModeEnabled={this.props.isEditModeEnabled}
               handleSelectAll={this.handleSelectAll}
               handlePinMultipleTabs={this.handlePinMultipleTabs}
               handleAddMultipleBookmarks={this.handleAddMultipleBookmarks}
@@ -45,10 +50,11 @@ class ActionBar extends React.Component {
           }
         </div>
         <div className="action-bar-container">
-          <span className="action-bar__counter">
+          <span className={counterClassNames(this.props.isEditModeEnabled)} >
             { this.props.isEditModeEnabled ? `${this.props.checkedTabsInWindow.length}/${this.props.tabsCount}` : this.props.tabsCount}
           </span>
           <Button
+            className="button--white"
             title="Close window with all tabs"
             icon={faTimes}
             handleClick={() => this.props.removeWindow(this.props.windowId)}
