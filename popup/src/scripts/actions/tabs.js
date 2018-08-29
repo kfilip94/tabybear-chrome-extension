@@ -71,6 +71,12 @@ export const moveTab = (id, windowId, newWindowId, tab) => ({
   id, windowId, newWindowId, tab
 });
 
+export const moveTabStore = (id, windowId, newWindowId, index) => ({
+  type: 'MOVE_TAB_STORE',
+  id, windowId, newWindowId, index
+
+});
+
 export const moveTabs = (checkedTabs, newWindowId, tabArr) => ({
   type: 'MOVE_TABS',
   checkedTabs, newWindowId, tabArr

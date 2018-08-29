@@ -12,6 +12,19 @@ export default (state = defaultWindowsState, action) => {
       );
       return filteredWindows;
 
+    case 'MOVE_TAB_STORE':
+      let movedTab = state.find(({id}) => id === action.windowId).tabs.find(({id}) => id === action.id);
+      movedTab = { ...movedTab, index: action.index, windowId: action.newWindowId }
+
+      return state.map(chromeWindow => {
+        if(chromeWindow.id === action.windowId) {
+          return {...chromeWindow, tabs: chromeWindow.tabs.filter((tab) => tab.id !== action.id)};
+        } else if(chromeWindow.id === action.newWindowId) {
+          return {...chromeWindow, tabs: [...chromeWindow.tabs, movedTab]}
+        } else {
+          return chromeWindow;
+        }
+      });
 
     case 'UPDATE_TAB': //OK
       console.log('UPDATE_TAB');

@@ -33,8 +33,8 @@ export const moveTabPromise = (tabId, windowId, index) =>
     chrome.tabs.move(tabId, {windowId, index}, (tab) => resolve(tab))
   );
 
-export const moveTabsPromise = (checkedTabs, windowId, index) =>
+export const moveTabsPromise = (tabIdArr, windowId, index) =>
   new Promise(resolve => {
-    const tabIdArr = checkedTabs.map(({id}) => id);
-    chrome.tabs.move(tabIdArr, {windowId, index}, (tab) => resolve(tab));
+    // const tabIdArr = checkedTabs.map(({id}) => id);
+    chrome.tabs.move(tabIdArr, {windowId, index}, (tabArr) => resolve(tabArr));
   });

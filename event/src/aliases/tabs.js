@@ -13,7 +13,6 @@ const createTabAlias = (originalAction) => {
   };
 };
 
-
 //UPDATE TAB
 const muteTabAlias = (originalAction) => {
   return (dispatch) => {
@@ -70,17 +69,18 @@ const moveTabAlias = (originalAction) => {
 
 const moveTabsAlias = (originalAction) => {
   return (dispatch) => {
-    console.log('originalAction:',originalAction);
+    const tabIdArr = originalAction.checkedTabs.map(({id}) => id);
+    const moveTabPromises = tabIdArr.map((id) => promises.moveTabPromise(id, originalAction.newWindowId, originalAction.startIndex));
     if(originalAction.windowId !== originalAction.newWindowId){
-      return promises.moveTabsPromise(originalAction.checkedTabs, originalAction.newWindowId, originalAction.startIndex)
-        .then((tabArr) => dispatch(actions.moveTabs(originalAction.checkedTabs, originalAction.newWindowId, tabArr.length === undefined ? [tabArr] : tabArr)))
-        .then(() => dispatch(clearSelection(originalAction.newWindowId)))
-        // .then(() => promisesWindows.getTabsOrderPromise(originalAction.newWindowId))
-        // .then((tabsIndexesArr) => dispatch(actionsWindows.updateTabsOrder(originalAction.newWindowId, tabsIndexesArr)))
+      return Promise.all(moveTabPromises)
+          .then((tabArr) => dispatch(actions.moveTabs(originalAction.checkedTabs, originalAction.newWindowId, tabArr.length === undefined ? [tabArr] : tabArr)))
+          .then(() => dispatch(clearSelection(originalAction.newWindowId)))
+          .then(() => promisesWindows.getTabsOrderPromise(originalAction.newWindowId))
+          .then((tabsIndexesArr) => dispatch(actionsWindows.updateTabsOrder(originalAction.newWindowId, tabsIndexesArr)))
     } else {
-      return promises.moveTabPromise(originalAction.id, originalAction.newWindowId, originalAction.index)
-        .then((tab) => promisesWindows.getTabsOrderPromise(originalAction.windowId))
-        .then((tabsIndexesArr) => dispatch(actionsWindows.updateTabsOrder(originalAction.windowId, tabsIndexesArr)))
+      return Promise.all(moveTabPromises)
+        .then(() => promisesWindows.getTabsOrderPromise(originalAction.newWindowId))
+        .then((tabsIndexesArr) => dispatch(actionsWindows.updateTabsOrder(originalAction.newWindowId, tabsIndexesArr)));
     }
   };
 };

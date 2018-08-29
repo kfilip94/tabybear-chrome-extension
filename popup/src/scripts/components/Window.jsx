@@ -28,39 +28,53 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 	// }
 });
 
-const Window = props => (
+
+
+class Window extends React.Component {
+	state = {
+		isDraggingOver: false,
+	};
+
+	render(){
+		return (
 			<div className="window">
-				<ActionBar windowId={props.windowId} />
-				<Droppable droppableId={String(props.windowId)} className="window__tab-list">
+				<ActionBar windowId={this.props.windowId} />
+				<Droppable droppableId={String(this.props.windowId)} className="window__tab-list">
 					{(provided, snapshot) => {
-						console.log(`WINDOW id:${props.windowId}`  );
-						console.log('WINDOW provided:',provided );
-						console.log('WINDOW snapshot:',snapshot);
+						// console.log(`WINDOW id:${this.props.windowId}`  );
+						// console.log('WINDOW provided:',provided );
+						// console.log('WINDOW snapshot:',snapshot);
+						// this.setState(() => ({ isDraggingOver: snapshot.isDraggingOver }));
 						return (
 							<div
 								ref={provided.innerRef}
 								style={getListStyle(snapshot.isDraggingOver)}
 							>
-								{props.tabs.map((tab) => { 
-									console.log(`-->tab id:${tab.id},indes:${tab.index}`  )
+								{this.props.tabs && this.props.tabs.map((tab) => { 
+									// console.log(`-->tab id:${tab.id},indes:${tab.index}`  )
 									return(
 									<Draggable key={`${tab.id}`} draggableId={`${tab.id}`} index={tab.index}>
-										{(provided, snapshot) => (
+										{(provided, snapshotDraggable) => {
+											
+											// console.log(`-->tab id:${tab.id},indes:${tab.index}`  )
+											// console.log('TAB provided:',provided );
+											// console.log('TAB snapshot:',snapshot);
+											return (
 											<div>
 												<div
 													ref={provided.innerRef}
 													style={getItemStyle(
-														snapshot.isDragging,
+														snapshotDraggable.isDragging,
 														provided.draggableProps.style
 													)}
 													{...provided.draggableProps}
 													{...provided.dragHandleProps}
 												>
-													<Tab tab={tab} isDragging={snapshot.isDragging} isWindowDragging={props.isDragging}/>
+													<Tab tab={tab} isDragging={snapshotDraggable.isDragging} isWindowDragging={this.props.isDragging}/>
 												</div>
 												{provided.placeholder}
 											</div>
-										)}
+										)}}
 									</Draggable>);}
 								)}
 								{provided.placeholder}
@@ -73,12 +87,14 @@ const Window = props => (
 				
 				<button
 					className="window__bottom-btn"
-					onClick={() => props.dispatch(createTabRequest(props.windowId))}
+					onClick={() => this.props.dispatch(createTabRequest(this.props.windowId))}
 				>
 					+ Open new tab
 				</button>
 			</div>
-		)
+		);
+	}
+}	
 ;
 
 export default connect()(Window);

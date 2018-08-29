@@ -66,10 +66,10 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   store.dispatch(updateTab(tabId, changeInfo));
 });
 
-chrome.tabs.onMoved.addListener((tabId, movedInfo) => {
-  console.log('tabs.onMoved');
-  store.dispatch(updateTabsOrderRequest(movedInfo.windowId));
-});
+// chrome.tabs.onMoved.addListener((tabId, movedInfo) => {
+//   console.log('tabs.onMoved');
+//   store.dispatch(updateTabsOrderRequest(movedInfo.windowId));
+// });
 
 const updateBadgeText = (numberOfTabs) => {
   numberOfTabs = numberOfTabs > 999 ? '999+' : `${numberOfTabs}`;

@@ -82,24 +82,45 @@ const isEditModeEnabled = ({checkedTabs}, props) => {
 };
 
 const getAllTabsIdsInWindow = ({windows}, props) => {
-  return windows.find(({ id }) => id === props.windowId).tabs.map(({id}) => (id));
+  try {
+
+    return windows.find(({ id }) => id === props.windowId).tabs.map(({id}) => (id));
+  } catch(error) {
+    return [];
+
+  }
 };
 
 const areAllTabsInWindowChecked = ({windows, checkedTabs}, props) => {
-  return windows.find(({ id }) => id === props.windowId).tabs.length === getCheckedTabsInWindow(checkedTabs, props).length;
+  try {
+
+    return windows.find(({ id }) => id === props.windowId).tabs.length === getCheckedTabsInWindow(checkedTabs, props).length;
+  } catch(error) {
+    return false;
+
+  }
 };
 
 const getBookmarksDataArr = ({windows, checkedTabs}, props) => {
-  return windows.find(({id}) => props.windowId === id)
+  try {
+    return windows.find(({id}) => props.windowId === id)
     .tabs.filter(({id}) => getCheckedTabsInWindow(checkedTabs, props).includes(id))
     .map(({title, url}) => ({ title, url }));
-}; 
+  } catch(error) {
+    return [];
+  }
+}
 
 const areAllTabsInWindowPinned = ({windows, checkedTabs}, props) => {
-  return windows.find(({ id }) => id === props.windowId)
-    .tabs.filter(({id}) => getCheckedTabsInWindow(checkedTabs, props).includes(id))
-    .every(({pinned}) => pinned);
-};
+  try {
+    return windows.find(({ id }) => id === props.windowId)
+      .tabs.filter(({id}) => getCheckedTabsInWindow(checkedTabs, props).includes(id))
+      .every(({pinned}) => pinned);
+    } catch(error) {
+      return false;
+  
+    }
+  }
 
 const mapDispatchToProps = (dispatch) => {
   return {

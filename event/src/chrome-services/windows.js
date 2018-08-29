@@ -7,7 +7,7 @@ export const removeWindowPromise = (windowId) => new Promise(resolve =>
 );
 
 export const createWindowPromise = () => new Promise(resolve =>
-  chrome.windows.create(null, (newWindow) => resolve(newWindow))
+  chrome.windows.create({ focused: false }, (newWindow) => resolve(newWindow))
 );
 
 export const getWindowPromise = (windowId) => new Promise(resolve =>
