@@ -43,3 +43,7 @@ export const updateMultipleWindowId = (idArr, windowId) => ({
   windowId
 });
 
+export const filterCheckedTabs = (filterText) => ({
+  type: 'FILTER_CHECKED_TABS',
+  filterText
+})

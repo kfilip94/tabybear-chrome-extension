@@ -1,11 +1,10 @@
 import React from 'react';
-import Button from './Button';
+import Button from '../Button';
 import classNames from "classnames";
 import { faTimes, faThumbtack, faStar } from '@fortawesome/free-solid-svg-icons';
 
 const editActionsClassNames = isEditModeEnabled => 
   classNames("actions", { "actions--edit": isEditModeEnabled })
-
 
 const EditActionBar = props => (
   <div className={editActionsClassNames(props.isEditModeEnabled)}>

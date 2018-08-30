@@ -4,6 +4,7 @@ import { faSearch, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import { setTextFilter } from '../actions/filters';
 import Button from './Button';
+import { clearSelection } from '../actions/checkedTabs';
 
 const Searchbar = (props) => (
   <div className="searchbar">
@@ -16,7 +17,10 @@ const Searchbar = (props) => (
       className="searchbar__input"
       placeholder="Type search..."
       value={props.filters.text}
-      onChange={(e) => props.dispatch(setTextFilter(e.target.value))}
+      onChange={(e) => {
+        props.dispatch(setTextFilter(e.target.value));
+        props.dispatch(clearSelection())
+      }}
     />
     { props.filters.text &&
       <Button 

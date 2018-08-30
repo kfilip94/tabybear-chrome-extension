@@ -1,12 +1,9 @@
 import React from 'react';
 import classNames from 'classnames';
 import TabCheckbox from './TabCheckbox';
-import Button from './Button';
+import Button from '../Button';
 import TabTitle from './TabTitle';
-import { connect } from 'react-redux';
-import { removeTabRequest, setTabActiveRequest, pinTabRequest, muteTabRequest  } from '../actions/tabs';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { checkTab, uncheckTab } from '../actions/checkedTabs';
 
 const tabClassNames = isInDraggedGroup => 
   classNames("tab" , {
@@ -15,7 +12,6 @@ const tabClassNames = isInDraggedGroup =>
 
 const Tab = props => (
     <div className={tabClassNames(props.isChecked && props.isWindowDragging && !props.isDragging)}>
-      {/* {console.log('isChecked:',props.isChecked, ', isWindowDragging:',props.isWindowDragging,', !isDragging:',!props.isDragging)} */}
       <TabCheckbox 
         tab={props.tab} 
         isChecked={props.isChecked}
@@ -42,22 +38,4 @@ const Tab = props => (
     </div>
 );
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    checkTab: (id, windowId) => { dispatch(checkTab(id, windowId)) },
-    uncheckTab: (id) => { dispatch(uncheckTab(id)) },
-    pinTab: (id, pinned) => { dispatch(pinTabRequest(id, pinned)) },
-    muteTab: (id, muted) => { dispatch(muteTabRequest(id, muted)) },
-    setTabActive: (id, windowId) => { dispatch(setTabActiveRequest(id, windowId)) },
-    removeTab: (id) => { dispatch(removeTabRequest(id)) },
-  };
-};
-
-const mapStateToProps = (state, props) => {
-  return {
-    isChecked: state.checkedTabs.some(({ id }) => id === props.tab.id),
-    checkedTabsLength: state.checkedTabs.length
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Tab);
+export default Tab;

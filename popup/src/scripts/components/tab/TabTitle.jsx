@@ -1,10 +1,5 @@
 import React from 'react';
 import classNames from 'classnames';
-import TabCheckbox from './TabCheckbox';
-import Button from './Button';
-import { connect } from 'react-redux';
-import { removeTabRequest, setTabActiveRequest, clearActive } from '../actions/tabs';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const titleClassNames = (isActive, isChecked) => 
   classNames("tab__title" , {
@@ -12,7 +7,7 @@ const titleClassNames = (isActive, isChecked) =>
     "tab__title--checked": isChecked
   });
 
-const TabTitle = (props) => (
+const TabTitle = props => (
   <span 
     className={titleClassNames(props.tab.active, props.isChecked)}
     onClick={props.handleClick}

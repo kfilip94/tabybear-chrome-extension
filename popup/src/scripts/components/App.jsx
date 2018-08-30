@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Navbar from './Navbar';
 import Searchbar from './SearchBar';
-import Window from './Window'
+import Window from './windows/WindowContainer'
 import { setWindowsRequest, createWindowRequest  } from '../actions/windows';
 import { moveTabRequest, moveTabsRequest, moveTabs } from '../actions/tabs';
 import selectTabs from '../selectors/tabs';
@@ -31,7 +31,6 @@ class App extends React.Component {
 
   onDragEnd({draggableId, source, destination}) {
     this.setState(() => ({ isDragging: false }));
-    console.log('draggableId:',draggableId, ', source:',source, ', destination:',destination);
 
     if(destination && destination.droppableId){
       const tabId = parseInt(draggableId);
@@ -67,7 +66,14 @@ class App extends React.Component {
             <div className="window-list">
               {this.props.windows && this.props.windows.length != 0 ?
                 this.props.windows.map((chromeWindow) => 
-                  <Window key={chromeWindow.id} tabs={chromeWindow.tabs} windowId={chromeWindow.id}  isDragging={this.state.isDragging} />
+                  <Window 
+                    key={chromeWindow.id} 
+                    tabs={chromeWindow.tabs} 
+                    windowId={chromeWindow.id}  
+                    isDragging={this.state.isDragging}
+                    windows={this.props.windows}
+
+                  />
                 )
                 :
                 <p>I didn't found anything :(</p>
@@ -95,8 +101,6 @@ const mapStateToProps = (state) => {
     windows: selectTabs(state.windows, state.filters),
     checkedTabs: state.checkedTabs,
     checkeTabsIds: state.checkedTabs.map(({id}) => id),
-
-
   };
 };
 
