@@ -31,7 +31,7 @@ const Tab = props => (
         handleClick={() => props.removeTab(props.tab.id)}
       />
       {props.isDragging && props.isChecked && 
-        <div className="tab__dragged-tabs-counter">
+        <div className="tab__dragged-counter">
           {props.checkedTabsLength}
         </div>
       }

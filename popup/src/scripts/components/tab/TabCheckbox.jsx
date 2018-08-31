@@ -28,14 +28,18 @@ const TabCheckbox = props => (
         onClick={props.handleUncheckTab}
       />
     }
-    <FontAwesomeIcon 
-      icon={faThumbtack} 
-      className={pinTabBtnClassNames(props.tab.pinned)}
-      onClick={props.handlePinTab}
-    />
+    <div title="Pin tab">
+      <FontAwesomeIcon 
+        icon={faThumbtack} 
+        className={pinTabBtnClassNames(props.tab.pinned)}
+        onClick={props.handlePinTab}
+      />
+    </div>
+
     <div 
       className={muteTabClassNames(props.tab.mutedInfo.muted)}
       onClick={props.handleMuteTab}
+      title="Mute tab"
     >
       <FontAwesomeIcon icon={faVolumeOff} />
     </div>

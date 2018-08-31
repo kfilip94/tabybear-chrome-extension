@@ -2,16 +2,16 @@ import * as actions  from '../../../popup/src/scripts/actions/windows';
 import * as promises from '../chrome-services/windows';
 
 //CREATE WINDOW
-const createWindowAlias = (originalAction) => {
-  return (dispatch) => {
+const createWindowAlias = () => {
+  return dispatch => {
     return promises.createWindowPromise()
       .then((newWindow) => dispatch(actions.createWindow(newWindow)))
   };
 };
 
 //GET ALL WINDOWS
-const setWindowsAlias = (originalAction) => {
-  return (dispatch) => {
+const setWindowsAlias = () => {
+  return dispatch => {
     return promises.getAllWindowsPromise()
       .then((windows) => dispatch(actions.setWindows(windows)) 
     );
@@ -19,19 +19,19 @@ const setWindowsAlias = (originalAction) => {
 };
 
 //UPDATE TAB ORDER IN WINDOW
-const updateTabsOrderAlias = (originalAction) => {
-  return (dispatch) => {
-    return promises.getTabsOrderPromise(originalAction.windowId)
-      .then((tabsIndexesArr) => dispatch(actions.updateTabsOrder(originalAction.windowId, tabsIndexesArr))
+const updateTabsOrderAlias = ({ windowId }) => {
+  return dispatch => {
+    return promises.getTabsOrderPromise(windowId)
+      .then((tabsIndexesArr) => dispatch(actions.updateTabsOrder(windowId, tabsIndexesArr))
     );
   };
 };
 
 //REMOVE WINDOW
-const removeWindowAlias = (originalAction) => {
-  return (dispatch) => {
-    return promises.removeWindowPromise(originalAction.id)
-      .then(() => dispatch(actions.removeWindow(originalAction.id))
+const removeWindowAlias = ({ id }) => {
+  return dispatch => {
+    return promises.removeWindowPromise(id)
+      .then(() => dispatch(actions.removeWindow(id))
     );
   };
 };
@@ -41,5 +41,4 @@ export default {
   'SET_WINDOWS_REQUEST': setWindowsAlias,
   'UPDATE_TABS_ORDER_REQUEST': updateTabsOrderAlias, 
   'REMOVE_WINDOW_REQUEST': removeWindowAlias
- 
 };
