@@ -4,11 +4,13 @@ import { connect } from 'react-redux';
 import { createTabRequest } from '../../actions/tabs';
 
 const WindowContainer = props => (
-	<Window {...props }/>
+	<Window { ...props } />
 );
 
-const mapDispatchToProps = (dispatch, props) => ({
-	createTab: () => { dispatch(createTabRequest(props.windowId)) }
-});
+const mapDispatchToProps = (dispatch) => {
+  return {
+		createTab: (windowId) => { dispatch(createTabRequest(windowId)) }
+	};	
+};
 
-export default connect(mapDispatchToProps)(WindowContainer);
+export default connect(null, mapDispatchToProps)(WindowContainer);

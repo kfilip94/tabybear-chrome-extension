@@ -10,11 +10,6 @@ import popupWebpackConfig from './popup/webpack.config';
 import eventWebpackConfig from './event/webpack.config';
 import optionsWebpackConfig from './options/webpack.config';
 
-import contentWebpackConfig from './content/webpack.config';
-
-
-
-
 gulp.task('popup-js', ['clean'], (cb) => {
   webpack(popupWebpackConfig, (err, stats) => {
     if(err) throw new plugins.util.PluginError('webpack', err);
@@ -45,16 +40,6 @@ gulp.task('options-js', ['clean'], (cb) => {
   });
 });
 
-gulp.task('content-js', ['clean'], (cb) => {
-  webpack(contentWebpackConfig, (err, stats) => {
-    if(err) throw new plugins.util.PluginError('webpack', err);
-
-    plugins.util.log('[webpack]', stats.toString());
-
-    cb();
-  });
-});
-
 gulp.task('popup-html', ['clean'], () => {
   return gulp.src('popup/src/index.html')
     .pipe(plugins.rename('popup.html'))
@@ -76,14 +61,12 @@ gulp.task('clean', (cb) => {
   rimraf('./build', cb);
 });
 
-gulp.task('build', ['copy-manifest', 'popup-js', 'popup-html', 'event-js', 'options-js', 'options-html', 'content-js']);
+gulp.task('build', ['copy-manifest', 'popup-js', 'popup-html', 'event-js', 'options-js', 'options-html']);
 
 gulp.task('watch', ['default'], () => {
   gulp.watch('popup/**/*', ['build']);
-  gulp.watch('content/**/*', ['build']);
   gulp.watch('event/**/*', ['build']);
   gulp.watch('options/**/*', ['build']);
-
 });
 
 gulp.task('default', ['build']);

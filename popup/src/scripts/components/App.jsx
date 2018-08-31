@@ -52,36 +52,33 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
-        <DragDropContext 
-          onDragStart={() => this.onDragStart()}
-          onDragEnd={(result) => this.onDragEnd(result)}
-        >
-          <div className='app'>
-            <Navbar
-              handleCreateWindow={() => this.props.createWindow()}
-              handleOpenSettingsPage={this.handleOpenSettingsPage}
-            />
-            <Searchbar />
-            <div className="window-list">
-              {this.props.windows && this.props.windows.length != 0 ?
-                this.props.windows.map((chromeWindow) => 
-                  <Window 
-                    key={chromeWindow.id} 
-                    tabs={chromeWindow.tabs} 
-                    windowId={chromeWindow.id}  
-                    isDragging={this.state.isDragging}
-                    windows={this.props.windows}
+      <DragDropContext 
+        onDragStart={() => this.onDragStart()}
+        onDragEnd={(result) => this.onDragEnd(result)}
+        className='app'
+      >
+        <Navbar
+          handleCreateWindow={() => this.props.createWindow()}
+          handleOpenSettingsPage={this.handleOpenSettingsPage}
+        />
+        <Searchbar />
+        <div className="window-list">
+          {this.props.windows && this.props.windows.length != 0 ?
+            this.props.windows.map((chromeWindow) => 
+              <Window 
+                key={chromeWindow.id} 
+                tabs={chromeWindow.tabs} 
+                windowId={chromeWindow.id}  
+                isDragging={this.state.isDragging}
+                windows={this.props.windows}
 
-                  />
-                )
-                :
-                <p>I didn't found anything :(</p>
-              }
-            </div>
-          </div>
-        </DragDropContext>
-      </div>
+              />
+            )
+            :
+            <p className="window-list--empty" >I didn't found anything :(</p>
+          }
+        </div>
+      </DragDropContext>
     );
   };
 };

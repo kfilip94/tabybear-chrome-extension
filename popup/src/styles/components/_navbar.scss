@@ -4,7 +4,10 @@
     display: flex;
     height: 38px;
     justify-content: space-between;
-    padding: 0 10px;
+    // position: absolute;
+    width: 94%;
+    z-index: 2;
+    padding: 0 3%;
 
     &__title {
         color: white;

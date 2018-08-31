@@ -17,7 +17,9 @@ body {
 }
 
 .app {
-    position: relative;
+    // position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
 ::-webkit-scrollbar {
