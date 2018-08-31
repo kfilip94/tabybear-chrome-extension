@@ -24,12 +24,5 @@
     "tabs",
     "bookmarks", 
     "storage"
-  ],
-  "content_scripts": [
-    {
-      "matches": ["*://*/*"],
-      "css": [],
-      "js": ["content.js"]
-    }
   ]
 }

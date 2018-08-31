@@ -3,37 +3,32 @@
 @import './components/_navbar';
 @import './components/_searchbar';
 @import './components/_tab';
+@import './components/_tab-checkbox';
 @import './components/_window';
 @import './components/_window-list';
 @import './components/_action-bar';
 
-
 body {
-    background: #E5E5E5;
-    border-radius: 4;
-    margin: 0;
-    min-height: 450px;
-    width: 340px;
+	background: $white;
+	border-radius: 4;
+	margin: 0;
+	min-height: 450px;
+	width: 340px;
 }
 
 .app {
-    // position: relative;
-    display: flex;
-    flex-direction: column;
+	display: flex;
+	flex-direction: column;
+	height: 500px;
 }
 
 ::-webkit-scrollbar {
-    width: 4px;
+	width: 4px;
 }
  
-/* Track */
-::-webkit-scrollbar-track {   
-}
- 
-/* Handle */
 ::-webkit-scrollbar-thumb {
     -webkit-border-radius: 4px;
     border-radius: 4px;
-    background: $light-grey; 
+    background: $blue; 
     -webkit-box-shadow: inset 0 0 6px $light-grey; 
 }

@@ -32,7 +32,7 @@ const countTabsInWindow = (state, windowId) => {
   } catch(error) {
     return 0;
   }
-}
+};
 
 const getCheckedTabsInWindow = (checkedTabs, props) => {
   return [...checkedTabs.filter(({ windowId }) => windowId === props.windowId).map(({id}) => id)];
@@ -71,12 +71,12 @@ const getBookmarksDataArr = ({checkedTabs}, props) => {
 const areAllTabsInWindowPinned = ({checkedTabs}, props) => {
   try {
     return props.windows.find(({ id }) => id === props.windowId)
-      .tabs.filter(({id}) => getCheckedTabsInWindow(checkedTabs, props).includes(id))
-      .every(({pinned}) => pinned);
-    } catch(error) {
-      return false;
-    }
-  }
+    .tabs.filter(({id}) => getCheckedTabsInWindow(checkedTabs, props).includes(id))
+    .every(({pinned}) => pinned);
+  } catch(error) {
+    return false;
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -91,7 +91,6 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state, props) => {
   return {
-    // windows: state.windows,
     tabsCount: countTabsInWindow(state, props.windowId),
     isEditModeEnabled: isEditModeEnabled(state, props),
     bookmarksDataArr: getBookmarksDataArr(state, props),

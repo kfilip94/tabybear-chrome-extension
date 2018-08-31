@@ -57,7 +57,7 @@ class Window extends React.Component {
           }
         </Droppable>
         <button
-          className="window__bottom-btn"
+          className="window__new-tab"
           onClick={() => this.props.createTab(this.props.windowId)}
         >
           + Open new tab

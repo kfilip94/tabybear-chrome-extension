@@ -20,6 +20,6 @@ console.log(proxyStore);
 // });
 proxyStore.ready().then(() => {
   render(
-     <Provider store={proxyStore}><App className="app" /></Provider>, document.getElementById('app'));
+     <Provider store={proxyStore}><App/></Provider>, document.getElementById('app'));
 });
 

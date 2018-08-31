@@ -1,34 +1,31 @@
 .searchbar {
-    background: $dark-blue;
-    display: flex;
-    align-items: center;
-    // padding: 8px 20px 20px 20px;
-    // position: absolute;
-    width: 94%;
-    top: 38px;
-    padding: 0 3% 0 3%;
-    z-index: 2;
-    height: 32px;
+	align-items: center;
+	background: $dark-blue;
+	display: flex;
+	height: 32px;
+	margin-bottom: 10px;
+	padding: 4px 6% 6px;
+	top: 38px;
+	z-index: 2;
 
-    &__icon {
-        color: $white;
-    }
+	&__icon {
+		color: $white;
+	}
 
-    &__input {
-        background: transparent;
-        border: 0;
-        // border-bottom: 1px solid white;
-        color: white;
-        font-style: italic;
-        flex-grow: 1;
-        height: 20px;
-        outline: none;
-        margin-left: 8px;
-        
-        &:placeholder {
-            color: $grey;
-            font-style: italic;
-            opacity: 0.3;
-        }
-    }
+	&__input {
+		background: transparent;
+		border: 0;
+		color: white;
+		font-style: italic;
+		flex-grow: 1;
+		height: 20px;
+		outline: none;
+		margin-left: 8px;
+		
+		&:placeholder {
+			color: $grey;
+			font-style: italic;
+			opacity: 0.3;
+		}
+	}
 }

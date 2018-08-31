@@ -1,38 +1,34 @@
 .window {
-    background:white;
-    border-radius: 4px;
-    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-    display: flex;
-    flex-direction: column;
-    height: auto;
-    margin-bottom: 20px;
-    width: 94%;
-    height: 100%;
-    margin: auto;
-    margin-bottom: 16px;
+	background:white;
+	border-radius: 4px;
+	box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	margin: auto;
+	margin-bottom: 16px;
+	width: 94%;
 
-    &__tab-list{
-        background: white;
-        border-radius: 0 0 4px 4px;
-        // max-height: 350px;
-        // overflow-y: scroll;
-        padding: 8px 0;
-        width: auto;
-    }
+	&__tab-list{
+		background: white;
+		border-radius: 0 0 4px 4px;
+		padding: 8px 0;
+		width: auto;
+	}
 
-    &__bottom-btn {
-        background: white;
-        border: 0px;
-        border-radius: 0 0 4px 4px;
-        border-top: 1px solid $grey;
-        color: $blue;
-        cursor: pointer;
-        outline: 0;
-        padding: 6px 0;
+	&__new-tab {
+		background: white;
+		border: 0px;
+		border-radius: 0 0 4px 4px;
+		border-top: 1px solid $grey;
+		color: $blue;
+		cursor: pointer;
+		outline: 0;
+		padding: 6px 0;
 
-        &:hover{
-            color: $light-blue;
-        }
-    }
+		&:hover{
+			color: $light-blue;
+		}
+	}
 }
 

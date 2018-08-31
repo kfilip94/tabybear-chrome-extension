@@ -1,29 +1,25 @@
 .button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    outline: 0;
-    color: $white;
-    font-size: 13px;
-    
-    &--cog{
-        color: $white;
-        font-size: 18px;
-    }
+	background: none;
+	border: none;
+	color: $white;
+	cursor: pointer;
+	display: flex;
+	font-size: 13px;
+	outline: 0;
 
-    &--plus-square{
-        color: $white;
-        font-size: 18px;
-    }
+	&:hover {
+		color: $yellow;
+		transition: all 100ms;
+	}
 
-    &--white {
-        &:hover {
-            color: $blue;
-            transition: all 100ms;
-        }
-    }
-    transition: all 100ms;
+	&--navbar {
+		font-size: 18px;
+	}
 
-    
+	&--white {
+		&:hover {
+			color: $blue;
+			transition: all 100ms;
+		}
+	}
 } 

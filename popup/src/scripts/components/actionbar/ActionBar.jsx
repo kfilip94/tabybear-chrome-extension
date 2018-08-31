@@ -1,11 +1,11 @@
 import React from "react";
 import classNames from "classnames";
 import Button from "../Button";
-import EditActionBar from './EditActionBar';
+import TabsActions from './TabsActions';
 import { faTimes, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 
 const actionBarClassNames = isEditModeEnabled => 
-classNames("action-bar", { "action-bar--green": isEditModeEnabled })
+classNames("action-bar", { "action-bar--edit": isEditModeEnabled })
 
 const counterClassNames = isEditModeEnabled =>
 classNames("action-bar__counter", { "action-bar__counter--edit": isEditModeEnabled})
@@ -23,7 +23,7 @@ const ActionBar = props => (
           handleClick={props.handleSelectAll}
         />
         { props.isEditModeEnabled && 
-          <EditActionBar 
+          <TabsActions 
             windowId={props.windowId}
             isEditModeEnabled={props.isEditModeEnabled}
             handleSelectAll={props.handleSelectAll}
