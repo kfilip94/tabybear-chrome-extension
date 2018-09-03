@@ -13,16 +13,14 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 	userSelect: 'none',
 	padding: '10px',
 	margin: '0 0 10px 0',
-	background: isDragging ? 'lightgreen' : 'grey',
+  background: isDragging ? 'lightgreen' : 'grey',
+  border: isDragging ? '1px solid #CCA43B' : '0',
 	...draggableStyle,
 });
 
 class Window extends React.Component {
-	state = {
-		isDraggingOver: false,
-	};
-
   render() {
+    console.log('WINDOW: this.props.isDragging: ',this.props.isDragging);
     return (
       <div className="window">
         <ActionBar 
@@ -45,7 +43,7 @@ class Window extends React.Component {
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                       >
-                        <Tab tab={tab} isDragging={snapshotDraggable.isDragging} isWindowDragging={this.props.isDragging}/>
+                        <Tab tab={tab} isDragging={snapshotDraggable.isDragging} />
                       </div>
                       {provided.placeholder}
                     </div>

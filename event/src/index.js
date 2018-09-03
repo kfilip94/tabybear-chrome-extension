@@ -3,7 +3,7 @@ import thunk from 'redux-thunk'
 import aliases from './aliases';
 import rootReducer from './reducers';
 import { wrapStore, alias } from 'react-chrome-redux';
-import { createTab, removeTab, clearActive, updateTab } from '../../popup/src/scripts/actions/tabs';
+import { createTab, removeTab, setTabActive, updateTab } from '../../popup/src/scripts/actions/tabs';
 import { createWindow, removeWindow, updateTabsOrderRequest } from '../../popup/src/scripts/actions/windows';
 
 import { createLogger } from 'redux-logger';
@@ -57,8 +57,7 @@ chrome.tabs.onRemoved.addListener((tabId) => {
 
 chrome.tabs.onActivated.addListener(({tabId, windowId}) => {
   console.log('tabs.onActivated');
-  store.dispatch(clearActive(windowId));
-  store.dispatch(updateTab(tabId, { active: true }));
+  store.dispatch(setTabActive(tabId, windowId));
 });
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {

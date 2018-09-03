@@ -7,11 +7,9 @@ import { setWindowsRequest, createWindowRequest  } from '../actions/windows';
 import { moveTabRequest, moveTabsRequest, moveTabs } from '../actions/tabs';
 import selectTabs from '../selectors/tabs';
 import { DragDropContext } from 'react-beautiful-dnd';
+import * as actionsDrag from '../actions/drag';
 
 class App extends React.Component {
-  state = {
-    isDragging: false
-  };
 
   componentDidMount() {
     console.log('component did mount!');
@@ -26,11 +24,10 @@ class App extends React.Component {
   }
 
   onDragStart() {
-    this.setState(() => ({ isDragging: true }));
   }
 
   onDragEnd({draggableId, source, destination}) {
-    this.setState(() => ({ isDragging: false }));
+
 
     if(destination && destination.droppableId){
       const tabId = parseInt(draggableId);
@@ -54,8 +51,14 @@ class App extends React.Component {
     return (
       <div className="app">
         <DragDropContext 
-          onDragStart={() => this.onDragStart()}
-          onDragEnd={(result) => this.onDragEnd(result)}
+          onDragStart={() => {
+            this.props.startDragging();
+            this.onDragStart()}
+          }
+          onDragEnd={(result) => {
+            this.props.stopDragging();
+            this.onDragEnd(result)}
+          }
 
           className={this.props.className}
         >
@@ -71,9 +74,7 @@ class App extends React.Component {
                   key={chromeWindow.id} 
                   tabs={chromeWindow.tabs} 
                   windowId={chromeWindow.id}  
-                  isDragging={this.state.isDragging}
                   windows={this.props.windows}
-
                 />
               )
               :
@@ -92,7 +93,9 @@ const mapDispatchToProps = (dispatch) => {
     moveTab: (id, windowId, newWindowId, index) => { dispatch(moveTabRequest(id, windowId, newWindowId, index)) },
     moveTabStore: (id, windowId, newWindowId, index) => { dispatch(moveTabStore(id, windowId, newWindowId, index)) },
     moveTabs: (checkedTabs, newWindowId, index) => { dispatch(moveTabsRequest(checkedTabs, newWindowId, index)) },
-    setWindows: () => { dispatch(setWindowsRequest()) }
+    setWindows: () => { dispatch(setWindowsRequest()) },
+    startDragging: () => { dispatch(actionsDrag.startDragging()) },
+    stopDragging: () => { dispatch(actionsDrag.stopDragging()) }
   };
 };
 

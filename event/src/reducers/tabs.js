@@ -1,29 +1,29 @@
 const defaultWindowsState = [];
 
 export default (state = defaultWindowsState, action) => {
-  
   switch(action.type){
+
     case 'CREATE_TAB':
-      return state.map(chromeWindow => {
-        if(chromeWindow.id === action.tab.windowId){
-          if(chromeWindow.tabs){
-            if(chromeWindow.tabs.every(({id}) => id !== action.tab.id))
-              return {...chromeWindow, tabs: [...chromeWindow.tabs, action.tab]};
+      return state.map(window => {
+        if(window.id === action.tab.windowId){
+          if(window.tabs){
+            if(window.tabs.every(({id}) => id !== action.tab.id))
+              return {...window, tabs: [...window.tabs, action.tab]};
             else 
-              return chromeWindow;
-          }
+              return window;
+           }
           else {
-            return {...chromeWindow, tabs: [action.tab]};
+            return {...window, tabs: [action.tab]};
           }
         } else {
-          return chromeWindow;
+          return window;
         }
       });
 
     case 'UPDATE_TAB':
-      return state.map(chromeWindow => 
-        Object.assign({}, chromeWindow,{
-          'tabs': chromeWindow.tabs ? chromeWindow.tabs.map((tab) => {
+      return state.map(window => 
+        Object.assign({}, window,{
+          'tabs': window.tabs ? window.tabs.map((tab) => {
             if(tab.id === action.id) 
               return {...tab, ...action.updatedTab };
             else
@@ -33,33 +33,27 @@ export default (state = defaultWindowsState, action) => {
       );
       
     case 'MOVE_TAB':
-      return state.map(chromeWindow => {
-        if(chromeWindow.id === action.windowId)
-          return {...chromeWindow, tabs: chromeWindow.tabs.filter((tab) => tab.id !== action.id)};
-
-        else if(chromeWindow.id === action.newWindowId)
-          return {...chromeWindow, tabs: [...chromeWindow.tabs, action.tab]}
-
+      return state.map(window => {
+        if(window.id === action.windowId)
+          return {...window, tabs: window.tabs.filter((tab) => tab.id !== action.id)};
+        else if(window.id === action.newWindowId)
+          return {...window, tabs: [...window.tabs, action.tab]}
         else
-          return chromeWindow;
+          return window;
       });
 
     case 'SET_TAB_ACTIVE': 
-      return state.map(chromeWindow => {
-        if(chromeWindow.id === action.windowId) {
-          const tabs = chromeWindow.tabs.map((tab) => {
-              return {...tab, 'active': tab.id === action.id }
-          });
-          return {...chromeWindow, 'tabs': tabs};
-        } else {
-          return chromeWindow;
-        }
-      });
+      return state.map(window => 
+        Object.assign({}, window,
+          { 'tabs': window.id === action.windowId ? 
+            window.tabs.map((tab) =>  ({...tab, 'active': tab.id === action.id })) : window.tabs
+          })
+      );      
     
     case 'UPDATE_MULTIPLE_TABS':
-      return  state.map(chromeWindow => 
-        Object.assign({}, chromeWindow,{
-          'tabs': chromeWindow.tabs ? chromeWindow.tabs.map((tab) => {
+      return  state.map(window => 
+        Object.assign({}, window,{
+          'tabs': window.tabs ? window.tabs.map((tab) => {
             if(action.updatedTabIdArr.includes(tab.id))
               return  {...tab, ...action.updatedTab };
             else
@@ -72,59 +66,44 @@ export default (state = defaultWindowsState, action) => {
       const checkedTabsIdArr = action.checkedTabs.map(({id}) => id);
       const checkedWindowsIdArr = [...new Set(action.checkedTabs.map(({windowId}) => windowId))];
 
-      const removedOldTabsState = state.map(chromeWindow => {
-        if(checkedWindowsIdArr.includes(chromeWindow.id)) {
-          return {...chromeWindow, tabs: chromeWindow.tabs.filter((tab) => !checkedTabsIdArr.includes(tab.id))};
-        } else {
-          return chromeWindow;
-        }});
+      const removedOldTabsState = state.map(window => {
+        if(checkedWindowsIdArr.includes(window.id)) 
+          return {...window, tabs: window.tabs.filter((tab) => !checkedTabsIdArr.includes(tab.id))};
+         else 
+          return window;
+        });
       
-      return removedOldTabsState.map(chromeWindow => {
-        if(chromeWindow.id === action.newWindowId) 
-          return {...chromeWindow, tabs: [...chromeWindow.tabs, ...action.tabArr]}
+      return removedOldTabsState.map(window => {
+        if(window.id === action.newWindowId) 
+          return {...window, tabs: [...window.tabs, ...action.tabArr]}
         else
-          return chromeWindow;
+          return window;
       });
-
-   
-    case 'CLEAR_ACTIVE':
-      return state.map(chromeWindow => {
-        if(chromeWindow.id === action.windowId)
-          return {...chromeWindow, tabs: chromeWindow.tabs.map((tab) => { return {...tab, active: false };})};
-        else
-          return chromeWindow
-      });
-    
 
     case 'UPDATE_TABS_ORDER':
-      return state.map(chromeWindow => {
-            if(chromeWindow.id === action.windowId) {
-              const updatedTabs = chromeWindow.tabs.map((tab) => {
-                const updateInfo = action.indexArr.find(({id}) => tab.id === id);
-                return {...tab, index: updateInfo.index }  
-              });
-              return {...chromeWindow, tabs: updatedTabs};
-            }
-            else 
-              return chromeWindow;
+      return state.map(window => {
+        if(window.id === action.windowId) {
+          const updatedTabs = window.tabs.map((tab) => {
+            const updateInfo = action.indexArr.find(({id}) => tab.id === id);
+            return {...tab, index: updateInfo.index }  
+          });
+          return {...window, tabs: updatedTabs};
+        }
+        else 
+          return window;
       });
 
     case 'REMOVE_TAB':
-      return state.map(chromeWindow => 
-        Object.assign({}, chromeWindow, {
-          'tabs': chromeWindow.tabs.filter((tab) => 
-            tab.id !== action.id
-          )
+      return state.map(window => 
+        Object.assign({}, window, {
+          'tabs': window.tabs.filter((tab) => tab.id !== action.id)
         })
       );
 
-
     case 'REMOVE_TABS':
-      return state.map(chromeWindow => 
-          Object.assign({}, chromeWindow,{
-            'tabs': chromeWindow.tabs.filter((tab) => 
-              !action.idArr.includes(tab.id)
-            )
+      return state.map(window => 
+        Object.assign({}, window,{
+          'tabs': window.tabs.filter((tab) => !action.idArr.includes(tab.id))
         })
       );
 
@@ -132,18 +111,3 @@ export default (state = defaultWindowsState, action) => {
       return state;
   };
 };
-
-
-// case 'MOVE_TAB_STORE':
-// let movedTab = state.find(({id}) => id === action.windowId).tabs.find(({id}) => id === action.id);
-// movedTab = { ...movedTab, index: action.index, windowId: action.newWindowId }
-
-// return state.map(chromeWindow => {
-//   if(chromeWindow.id === action.windowId) {
-//     return {...chromeWindow, tabs: chromeWindow.tabs.filter((tab) => tab.id !== action.id)};
-//   } else if(chromeWindow.id === action.newWindowId) {
-//     return {...chromeWindow, tabs: [...chromeWindow.tabs, movedTab]}
-//   } else {
-//     return chromeWindow;
-//   }
-// });

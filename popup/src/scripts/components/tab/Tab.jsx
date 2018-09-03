@@ -11,7 +11,7 @@ const tabClassNames = isInDraggedGroup =>
   });
 
 const Tab = props => (
-    <div className={tabClassNames(props.isChecked && props.isWindowDragging && !props.isDragging)}>
+    <div className={tabClassNames(props.isChecked && props.drag && !props.isDragging)}>
       <TabCheckbox 
         tab={props.tab} 
         isChecked={props.isChecked}

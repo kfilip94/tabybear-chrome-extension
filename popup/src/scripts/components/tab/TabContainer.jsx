@@ -22,6 +22,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state, props) => {
   return {
     isChecked: state.checkedTabs.some(({ id }) => id === props.tab.id),
+    drag: state.drag,
     checkedTabsLength: state.checkedTabs.length
   };
 };
