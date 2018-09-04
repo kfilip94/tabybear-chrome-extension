@@ -28,7 +28,7 @@ export const setBookmarksFolderId = (newBookmarkFolderId) => new Promise(resolve
 export const restoreDefaultSettings = () => {
   const newTabUrl = "https://google.com";
   const newBookmarkFolderId = "1";
-  setSettings(newTabUrl, newBookmarkFolderId);
+  return setSettings(newTabUrl, newBookmarkFolderId);
 };
 
 export const getSettings = () => new Promise(resolve =>
@@ -38,13 +38,11 @@ export const getSettings = () => new Promise(resolve =>
 export const getBookmarksTree = () => new Promise(resolve =>
   chrome.bookmarks.getTree((bookmarksTree) => {
     const bookmarksFolders = getFolders(bookmarksTree).filter(({id}) => id !== "0");
-    console.log('bookmarksFolders:');
-    console.log(bookmarksFolders);
     resolve(bookmarksFolders);
   })
 );
 
-export const getFolders = (childrens) => {
+export const getFolders = childrens => {
   return [].concat.apply([], childrens.filter((tree) => tree.children !== undefined)
     .map(({id, title, children}) => {
       return [{ id, title }, ...getFolders(children)];
@@ -52,6 +50,6 @@ export const getFolders = (childrens) => {
   ));
 };
 
-const validateUrl = (url) => {
-  return url.startsWith('http://') || url.startsWith('https://') ? url : `http://${url}`;
+const validateUrl = url => {
+  return url;
 }

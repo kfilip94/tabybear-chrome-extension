@@ -1,4 +1,3 @@
-//CREATE TAB
 export const createTabRequest = (windowId) => ({
   type: 'CREATE_TAB_REQUEST',
   windowId
@@ -9,8 +8,6 @@ export const createTab = (tab) => ({
   tab
 });
 
-
-//UPDATE TAB
 export const updateTab = (id, updatedTab) => ({
   type: 'UPDATE_TAB',
   id,
@@ -51,11 +48,6 @@ export const setTabActive = (id, windowId) => ({
   id, windowId
 });
 
-export const clearActive = (windowId) => ({
-  type: 'CLEAR_ACTIVE',
-  windowId
-});
-
 export const moveTabRequest = (id, windowId, newWindowId, index) => ({
   type: 'MOVE_TAB_REQUEST',
   id, windowId, newWindowId, index
@@ -71,18 +63,11 @@ export const moveTab = (id, windowId, newWindowId, tab) => ({
   id, windowId, newWindowId, tab
 });
 
-export const moveTabStore = (id, windowId, newWindowId, index) => ({
-  type: 'MOVE_TAB_STORE',
-  id, windowId, newWindowId, index
-
-});
-
 export const moveTabs = (checkedTabs, newWindowId, tabArr) => ({
   type: 'MOVE_TABS',
   checkedTabs, newWindowId, tabArr
 });
 
-//REMOVE TAB
 export const removeTabRequest = (id) => ({
   type: 'REMOVE_TAB_REQUEST',
   id

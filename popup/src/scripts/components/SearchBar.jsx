@@ -1,12 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import Button from './Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
-import { connect } from 'react-redux';
-import { setTextFilter } from '../actions/filters';
-import Button from './Button';
-import { clearSelection } from '../actions/checkedTabs';
+import { setTextFilter } from '../../../../event/src/reducers/filters';
+import { uncheckAll } from '../../../../event/src/reducers/checkedTabs';
 
-const Searchbar = (props) => (
+const Searchbar = props => (
   <div className="searchbar">
 		<FontAwesomeIcon 
 			className="searchbar__icon" 
@@ -18,8 +18,8 @@ const Searchbar = (props) => (
       placeholder="Type search..."
       value={props.filters.text}
       onChange={(e) => {
-        props.dispatch(setTextFilter(e.target.value));
-        props.dispatch(clearSelection())
+        props.setTextFilter(e.target.value);
+        props.clearSelection();
       }}
     />
     { props.filters.text &&
@@ -27,16 +27,23 @@ const Searchbar = (props) => (
         className="button button--small"
         title="Clear"
         icon={faTimesCircle}
-        handleClick={() => props.dispatch(setTextFilter())}
+        handleClick={() => props.setTextFilter("")}
       />
     }
   </div>
 );
 
-const mapStateToProps = (state) => {
+const mapDispatchToProps = dispatch => {
   return {
-    filters: state.filters
-  }
+    clearSelection: () => { dispatch(uncheckAll()) },
+    setTextFilter: (filterText) => { dispatch(setTextFilter(filterText)) },
+  };
 };
 
-export default connect(mapStateToProps)(Searchbar);
+const mapStateToProps = state => {
+  return {
+    filters: state.filters
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Searchbar);

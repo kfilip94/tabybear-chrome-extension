@@ -2,12 +2,10 @@
 	align-items: center;
 	max-height: 526px;
 	overflow-y: scroll;
-	top: 70px;
-	width: 100%;
 
 	&--empty {
 		color: $blue;
-		font-size: 16px;
+		font-size: medium;
 		text-align: center;
 		width: 100%;
 	}

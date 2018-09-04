@@ -1,14 +1,15 @@
-const defaultDraggingState = false;
+import { createAction, handleActions } from 'redux-actions';
 
-export default (state = defaultDraggingState, action) => {
-  switch(action.type){
-    case 'START_DRAGGING':
-      return true;
+const defaultDragState = { drag: false };
 
-    case 'STOP_DRAGGING':
-      return false;
+export const startDragging = createAction('START_DRAGGING');
+export const stopDragging = createAction('STOP_DRAGGING');
 
-    default:
-      return state;
-  }
-};
+export default handleActions({
+  [startDragging](state) {
+    return true;
+  },
+  [stopDragging](state) {
+    return false;
+  },
+}, defaultDragState);

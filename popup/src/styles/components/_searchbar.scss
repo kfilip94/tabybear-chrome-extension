@@ -2,10 +2,9 @@
 	align-items: center;
 	background: $dark-blue;
 	display: flex;
-	height: 32px;
+	height: 2rem;
 	margin-bottom: 10px;
-	padding: 4px 6% 6px;
-	top: 38px;
+	padding: 0.4rem 6% 0.5rem;
 	z-index: 2;
 
 	&__icon {
@@ -18,9 +17,9 @@
 		color: white;
 		font-style: italic;
 		flex-grow: 1;
-		height: 20px;
+		height: 1.5rem;
 		outline: none;
-		margin-left: 8px;
+		margin-left: 0.5rem;
 		
 		&:placeholder {
 			color: $grey;

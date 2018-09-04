@@ -1,33 +1,32 @@
 .window {
 	background:white;
-	border-radius: 4px;
-	box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+	border-radius: 0.4rem;
+	box-shadow: 0px 0px 0.4rem rgba(0, 0, 0, 0.25);
 	display: flex;
 	flex-direction: column;
-	height: 100%;
 	margin: auto;
-	margin-bottom: 16px;
+	margin-bottom: 1rem;
 	width: 94%;
 
 	&__tab-list{
 		background: white;
-		border-radius: 0 0 4px 4px;
-		padding: 8px 0;
+		border-radius: 0 0  0.4rem 0.4remx;
+		padding: 0.5rem 0;
 		width: auto;
 	}
 
 	&__new-tab {
 		background: white;
 		border: 0px;
-		border-radius: 0 0 4px 4px;
+		border-radius: 0 0 0.4rem 0.4rem;
 		border-top: 1px solid $grey;
 		color: $blue;
 		cursor: pointer;
 		outline: 0;
-		padding: 6px 0;
+		padding: 0.5rem 0;
 
 		&:hover{
-			color: $light-blue;
+			color: $yellow;
 		}
 	}
 }

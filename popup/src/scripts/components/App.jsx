@@ -4,10 +4,10 @@ import Navbar from './Navbar';
 import Searchbar from './SearchBar';
 import Window from './windows/WindowContainer'
 import { setWindowsRequest, createWindowRequest  } from '../actions/windows';
-import { moveTabRequest, moveTabsRequest, moveTabs } from '../actions/tabs';
+import { moveTabRequest, moveTabsRequest } from '../actions/tabs';
 import selectTabs from '../selectors/tabs';
 import { DragDropContext } from 'react-beautiful-dnd';
-import * as actionsDrag from '../actions/drag';
+import * as actionsDrag from '../../../../event/src/reducers/drag';
 
 class App extends React.Component {
 
@@ -24,22 +24,21 @@ class App extends React.Component {
   }
 
   onDragStart() {
+    this.props.startDragging();
   }
 
   onDragEnd({draggableId, source, destination}) {
-
+    this.props.stopDragging();
 
     if(destination && destination.droppableId){
       const tabId = parseInt(draggableId);
       const newWindowId = parseInt(destination.droppableId);
       const windowId = parseInt(source.droppableId);
 
-      if(this.props.checkeTabsIds.includes(parseInt(tabId))){
+      if(this.props.checkeTabsIds.includes(parseInt(tabId)))
         this.props.moveTabs(this.props.checkedTabs, newWindowId, destination.index);
-      }
-      else {
+      else 
         this.props.moveTab(tabId, windowId,  newWindowId, destination.index);
-      }
     }
   };
 
@@ -51,15 +50,8 @@ class App extends React.Component {
     return (
       <div className="app">
         <DragDropContext 
-          onDragStart={() => {
-            this.props.startDragging();
-            this.onDragStart()}
-          }
-          onDragEnd={(result) => {
-            this.props.stopDragging();
-            this.onDragEnd(result)}
-          }
-
+          onDragStart={() => this.onDragStart()}
+          onDragEnd={(result) => this.onDragEnd(result)}
           className={this.props.className}
         >
           <Navbar
@@ -76,9 +68,7 @@ class App extends React.Component {
                   windowId={chromeWindow.id}  
                   windows={this.props.windows}
                 />
-              )
-              :
-              <p className="window-list--empty" >I didn't found anything :(</p>
+              ) : <p className="window-list--empty" >I didn't found anything :(</p>
             }
           </div>
         </DragDropContext>

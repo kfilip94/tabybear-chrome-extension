@@ -1,11 +1,11 @@
 import * as promises from '../chrome-services/bookmarks';
-import { clearWindowSelection } from '../../../popup/src/scripts/actions/checkedTabs';
+import { uncheckWindow } from '../reducers/checkedTabs';
 
-const createMultipleBookmarksAlias = (originalAction) => {
+const createMultipleBookmarksAlias = ({ windowId, bookmarkDataArr }) => {
   return (dispatch) => {
-    const bookmarkPromises = originalAction.bookmarkDataArr.map(({title, url}) => promises.createBookmarkPromise(title, url));
+    const bookmarkPromises = bookmarkDataArr.map(({title, url}) => promises.createBookmarkPromise(title, url));
     return Promise.all(bookmarkPromises)
-      .then(() => dispatch(clearWindowSelection(originalAction.windowId)))
+      .then(() => dispatch(uncheckWindow(windowId)))
   };
 };
 

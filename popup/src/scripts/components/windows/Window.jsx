@@ -18,51 +18,46 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 	...draggableStyle,
 });
 
-class Window extends React.Component {
-  render() {
-    console.log('WINDOW: this.props.isDragging: ',this.props.isDragging);
-    return (
-      <div className="window">
-        <ActionBar 
-          windowId={this.props.windowId}
-          windows={this.props.windows}
-        />
-        <Droppable droppableId={`${this.props.windowId}`} className="window__tab-list">
-          {(provided, snapshot) => 
-            <div
-              ref={provided.innerRef}
-              style={getListStyle(snapshot.isDraggingOver)}
-            >
-              {this.props.tabs && this.props.tabs.map((tab) => 
-                <Draggable key={`${tab.id}`} draggableId={`${tab.id}`} index={tab.index}>
-                  {(provided, snapshotDraggable) => 
-                    <div>
-                      <div
-                        ref={provided.innerRef}
-                        style={getItemStyle(snapshotDraggable.isDragging,provided.draggableProps.style)}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                      >
-                        <Tab tab={tab} isDragging={snapshotDraggable.isDragging} />
-                      </div>
-                      {provided.placeholder}
-                    </div>
-                  }
-                </Draggable>)
-              }
-              {provided.placeholder}
-            </div>
-          }
-        </Droppable>
-        <button
-          className="window__new-tab"
-          onClick={() => this.props.createTab(this.props.windowId)}
+const Window = props => (
+  <div className="window">
+    <ActionBar 
+      windowId={props.windowId}
+      windows={props.windows}
+    />
+    <Droppable droppableId={`${props.windowId}`} className="window__tab-list">
+      {(provided, snapshot) => 
+        <div
+          ref={provided.innerRef}
+          style={getListStyle(snapshot.isDraggingOver)}
         >
-          + Open new tab
-        </button>
-      </div>
-    );
-  };
-};
+          {props.tabs && props.tabs.map((tab) => 
+            <Draggable key={`${tab.id}`} draggableId={`${tab.id}`} index={tab.index}>
+              {(provided, snapshotDraggable) => 
+                <div>
+                  <div
+                    ref={provided.innerRef}
+                    style={getItemStyle(snapshotDraggable.isDragging,provided.draggableProps.style)}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                  >
+                    <Tab tab={tab} isDragging={snapshotDraggable.isDragging} />
+                  </div>
+                  {provided.placeholder}
+                </div>
+              }
+            </Draggable>)
+          }
+          {provided.placeholder}
+        </div>
+      }
+    </Droppable>
+    <button
+      className="window__new-tab"
+      onClick={() => props.createTab(props.windowId)}
+    >
+      + Open new tab
+    </button>
+  </div>
+);
 
 export default Window;

@@ -51,13 +51,13 @@ export default (state = defaultWindowsState, action) => {
       );      
     
     case 'UPDATE_MULTIPLE_TABS':
-      return  state.map(window => 
+      return state.map(window => 
         Object.assign({}, window,{
           'tabs': window.tabs ? window.tabs.map((tab) => {
-            if(action.updatedTabIdArr.includes(tab.id))
+            // if(action.updatedTabIdArr.includes(tab.id))
               return  {...tab, ...action.updatedTab };
-            else
-              return tab;
+            // else
+            //   return tab;
           }) : []
         })
       );

@@ -2,8 +2,7 @@
   align-items: center;
   background: white;
   display: inline-flex;
-  height: 30px;
-  padding: 6px 0;
+  height: 2.5rem;
   width: 100%;
 
   &__title {
@@ -11,7 +10,7 @@
     display: inline-flex;
     height: 100%;
     overflow: hidden;
-    padding-left: 16px;
+    padding-left: 1rem;
     text-overflow: ellipsis;
     white-space: nowrap;
     width: 70%;
@@ -28,23 +27,23 @@
   &__close {
     color: $blue;
     display: none;
-    margin: 8px;
+    margin: 0.5rem;
   }
 
   &__dragged-counter {
     align-items: center;
     background: $blue;
     color: white;
-    border-radius: 16px;
+    border-radius: 1rem;
     display: flex;
-    font-size: 12px;
-    height: 20px;
+    font-size: 0.8rem;
+    height: 1.25rem;
     justify-content: center;
     position: absolute;
-    right: -4px;
+    right: -0.5rem;
     text-align: center;
-    top: -4px;
-    width: 20px;
+    top: -0.5rem;
+    width: 1.25rem;
   }
 
   &--dragged {

@@ -1,11 +1,11 @@
 .action-bar {
   align-items: center;
   background: $blue;
-  border-radius: 4px 4px 0 0;
+  border-radius: 0.3rem 0.3rem 0 0;
   display: flex;
-  height: 34px;
+  height: 2rem;
   justify-content: space-between;
-  padding: 0 10px 0 18px;
+  padding: 0 1rem 0 1.1rem;
   position: sticky;
   top: 0;
   z-index: 1;
@@ -18,8 +18,8 @@
     .action-bar__tabs-actions {
       display: flex;
       align-items: center;
-      padding-left: 4px;
-      margin: 0 4px;
+      padding-left: 0.3rem;
+      margin: 0 0.3rem;
       color: $white;
       border-left: 1px solid #E5E5E5;
     }
@@ -27,15 +27,15 @@
     .action-bar__counter {
       align-items: center;
       background: $grey;
-      border-radius: 8px;
+      border-radius: 0.5rem;
       color: $blue;
       display: flex;
       font-size: x-small;
       font-weight: bold;
-      height: 15px;
+      height: 1rem;
       justify-content: center;
-      padding: 0 6px;
-      margin-right: 8px;
+      padding: 0 0.5rem;
+      margin-right: 0.6rem;
       width: auto;
 
       &--edit {

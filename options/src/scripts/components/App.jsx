@@ -9,20 +9,32 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    console.log('component did mount!');
     storage.getBookmarksTree()
       .then((bookmarkFolders) => 
-        this.setState(() =>
-          ({ bookmarkFolders }))
-        );
+        this.setState(() => ({ bookmarkFolders }))
+      );
 
     storage.getSettings()
-      .then((settings) => {
-        this.setState(() => ({
-            newTabUrl: settings.newTabUrl,
-            newBookmarkFolderId: settings.newBookmarkFolderId
-        }));
+      .then(({newTabUrl, newBookmarkFolderId}) => {
+        if(newTabUrl && newBookmarkFolderId)
+          this.setState(() => ({ newTabUrl, newBookmarkFolderId }))
+        else {
+          storage.restoreDefaultSettings()
+          .then(({ newTabUrl, newBookmarkFolderId }) => {
+            this.setState(() => ({ newTabUrl, newBookmarkFolderId }));
+          })
+        }
       });
+  };
+
+  handleUrlChange = (url) => {
+    storage.setNewTabUrlSetting(url)
+      .then((newTabUrl) => this.setState(() => ({ newTabUrl })))
+  };
+
+  handleBookmarkFolderChange = (id) => {
+    storage.setBookmarksFolderId(id)
+      .then((newBookmarkFolderId) => this.setState(() => ({ newBookmarkFolderId })))
   };
 
   render() {
@@ -34,10 +46,7 @@ class App extends React.Component {
             type="text" 
             className="options__item options__item--input"
             value={this.state.newTabUrl}
-            onChange={(e) => 
-              storage.setNewTabUrlSetting(e.target.value)
-                .then((newTabUrl) => this.setState(() => ({ newTabUrl })))
-            } 
+            onChange={(e) => this.handleUrlChange(e.target.value)} 
           />
         </div>
         <div className="options__wrapper">
@@ -45,23 +54,18 @@ class App extends React.Component {
           <div className="select__wrapper">
             <select 
               className="options__item options__item--select"
-              onChange={(e) => 
-                storage.setBookmarksFolderId(e.target.value)
-                  .then((newBookmarkFolderId) => this.setState(() => ({ newBookmarkFolderId })))
-              } 
+              onChange={(e) => this.handleBookmarkFolderChange(e.target.value)} 
               value={ this.state.newBookmarkFolderId }
             >
-              {
-              this.state.bookmarkFolders && 
-              this.state.bookmarkFolders.map(({id, title}) => 
-                <option value={id} >{title}</option>
+              { this.state.bookmarkFolders && this.state.bookmarkFolders.map(({id, title}) => 
+                  <option value={id} >{title}</option>
               )}
             </select>
           </div>
         </div>
       </div>
     );
-  }
-}
+  };
+};
 
 export default App;

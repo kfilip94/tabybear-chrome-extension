@@ -1,5 +1,6 @@
 export default(windows, { text }) => {
-  const filteredWindows = windows.filter((chromeWindow) => 
+  console.log(text);
+  return windows.filter((chromeWindow) => 
     chromeWindow.tabs && chromeWindow.tabs.some((tab) => tab.title.toLowerCase().includes(text.toLowerCase())
   ))
   .map(chromeWindow => {
@@ -12,8 +13,5 @@ export default(windows, { text }) => {
     );
     return newWindow;
   });
-  
-  console.log('filtered: ',filteredWindows);
-  return filteredWindows;
 };
  

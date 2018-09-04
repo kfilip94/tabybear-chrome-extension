@@ -1,25 +1,25 @@
 .tab-checkbox {
   align-items: center;
   background: white;
-  border-radius: 16px;
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 2rem;
+  box-shadow: 0px 0px 0.4rem rgba(0, 0, 0, 0.25);
   color: white;
   display: flex;
-  height: 30px;
-  margin-left: 16px;
+  height: 2rem;
+  margin-left: 1rem;
   position: relative;
-  width: 30px;
+  width: 2rem;
 
   &__favicon {
     color: $yellow;
-    font-size: 16px;
-    height: 16px;
-    padding: 7px 0 7px 7px;
-    width: 16px;
+    font-size: 1rem;
+    height: 1rem;
+    padding: 0.5rem 0 0.5rem 0.5rem;
+    width: 1rem;
   }
 
   &__action {
-    color: $light-blue;
+    color: $yellow;
     display: none;
     position: absolute;
 
@@ -40,7 +40,7 @@
 
       &:after{
         content: 'x';
-        font-size: 8px;
+        font-size: 0.5rem;
         font-weight: bold;
       }
     }

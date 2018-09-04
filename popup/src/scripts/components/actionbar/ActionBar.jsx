@@ -16,7 +16,7 @@ const ActionBar = props => (
   <div className={actionBarClassNames(props.isEditModeEnabled)}>
     <div className="action-bar-container">
       <Button
-        className={buttonClassNames(props.isEditModeEnabled)}
+        className={`${buttonClassNames(props.isEditModeEnabled)} button--big`}
         title="Select all tabs in window"
         icon={faCheckCircle}
         handleClick={props.handleSelectAll}

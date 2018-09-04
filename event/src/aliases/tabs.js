@@ -2,7 +2,7 @@ import * as actions from '../../../popup/src/scripts/actions/tabs';
 import * as actionsWindows from '../../../popup/src/scripts/actions/windows';
 import * as promises from '../chrome-services/tabs';
 import * as promisesWindows from '../chrome-services/windows';
-import * as actionsChecked from '../../../popup/src/scripts/actions/checkedTabs';
+import * as actionsChecked from '../reducers/checkedTabs'
 
 //CREATE TAB
 const createTabAlias = ({ windowId }) => {
@@ -33,7 +33,7 @@ const pinMultipleTabsAlias = ({ idArr, pinned }) => {
   return dispatch => {
     const pinTabPromiseArr = idArr.map(id => promises.pinTabPromise(id, pinned));
     return Promise.all(pinTabPromiseArr)
-      .then((values) => dispatch(actions.updateMultipleTabs(originalAction.idArr, { 'pinned': pinned })));
+      // .then((values) => dispatch(actions.updateMultipleTabs(idArr, { 'pinned': pinned })));
   };
 };
 
@@ -53,7 +53,7 @@ const moveTabAlias = ({id, windowId, newWindowId, index}) => {
     if(windowId !== newWindowId){
       return promises.moveTabPromise(id, newWindowId, index)
         .then((tab) => dispatch(actions.moveTab(tab.id, windowId, newWindowId, tab)))
-        .then(() => dispatch(actionsChecked.updateWindowId(id, newWindowId)))
+        .then(() => dispatch(actionsChecked.updateWindowId({ id, newWindowId })))
         .then(() => promisesWindows.getTabsOrderPromise(newWindowId))
         .then((tabsIndexesArr) => dispatch(actionsWindows.updateTabsOrder(newWindowId, tabsIndexesArr)))
         .then(() => promisesWindows.getTabsOrderPromise(windowId))
@@ -75,7 +75,7 @@ const moveTabsAlias = ({ checkedTabs, windowId, newWindowId, startIndex}) => {
     if(windowId !== newWindowId){
       return Promise.all(moveTabPromises)
           .then((tabArr) => dispatch(actions.moveTabs(checkedTabs, newWindowId, tabArr.length === undefined ? [tabArr] : tabArr)))
-          .then(() => dispatch(actionsChecked.clearSelection(newWindowId)))
+          .then(() => dispatch(actionsChecked.uncheckAll({ newWindowId })))
           .then(() => promisesWindows.getTabsOrderPromise(newWindowId))
           .then((tabsIndexesArr) => dispatch(actionsWindows.updateTabsOrder(newWindowId, tabsIndexesArr)))
     } else {
@@ -91,7 +91,7 @@ const removeTabAlias = ({ id }) => {
   return dispatch => {
     return promises.removeTabPromise(id)
       .then(() => dispatch(actions.removeTab(id)))
-      .then(() => dispatch(actionsChecked.uncheckTab(id)));
+      .then(() => dispatch(actionsChecked.uncheckTab({ id })));
   };
 };
 
@@ -100,7 +100,7 @@ const removeTabsAlias = ({ idArr }) => {
   return dispatch => {
     return promises.removeTabPromise(idArr)
       .then(() => dispatch(actions.removeTabs(idArr)))
-      .then(() => dispatch(actionsChecked.uncheckTabs(idArr)));
+      .then(() => dispatch(actionsChecked.uncheckTabs({ idArr })));
   };
 };
 

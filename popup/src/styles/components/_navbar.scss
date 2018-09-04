@@ -2,14 +2,13 @@
 	align-items: center;
 	background: $blue;
 	display: flex;
-	height: 48px;
+	height: 2.5rem;
 	justify-content: space-between;
 	padding: 0 3%;
-	width: 94%;
 	z-index: 2;
 
 	&__title {
 		color: $white;
-		font-size: 12px;
+		// font-size: 12px;
 	}
 }

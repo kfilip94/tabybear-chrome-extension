@@ -13,7 +13,8 @@ const initialState = {
   checkedTabs: [],
   filters: {
     text: ''
-  }
+  },
+  drag: false
 };
 const logger = createLogger({
   collapsed: true,

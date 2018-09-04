@@ -1,10 +1,7 @@
 $blue: #293E52;
 $dark-blue: #1C2C3B;
-$grey: #C2C9DE;
-$white: #DDDDE9;
 $light-blue: #4b93d6;
 $light-grey: #C2C9DE;
-$green: #78D492;
 
 .options{
   display: flex;
@@ -17,22 +14,23 @@ $green: #78D492;
     margin-bottom: 32px;
 
     .options__label{
-      font-size: 12px;
       color: $light-blue;
+      font-size: 12px;
     }
     
     .select__wrapper{
       position: relative;
+      
       &::after{
-        content: '';
-        width: 0;
-        position: absolute;
-        height: 0;
-        right: 0;
-        top: 50%;
         border-left: 5px solid transparent;
         border-right: 5px solid transparent;
         border-top: 5px solid $blue;
+        content: '';
+        height: 0;
+        position: absolute;
+        right: 0;
+        top: 50%;
+        width: 0;
         z-index: -1;
       }
     }
@@ -45,7 +43,6 @@ $green: #78D492;
       padding: 8px 0;
   
       &--input{
-        
         padding: 8px 0;
       }
   
@@ -53,13 +50,7 @@ $green: #78D492;
         background: transparent;
         position: relative;
         width: 100%;
-
-      
       }
     }
   }
-
-  
-
-  
 }

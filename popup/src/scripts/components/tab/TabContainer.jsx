@@ -2,7 +2,7 @@ import React from 'react';
 import Tab from './Tab';
 import { connect } from 'react-redux';
 import { removeTabRequest, setTabActiveRequest, pinTabRequest, muteTabRequest  } from '../../actions/tabs';
-import { checkTab, uncheckTab } from '../../actions/checkedTabs';
+import { checkTab, uncheckTab } from '../../../../../event/src/reducers/checkedTabs';
 
 const TabContainer = props => (
     <Tab {...props} ></Tab>
@@ -10,12 +10,12 @@ const TabContainer = props => (
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    checkTab: (id, windowId) => { dispatch(checkTab(id, windowId)) },
-    uncheckTab: (id) => { dispatch(uncheckTab(id)) },
-    pinTab: (id, pinned) => { dispatch(pinTabRequest(id, pinned)) },
-    muteTab: (id, muted) => { dispatch(muteTabRequest(id, muted)) },
-    setTabActive: (id, windowId) => { dispatch(setTabActiveRequest(id, windowId)) },
-    removeTab: (id) => { dispatch(removeTabRequest(id)) },
+    checkTab: (tabId, windowId) => { dispatch(checkTab({ tabId, windowId })) },
+    uncheckTab: (tabId) => { dispatch(uncheckTab({ tabId })) },
+    pinTab: (tabId, pinned) => { dispatch(pinTabRequest(tabId, pinned)) },
+    muteTab: (tabId, muted) => { dispatch(muteTabRequest(tabId, muted)) },
+    setTabActive: (tabId, windowId) => { dispatch(setTabActiveRequest(tabId, windowId)) },
+    removeTab: (tabId) => { dispatch(removeTabRequest(tabId)) },
   };
 };
 
