@@ -15,15 +15,15 @@ export default handleActions({
   [createTab]: (state, { payload: { tab } }) => {
     return state.map(window => {
       if(window.id === tab.windowId){
-        if(window.tabs){
+        // if(window.tabs){
           if(window.tabs.every(({id}) => id !== tab.id))
             return {...window, tabs: [...window.tabs, tab]};
           else 
             return window;
-          }
-        else {
-          return {...window, tabs: [tab]};
-        }
+        //   }
+        // else {
+        //   return { ...window, tabs: [tab] };
+        // }
       } else {
         return window;
       }
@@ -57,12 +57,14 @@ export default handleActions({
   },
 
   [setTabActive]: (state, { payload: { id, windowId }}) => {
-    return state.map(window => 
-      Object.assign({}, window,
-        { 'tabs': window.id === windowId ? 
-          window.tabs.map((tab) =>  ({...tab, 'active': tab.id === id })) : window.tabs
-        })
-    );  
+    return state.map(window => {
+      if(window.id === windowId) {
+        const tabs = window.tabs.map((tab) =>  ({ ...tab, 'active': tab.id === id }));
+        return { ...window, tabs };
+      } else {
+        return window;
+      }
+    });  
   },
 
   [moveTab]: (state, { payload: { id, windowId, newWindowId, tab }}) => {

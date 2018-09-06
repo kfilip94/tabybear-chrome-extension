@@ -11,7 +11,8 @@ export const removeWindow = createAction('REMOVE_WINDOW');
 
 export default handleActions({
     [createWindow]: (state, { payload: { newWindow } }) => {
-      return state.map(({id}) => id).includes(newWindow.id) ? state : [...state, newWindow];
+      const tabs = newWindow.tabs ? newWindow.tabs : [];
+      return state.map(({ id }) => id).includes(newWindow.id) ? state : [...state, { ...newWindow, tabs }];
     },
 
     [setWindowActive]: (state, { payload: { id } }) => {

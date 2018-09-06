@@ -37,3 +37,8 @@ export const moveTabsPromise = (tabIdArr, windowId, index) =>
   new Promise(resolve => {
     chrome.tabs.move(tabIdArr, {windowId, index}, (tabArr) => resolve(tabArr));
   });
+
+export const getTabPromise = (tabId) =>
+  new Promise(resolve => 
+    chrome.tabs.get(tabId, (tab) => resolve(tab))
+  );

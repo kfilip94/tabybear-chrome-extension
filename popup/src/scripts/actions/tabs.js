@@ -50,3 +50,8 @@ export const removeTabsRequest = (idArr) => ({
   type: 'REMOVE_TABS_REQUEST',
   idArr
 });
+
+export const attachTabRequest = (id) => ({
+  type: 'ATTACH_TAB_REQUEST',
+  id
+});

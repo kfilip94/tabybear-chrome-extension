@@ -89,6 +89,15 @@ const moveTabsAlias = ({ checkedTabs, windowId, newWindowId, startIndex}) => {
   };
 };
 
+//ATTACH TAB TO WINDOW
+const attachTabAlias = ({ id }) => {
+  return dispatch => {
+    return promises.getTabPromise(id)
+      .then((tab) => dispatch(actions.createTab({ tab })));
+  };
+};
+
+
 //REMOVE TAB
 const removeTabAlias = ({ id }) => {
   return dispatch => {
@@ -115,6 +124,7 @@ export default {
   'SET_TAB_ACTIVE_REQUEST': setTabActiveAlias,
   'MOVE_TAB_REQUEST': moveTabAlias,
   'MOVE_TABS_REQUEST': moveTabsAlias,
+  'ATTACH_TAB_REQUEST': attachTabAlias,
   'REMOVE_TAB_REQUEST': removeTabAlias,
   'REMOVE_TABS_REQUEST': removeTabsAlias,
 };
