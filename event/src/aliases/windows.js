@@ -1,11 +1,11 @@
-import * as actions  from '../../../popup/src/scripts/actions/windows';
+import * as actions  from '../reducers/windows';
 import * as promises from '../chrome-services/windows';
 
 //CREATE WINDOW
 const createWindowAlias = () => {
   return dispatch => {
     return promises.createWindowPromise()
-      .then((newWindow) => dispatch(actions.createWindow(newWindow)))
+      .then((newWindow) => dispatch(actions.createWindow({ newWindow })))
   };
 };
 
@@ -13,7 +13,7 @@ const createWindowAlias = () => {
 const setWindowsAlias = () => {
   return dispatch => {
     return promises.getAllWindowsPromise()
-      .then((windows) => dispatch(actions.setWindows(windows)) 
+      .then((windows) => dispatch(actions.setWindows({ windows })) 
     );
   };
 };
@@ -22,7 +22,7 @@ const setWindowsAlias = () => {
 const updateTabsOrderAlias = ({ windowId }) => {
   return dispatch => {
     return promises.getTabsOrderPromise(windowId)
-      .then((tabsIndexesArr) => dispatch(actions.updateTabsOrder(windowId, tabsIndexesArr))
+      .then((tabsIndexesArr) => dispatch(actions.updateTabsOrder({ windowId, tabsIndexesArr }))
     );
   };
 };
@@ -31,7 +31,7 @@ const updateTabsOrderAlias = ({ windowId }) => {
 const removeWindowAlias = ({ id }) => {
   return dispatch => {
     return promises.removeWindowPromise(id)
-      .then(() => dispatch(actions.removeWindow(id))
+      .then(() => dispatch(actions.removeWindow({ id }))
     );
   };
 };

@@ -1,27 +1,45 @@
+import { createAction, handleActions } from 'redux-actions';
+
 const defaultWindowsState = [];
 
-export default (state = defaultWindowsState, action) => {
-  switch(action.type){
-    case 'CREATE_WINDOW':
-      if(state.map(({id}) => id).includes(action.newWindow.id))
-        return state;
-      else
-        return [...state, action.newWindow];
-      
-    case 'SET_WINDOW_ACTIVE':
+export const createWindow = createAction('CREATE_WINDOW');
+export const updateTabsOrder = createAction('UPDATE_TABS_ORDER');
+export const setWindowActive = createAction('SET_WINDOW_ACTIVE');
+export const setWindows = createAction('SET_WINDOWS');
+export const removeWindow = createAction('REMOVE_WINDOW');
+
+
+export default handleActions({
+    [createWindow]: (state, { payload: { newWindow } }) => {
+      return state.map(({id}) => id).includes(newWindow.id) ? state : [...state, newWindow];
+    },
+
+    [setWindowActive]: (state, { payload: { id } }) => {
       return state.map(chromeWindow => {
-        const focused = chromeWindow.id === action.id;
-        return {...chromeWindow, focused: focused}  
+        const focused = chromeWindow.id === id;
+        return { ...chromeWindow, focused }  
       });
+    },
 
-    case 'SET_WINDOWS':
-      return action.windows;
+    [updateTabsOrder]: (state, { payload: { windowId, tabsIndexesArr } }) => {
+      return state.map(window => {
+        if(window.id === windowId) {
+          const updatedTabs = window.tabs.map((tab) => {
+            const updateInfo = tabsIndexesArr.find(({id}) => tab.id === id);
+            return {...tab, index: updateInfo.index }  
+          });
+          return {...window, tabs: updatedTabs};
+        }
+        else 
+          return window;
+      });
+    },
 
-    case 'REMOVE_WINDOW':
-      return state.filter(({id}) => id !== action.id);
+    [setWindows]: (state, { payload: { windows } }) => {
+      return windows;
+    },
 
-    default:
-      return state;
-  };
-};
-
+    [removeWindow]: (state, { payload: { id } }) => {
+      return state.filter(({ id: filteredWindowId }) => filteredWindowId !== id);
+    },
+  }, defaultWindowsState);

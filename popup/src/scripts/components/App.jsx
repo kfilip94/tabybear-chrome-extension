@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Navbar from './Navbar';
 import Searchbar from './SearchBar';
 import Window from './windows/WindowContainer'
-import { setWindowsRequest, createWindowRequest  } from '../actions/windows';
+import { createWindowRequest, setWindowsRequest  } from '../actions/windows';
 import { moveTabRequest, moveTabsRequest } from '../actions/tabs';
 import selectTabs from '../selectors/tabs';
 import { DragDropContext } from 'react-beautiful-dnd';

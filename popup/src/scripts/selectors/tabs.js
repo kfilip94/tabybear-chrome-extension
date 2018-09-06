@@ -1,5 +1,4 @@
 export default(windows, { text }) => {
-  console.log(text);
   return windows.filter((chromeWindow) => 
     chromeWindow.tabs && chromeWindow.tabs.some((tab) => tab.title.toLowerCase().includes(text.toLowerCase())
   ))

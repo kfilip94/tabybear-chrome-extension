@@ -24,7 +24,11 @@ module.exports = {
         exclude: /(node_modules)/,
         include: path.join(__dirname, 'src'),
         query: {
-          presets: ['es2015', 'react']
+          presets: ['es2015', 'react'],
+          plugins: [
+            'transform-class-properties',
+            'transform-object-rest-spread'
+          ]
         }
       }
     ]

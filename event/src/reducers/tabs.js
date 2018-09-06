@@ -80,18 +80,18 @@ export default (state = defaultWindowsState, action) => {
           return window;
       });
 
-    case 'UPDATE_TABS_ORDER':
-      return state.map(window => {
-        if(window.id === action.windowId) {
-          const updatedTabs = window.tabs.map((tab) => {
-            const updateInfo = action.indexArr.find(({id}) => tab.id === id);
-            return {...tab, index: updateInfo.index }  
-          });
-          return {...window, tabs: updatedTabs};
-        }
-        else 
-          return window;
-      });
+    // case 'UPDATE_TABS_ORDER':
+    //   return state.map(window => {
+    //     if(window.id === action.windowId) {
+    //       const updatedTabs = window.tabs.map((tab) => {
+    //         const updateInfo = action.indexArr.find(({id}) => tab.id === id);
+    //         return {...tab, index: updateInfo.index }  
+    //       });
+    //       return {...window, tabs: updatedTabs};
+    //     }
+    //     else 
+    //       return window;
+    //   });
 
     case 'REMOVE_TAB':
       return state.map(window => 
