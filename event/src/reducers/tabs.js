@@ -1,113 +1,114 @@
+import { createAction, handleActions } from 'redux-actions';
+
 const defaultWindowsState = [];
 
-export default (state = defaultWindowsState, action) => {
-  switch(action.type){
+export const createTab = createAction('CREATE_TAB');
+export const updateTab = createAction('UPDATE_TAB');
+export const updateTabs = createAction('UPDATE_TABS');
+export const setTabActive = createAction('SET_TAB_ACTIVE');
+export const moveTab = createAction('MOVE_TAB');
+export const moveTabs = createAction('MOVE_TABS');
+export const removeTab = createAction('REMOVE_TAB');
+export const removeTabs = createAction('REMOVE_TABS');
 
-    case 'CREATE_TAB':
-      return state.map(window => {
-        if(window.id === action.tab.windowId){
-          if(window.tabs){
-            if(window.tabs.every(({id}) => id !== action.tab.id))
-              return {...window, tabs: [...window.tabs, action.tab]};
-            else 
-              return window;
-           }
-          else {
-            return {...window, tabs: [action.tab]};
+export default handleActions({
+  [createTab]: (state, { payload: { tab } }) => {
+    return state.map(window => {
+      if(window.id === tab.windowId){
+        if(window.tabs){
+          if(window.tabs.every(({id}) => id !== tab.id))
+            return {...window, tabs: [...window.tabs, tab]};
+          else 
+            return window;
           }
-        } else {
-          return window;
+        else {
+          return {...window, tabs: [tab]};
         }
-      });
+      } else {
+        return window;
+      }
+    });
+  },
 
-    case 'UPDATE_TAB':
-      return state.map(window => 
-        Object.assign({}, window,{
-          'tabs': window.tabs ? window.tabs.map((tab) => {
-            if(tab.id === action.id) 
-              return {...tab, ...action.updatedTab };
-            else
-              return tab;
-          }) : []
+  [updateTab]: (state, { payload: { id, updatedTab } }) => {
+    return state.map(window => 
+      Object.assign({}, window,{
+        'tabs': window.tabs ? window.tabs.map((tab) => {
+          if(tab.id === id) 
+            return {...tab, ...updatedTab };
+          else
+            return tab;
+        }) : []
+      })
+    );
+  },
+
+  [updateTabs]: (state, { payload: { idArr, updatedTab } }) => {
+    return state.map(window => 
+      Object.assign({}, window,{
+        'tabs': window.tabs ? window.tabs.map((tab) => {
+          if(idArr.includes(tab.id))
+            return  { ...tab, ...updatedTab };
+          else
+            return tab;
+        }) : []
+      })
+    );
+  },
+
+  [setTabActive]: (state, { payload: { id, windowId }}) => {
+    return state.map(window => 
+      Object.assign({}, window,
+        { 'tabs': window.id === windowId ? 
+          window.tabs.map((tab) =>  ({...tab, 'active': tab.id === id })) : window.tabs
         })
-      );
-      
-    case 'MOVE_TAB':
-      return state.map(window => {
-        if(window.id === action.windowId)
-          return {...window, tabs: window.tabs.filter((tab) => tab.id !== action.id)};
-        else if(window.id === action.newWindowId)
-          return {...window, tabs: [...window.tabs, action.tab]}
-        else
-          return window;
-      });
+    );  
+  },
 
-    case 'SET_TAB_ACTIVE': 
-      return state.map(window => 
-        Object.assign({}, window,
-          { 'tabs': window.id === action.windowId ? 
-            window.tabs.map((tab) =>  ({...tab, 'active': tab.id === action.id })) : window.tabs
-          })
-      );      
+  [moveTab]: (state, { payload: { id, windowId, newWindowId, tab }}) => {
+    return state.map(window => {
+      if(window.id === windowId)
+        return {...window, tabs: window.tabs.filter((tab) => tab.id !== id)};
+      else if(window.id === newWindowId)
+        return {...window, tabs: [...window.tabs, tab]}
+      else
+        return window;
+    });
+  },
+
+  [moveTabs]: (state, { payload: { checkedTabs, newWindowId, tabArr }}) => {
+    const checkedTabsIdArr = checkedTabs.map(({ id }) => id);
+    const checkedWindowsIdArr = [...new Set(checkedTabs.map(({ windowId }) => windowId))];
+
+    const removedOldTabsState = state.map(window => {
+      if(checkedWindowsIdArr.includes(window.id)) 
+        return {...window, tabs: window.tabs.filter((tab) => !checkedTabsIdArr.includes(tab.id))};
+        else 
+        return window;
+      });
     
-    case 'UPDATE_MULTIPLE_TABS':
-      return state.map(window => 
-        Object.assign({}, window,{
-          'tabs': window.tabs ? window.tabs.map((tab) => {
-            // if(action.updatedTabIdArr.includes(tab.id))
-              return  {...tab, ...action.updatedTab };
-            // else
-            //   return tab;
-          }) : []
-        })
-      );
+    return removedOldTabsState.map(window => {
+      if(window.id === newWindowId) 
+        return {...window, tabs: [...window.tabs, ...tabArr]}
+      else
+        return window;
+    });
+  },
 
-    case 'MOVE_TABS':
-      const checkedTabsIdArr = action.checkedTabs.map(({id}) => id);
-      const checkedWindowsIdArr = [...new Set(action.checkedTabs.map(({windowId}) => windowId))];
+  [removeTab]: (state, { payload: { id } }) => {
+    return state.map(window => 
+      Object.assign({}, window, {
+        'tabs': window.tabs.filter((tab) => tab.id !== id)
+      })
+    );
+  },
 
-      const removedOldTabsState = state.map(window => {
-        if(checkedWindowsIdArr.includes(window.id)) 
-          return {...window, tabs: window.tabs.filter((tab) => !checkedTabsIdArr.includes(tab.id))};
-         else 
-          return window;
-        });
-      
-      return removedOldTabsState.map(window => {
-        if(window.id === action.newWindowId) 
-          return {...window, tabs: [...window.tabs, ...action.tabArr]}
-        else
-          return window;
-      });
+  [removeTabs]: (state, { payload: { idArr } }) => {
+    return state.map(window => 
+      Object.assign({}, window,{
+        'tabs': window.tabs.filter((tab) => !idArr.includes(tab.id))
+      })
+    );
+  }
 
-    // case 'UPDATE_TABS_ORDER':
-    //   return state.map(window => {
-    //     if(window.id === action.windowId) {
-    //       const updatedTabs = window.tabs.map((tab) => {
-    //         const updateInfo = action.indexArr.find(({id}) => tab.id === id);
-    //         return {...tab, index: updateInfo.index }  
-    //       });
-    //       return {...window, tabs: updatedTabs};
-    //     }
-    //     else 
-    //       return window;
-    //   });
-
-    case 'REMOVE_TAB':
-      return state.map(window => 
-        Object.assign({}, window, {
-          'tabs': window.tabs.filter((tab) => tab.id !== action.id)
-        })
-      );
-
-    case 'REMOVE_TABS':
-      return state.map(window => 
-        Object.assign({}, window,{
-          'tabs': window.tabs.filter((tab) => !action.idArr.includes(tab.id))
-        })
-      );
-
-    default:
-      return state;
-  };
-};
+}, defaultWindowsState);

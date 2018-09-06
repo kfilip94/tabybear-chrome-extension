@@ -2,10 +2,10 @@ import * as promises from '../chrome-services/bookmarks';
 import { uncheckWindow } from '../reducers/checkedTabs';
 
 const createMultipleBookmarksAlias = ({ windowId, bookmarkDataArr }) => {
-  return (dispatch) => {
-    const bookmarkPromises = bookmarkDataArr.map(({title, url}) => promises.createBookmarkPromise(title, url));
+  return dispatch => {
+    const bookmarkPromises = bookmarkDataArr.map(({ title, url }) => promises.createBookmarkPromise(title, url));
     return Promise.all(bookmarkPromises)
-      .then(() => dispatch(uncheckWindow(windowId)))
+      .then(() => dispatch(uncheckWindow({ windowId })))
   };
 };
 

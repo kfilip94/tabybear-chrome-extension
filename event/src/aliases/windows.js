@@ -22,7 +22,7 @@ const setWindowsAlias = () => {
 const updateTabsOrderAlias = ({ windowId }) => {
   return dispatch => {
     return promises.getTabsOrderPromise(windowId)
-      .then((tabsIndexesArr) => dispatch(actions.updateTabsOrder({ windowId, tabsIndexesArr }))
+      .then((tabsOrderArr) => dispatch(actions.updateTabsOrder({ windowId, tabsOrderArr }))
     );
   };
 };

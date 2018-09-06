@@ -21,11 +21,11 @@ export default handleActions({
       });
     },
 
-    [updateTabsOrder]: (state, { payload: { windowId, tabsIndexesArr } }) => {
+    [updateTabsOrder]: (state, { payload: { windowId, tabsOrderArr } }) => {
       return state.map(window => {
         if(window.id === windowId) {
           const updatedTabs = window.tabs.map((tab) => {
-            const updateInfo = tabsIndexesArr.find(({id}) => tab.id === id);
+            const updateInfo = tabsOrderArr.find(({ id }) => tab.id === id);
             return {...tab, index: updateInfo.index }  
           });
           return {...window, tabs: updatedTabs};

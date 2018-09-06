@@ -17,7 +17,7 @@ export default handleActions({
   },
 
   [uncheckTab](state, { payload: { tabId } }) {
-    return state.filter(({id}) => id !== tabId);
+    return state.filter(({ id }) => id !== tabId);
   },
 
   [checkWindow](state, { payload: { windowId, tabIdArr, isChecked } }) {
@@ -36,7 +36,7 @@ export default handleActions({
   },
 
   [uncheckMultiple](state, { payload: { idArr } }) {
-    return state.filter(({id}) => !idArr.includes(id));
+    return state.filter(({ id }) => !idArr.includes(id));
   },
 
   [uncheckAll](state) {

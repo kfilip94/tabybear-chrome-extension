@@ -1,11 +1,11 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk'
 import aliases from './aliases';
-import rootReducer from './reducers';
+import rootReducer from './reducers/index';
 import { wrapStore, alias } from 'react-chrome-redux';
-import { createTab, removeTab, setTabActive, updateTab } from '../../popup/src/scripts/actions/tabs';
-import { createWindow, removeWindow, updateTabsOrderRequest } from '../../popup/src/scripts/actions/windows';
-
+import { createTab, removeTab, setTabActive, updateTab } from './reducers/tabs';
+import { createWindow, removeWindow } from './reducers/windows';
+import { updateTabsOrderRequest } from '../../popup/src/scripts/actions/windows';
 import { createLogger } from 'redux-logger';
 
 const initialState = {
@@ -36,34 +36,34 @@ wrapStore(store, {
 
 chrome.windows.onRemoved.addListener((windowId) => {
   console.log('windows.onRemoved');
-  store.dispatch(removeWindow(windowId));
+  store.dispatch(removeWindow({ windowId }));
 });
 
 chrome.windows.onCreated.addListener((newWindow) => {
   console.log('windows.onCreated');
-  store.dispatch(createWindow(newWindow));
+  store.dispatch(createWindow({ newWindow }));
 });  
 
-chrome.tabs.onCreated.addListener((newTab) => {
+chrome.tabs.onCreated.addListener((tab) => {
   console.log('tabs.onCreated');
-  store.dispatch(createTab(newTab));
+  store.dispatch(createTab({ tab }));
   updateNumberOfTabsFromApi();
 });
 
-chrome.tabs.onRemoved.addListener((tabId) => {
+chrome.tabs.onRemoved.addListener((id) => {
   console.log('tabs.onRemoved');
-  store.dispatch(removeTab(tabId))
+  store.dispatch(removeTab({ id }))
   updateNumberOfTabsFromApi();
 });
 
-chrome.tabs.onActivated.addListener(({tabId, windowId}) => {
+chrome.tabs.onActivated.addListener(({id, windowId}) => {
   console.log('tabs.onActivated');
-  store.dispatch(setTabActive(tabId, windowId));
+  store.dispatch(setTabActive({ id, windowId }));
 });
 
-chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+chrome.tabs.onUpdated.addListener((id, updatedTab, tab) => {
   console.log('tabs.onUpdated');
-  store.dispatch(updateTab(tabId, changeInfo));
+  store.dispatch(updateTab({ id, updatedTab }));
 });
 
 chrome.tabs.onMoved.addListener((tabId, movedInfo) => {
