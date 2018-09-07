@@ -1,5 +1,6 @@
 import * as actions  from '../reducers/windows';
 import * as promises from '../chrome-services/windows';
+import { CREATE_WINDOW_REQUEST, SET_WINDOWS_REQUEST, UPDATE_TABS_ORDER_REQUEST, REMOVE_WINDOW_REQUEST } from '../../../shared/consts';
 
 //CREATE WINDOW
 const createWindowAlias = () => {
@@ -13,7 +14,7 @@ const createWindowAlias = () => {
 const setWindowsAlias = () => {
   return dispatch => {
     return promises.getAllWindowsPromise()
-      .then((windows) => dispatch(actions.setWindows({ windows })) 
+      .then((windows) => dispatch(actions.setWindows({ windows }))
     );
   };
 };
@@ -37,8 +38,8 @@ const removeWindowAlias = ({ id }) => {
 };
 
 export default {
-  'CREATE_WINDOW_REQUEST': createWindowAlias,
-  'SET_WINDOWS_REQUEST': setWindowsAlias,
-  'UPDATE_TABS_ORDER_REQUEST': updateTabsOrderAlias, 
-  'REMOVE_WINDOW_REQUEST': removeWindowAlias
+  CREATE_WINDOW_REQUEST: createWindowAlias,
+  SET_WINDOWS_REQUEST: setWindowsAlias,
+  UPDATE_TABS_ORDER_REQUEST: updateTabsOrderAlias, 
+  REMOVE_WINDOW_REQUEST: removeWindowAlias
 };

@@ -11,19 +11,16 @@ export const moveTabs = createAction('MOVE_TABS');
 export const removeTab = createAction('REMOVE_TAB');
 export const removeTabs = createAction('REMOVE_TABS');
 
+export const muteTabRequest = createAction('MUTE_TAB_REQUEST');
+
 export default handleActions({
   [createTab]: (state, { payload: { tab } }) => {
     return state.map(window => {
       if(window.id === tab.windowId){
-        // if(window.tabs){
-          if(window.tabs.every(({id}) => id !== tab.id))
-            return {...window, tabs: [...window.tabs, tab]};
-          else 
-            return window;
-        //   }
-        // else {
-        //   return { ...window, tabs: [tab] };
-        // }
+        if(window.tabs.every(({id}) => id !== tab.id))
+          return {...window, tabs: [...window.tabs, tab]};
+        else 
+          return window;
       } else {
         return window;
       }

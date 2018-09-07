@@ -3,6 +3,7 @@ import * as actionsWindows from '../reducers/windows';
 import * as promises from '../chrome-services/tabs';
 import * as promisesWindows from '../chrome-services/windows';
 import * as actionsChecked from '../reducers/checkedTabs'
+import { CREATE_TAB_REQUEST, MUTE_TAB_REQUEST, PIN_TAB_REQUEST, PIN_MULTIPLE_TABS_REQUEST, SET_TAB_ACTIVE_REQUEST, MOVE_TAB_REQUEST, MOVE_TABS_REQUEST, ATTACH_TAB_REQUEST, REMOVE_TAB_REQUEST, REMOVE_TABS_REQUEST } from '../../../shared/consts';
 
 //CREATE TAB
 const createTabAlias = ({ windowId }) => {
@@ -29,13 +30,13 @@ const pinTabAlias = ({ id, pinned }) => {
 };
 
 //PIN MULTPILE TABS
-const pinMultipleTabsAlias = ({ idArr, pinned }) => {
+const pinMultipleTabsAlias = ({ idArr, pinned, windowId }) => {
   return dispatch => {
     const pinTabPromiseArr = idArr.map(id => promises.pinTabPromise(id, pinned));
     return Promise.all(pinTabPromiseArr)
-      .then((values) => {
-        const updateTab = { pinned };
-        return dispatch(actions.updateTabs({ idArr, updateTab }));
+      .then(() => {
+        const updatedTab = { pinned };
+        return dispatch(actions.updateTabs({ idArr, updatedTab }));
       })
   };
 };
@@ -117,14 +118,14 @@ const removeTabsAlias = ({ idArr }) => {
 };
 
 export default {
-  'CREATE_TAB_REQUEST': createTabAlias,
-  'MUTE_TAB_REQUEST': muteTabAlias,
-  'PIN_TAB_REQUEST': pinTabAlias,
-  'PIN_MULTIPLE_TABS_REQUEST': pinMultipleTabsAlias,
-  'SET_TAB_ACTIVE_REQUEST': setTabActiveAlias,
-  'MOVE_TAB_REQUEST': moveTabAlias,
-  'MOVE_TABS_REQUEST': moveTabsAlias,
-  'ATTACH_TAB_REQUEST': attachTabAlias,
-  'REMOVE_TAB_REQUEST': removeTabAlias,
-  'REMOVE_TABS_REQUEST': removeTabsAlias,
+  CREATE_TAB_REQUEST: createTabAlias,
+  MUTE_TAB_REQUEST: muteTabAlias,
+  PIN_TAB_REQUEST: pinTabAlias,
+  PIN_MULTIPLE_TABS_REQUEST: pinMultipleTabsAlias,
+  SET_TAB_ACTIVE_REQUEST: setTabActiveAlias,
+  MOVE_TAB_REQUEST: moveTabAlias,
+  MOVE_TABS_REQUEST: moveTabsAlias,
+  ATTACH_TAB_REQUEST: attachTabAlias,
+  REMOVE_TAB_REQUEST: removeTabAlias,
+  REMOVE_TABS_REQUEST: removeTabsAlias,
 };

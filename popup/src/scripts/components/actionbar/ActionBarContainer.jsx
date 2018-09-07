@@ -8,7 +8,7 @@ import { createMultipleBookmarksRequest } from '../../actions/bookmarks';
 
 class ActionBarContainer extends React.Component {
   handleSelectAll = () => this.props.checkAllTabsInWindow(this.props.windowId, this.props.allTabsIdsInWindow, !this.props.areAllTabsInWindowChecked);
-  handlePinMultipleTabs = () => this.props.pinMultipleTabs(this.props.checkedTabsInWindow, this.props.areAllTabsInWindowPinned);
+  handlePinMultipleTabs = () => this.props.pinMultipleTabs(this.props.checkedTabsInWindow, this.props.areAllTabsInWindowPinned, this.props.windowId);
   handleAddMultipleBookmarks = () => this.props.createBookmarks(this.props.bookmarksDataArr, this.props.windowId);
   handleRemoveMultipleTabs = () => this.props.removeMultipleTabs(this.props.checkedTabsInWindow);
 
@@ -82,7 +82,7 @@ const mapDispatchToProps = (dispatch) => {
     checkAllTabsInWindow: (windowId, tabIdArr, isChecked) => { dispatch(checkWindow({ windowId, tabIdArr, isChecked })) },
     clearWindowCheck: (windowId) => { dispatch(uncheckWindow({ windowId })) },
     createBookmarks: (bookmarkDataArr, windowId) => { dispatch(createMultipleBookmarksRequest(bookmarkDataArr, windowId)) },
-    pinMultipleTabs: (idArr, areChecked) => { dispatch(pinMultipleTabsRequest(idArr,!areChecked)) },
+    pinMultipleTabs: (idArr, areChecked, windowId) => { dispatch(pinMultipleTabsRequest(idArr, !areChecked, windowId)) },
     removeMultipleTabs: (checkedTabsIds) => { dispatch(removeTabsRequest(checkedTabsIds)) },
     removeWindow: (windowId) => { dispatch(removeWindowRequest(windowId)) }
   };

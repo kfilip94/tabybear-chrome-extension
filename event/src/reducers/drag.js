@@ -6,10 +6,10 @@ export const startDragging = createAction('START_DRAGGING');
 export const stopDragging = createAction('STOP_DRAGGING');
 
 export default handleActions({
-  [startDragging](state) {
+  [startDragging]: (state) => {
     return true;
   },
-  [stopDragging](state) {
+  [stopDragging]: (state) => {
     return false;
   },
 }, defaultDragState);

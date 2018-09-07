@@ -5,7 +5,7 @@ const defaultFiltersState = { text: '' };
 export const setTextFilter = createAction('SET_TEXT_FILTER');
 
 export default handleActions({
-  [setTextFilter](state, { payload }) {
+  [setTextFilter]: (state, { payload }) => {
     return { text: payload };
   },
 }, defaultFiltersState);

@@ -5,9 +5,10 @@ import rootReducer from './reducers/index';
 import { wrapStore, alias } from 'react-chrome-redux';
 import { createTab, removeTab, setTabActive, updateTab } from './reducers/tabs';
 import { createWindow, removeWindow } from './reducers/windows';
-import {  updateTabsOrderRequest } from '../../popup/src/scripts/actions/windows';
+import { updateTabsOrderRequest } from '../../popup/src/scripts/actions/windows';
 import { attachTabRequest } from '../../popup/src/scripts/actions/tabs';
 import { createLogger } from 'redux-logger';
+import { restoreDefaultSettings } from '../../shared/storage/localStorageApi';
 
 const initialState = {
   windows: [],
@@ -67,6 +68,7 @@ chrome.tabs.onUpdated.addListener((id, updatedTab, tab) => {
   store.dispatch(updateTab({ id, updatedTab }));
 });
 
+
 chrome.tabs.onMoved.addListener((tabId, movedInfo) => {
   console.log('tabs.onMoved');
   store.dispatch(updateTabsOrderRequest(movedInfo.windowId));
@@ -82,6 +84,13 @@ chrome.tabs.onDetached.addListener((tabId, { oldWindowId, oldPosition }) => {
   store.dispatch(removeTab({ id: tabId }))
 });
 
+const checkIfAlreadyUpdated = (tabId, windowId, toIndex) => {
+  console.log('tabId:',tabId, 'windowId: ',windowId,'toIndex:', toIndex)
+  const window = store.getState().windows.find(({id}) => id === windowId);
+  const tab = window.tabs.find(({id}) => id === tabId);
+  console.log(tab);
+  return tab.id === tabId && tab.index === toIndex;
+}
 
 const updateBadgeText = (numberOfTabs) => {
   numberOfTabs = numberOfTabs > 999 ? '999+' : `${numberOfTabs}`;
@@ -98,3 +107,7 @@ const updateNumberOfTabsFromApi = () => {
 
 chrome.browserAction.setBadgeBackgroundColor({ color: [41, 62, 82, 1] });
 updateNumberOfTabsFromApi();
+
+chrome.runtime.onInstalled.addListener(() => {
+  restoreDefaultSettings();
+});
