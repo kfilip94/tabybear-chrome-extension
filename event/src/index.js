@@ -65,7 +65,7 @@ chrome.tabs.onActivated.addListener(({ tabId, windowId }) => {
 
 chrome.tabs.onUpdated.addListener((id, updatedTab, tab) => {
   console.log('tabs.onUpdated');
-  store.dispatch(updateTab({ id, updatedTab }));
+  store.dispatch(updateTab({ id, windowId: tab.windowId, updatedTab }));
 });
 
 

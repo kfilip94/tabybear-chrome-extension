@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Tabybear",
   "description": "Helps you with managing your browser stuff",
-  "version": "0.0.0.1",
+  "version": "1.0",
   "background": {
     "scripts": [
       "event.js"

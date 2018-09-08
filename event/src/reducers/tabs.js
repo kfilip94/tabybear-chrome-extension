@@ -27,17 +27,15 @@ export default handleActions({
     });
   },
 
-  [updateTab]: (state, { payload: { id, updatedTab } }) => {
-    return state.map(window => 
-      Object.assign({}, window,{
-        'tabs': window.tabs ? window.tabs.map(tab => {
-          if(tab.id === id) 
-            return {...tab, ...updatedTab };
-          else
-            return tab;
-        }) : []
-      })
-    );
+  [updateTab]: (state, { payload: { id, windowId, updatedTab } }) => {
+    return state.map(window => {
+      if(window.id == windowId) {
+        const tabs = window.tabs.map(tab => tab.id === id ? { ...tab, ...updatedTab } : tab);
+        return { ...window, tabs};
+      } else {
+        return window;
+      }
+    });
   },
 
   [updateTabs]: (state, { payload: { idArr, updatedTab } }) => {

@@ -12,8 +12,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     checkTab: (tabId, windowId) => { dispatch(checkTab({ tabId, windowId })) },
     uncheckTab: (tabId) => { dispatch(uncheckTab({ tabId })) },
-    pinTab: (tabId, pinned) => { dispatch(pinTabRequest(tabId, pinned)) },
-    muteTab: (tabId, muted) => { dispatch(muteTabRequest(tabId, muted)) },
+    pinTab: (tabId, windowId, pinned) => { dispatch(pinTabRequest(tabId, windowId, pinned)) },
+    muteTab: (tabId, windowId, muted) => { dispatch(muteTabRequest(tabId, windowId, muted)) },
     setTabActive: (tabId, windowId) => { dispatch(setTabActiveRequest(tabId, windowId)) },
     removeTab: (tabId) => { dispatch(removeTabRequest(tabId)) },
   };

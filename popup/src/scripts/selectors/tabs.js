@@ -6,7 +6,7 @@ export default(windows, { text }) => {
     let newWindow = Object.assign({}, chromeWindow,
       {
         'tabs': chromeWindow.tabs.filter((tab) => 
-          tab.title && tab.title.toLowerCase().includes(text.toLowerCase()))
+          tab ? tab.title.toLowerCase().includes(text.toLowerCase()) : false)
           .sort((tabOne, tabTwo) => tabOne.index > tabTwo.index ? 1 : -1)
       }
     );

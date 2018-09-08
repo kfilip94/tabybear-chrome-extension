@@ -13,18 +13,18 @@ const createTabAlias = ({ windowId }) => {
 };
 
 //MUTE TAB
-const muteTabAlias = ({ id, muted }) => {
+const muteTabAlias = ({ id, windowId, muted }) => {
   return dispatch => {
     return promises.muteTabPromise(id, muted)
-      .then(updatedTab => dispatch(actions.updateTab({ id, updatedTab })));
+      .then(updatedTab => dispatch(actions.updateTab({ id, windowId, updatedTab })));
   };
 };
 
 //PIN TAB
-const pinTabAlias = ({ id, pinned }) => {
+const pinTabAlias = ({ id, windowId, pinned }) => {
   return dispatch => {
     return promises.pinTabPromise(id, pinned)
-      .then(updatedTab => dispatch(actions.updateTab({ id, updatedTab })));
+      .then(updatedTab => dispatch(actions.updateTab({ id, windowId, updatedTab })));
   };
 };
 
