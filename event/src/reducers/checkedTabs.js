@@ -23,7 +23,7 @@ export default handleActions({
   [checkWindow]: (state, { payload: { windowId, tabIdArr, isChecked } }) => {
     if(isChecked){
       const checkedTabsArr = tabIdArr.map(id => ({ id, windowId }));
-      const filteredState = state.filter((checkedTab) => checkedTab.windowId !== windowId);
+      const filteredState = state.filter(checkedTab => checkedTab.windowId !== windowId);
       return [...filteredState, ...checkedTabsArr];
     }
     else {
@@ -39,12 +39,12 @@ export default handleActions({
     return state.filter(({ id }) => !idArr.includes(id));
   },
 
-  [uncheckAll]: () => {
+  [uncheckAll]: (state) => {
     return [];
   },
 
   [updateMultipleWindowId]: (state, { payload: { idArr, windowId } }) => {
-    return state.map((checkedTab) => {
+    return state.map(checkedTab => {
       if(idArr.includes(checkedTab.id))
         return { id: checkedTab.id, windowId }
       else
@@ -53,7 +53,7 @@ export default handleActions({
   },
 
   [updateWindowId]: (state, { payload: { id, windowId } }) => {
-    return state.map((checkedTab) => {
+    return state.map(checkedTab => {
       if(checkedTab.id === id)
         return { id: checkedTab.id, windowId }
       else

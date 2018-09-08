@@ -36,30 +36,30 @@ wrapStore(store, {
   portName: 'tabsManageStore'
 });
 
-chrome.windows.onRemoved.addListener((windowId) => {
+chrome.windows.onRemoved.addListener(windowId => {
   console.log('windows.onRemoved');
   store.dispatch(removeWindow({ windowId }));
 });
 
-chrome.windows.onCreated.addListener((newWindow) => {
+chrome.windows.onCreated.addListener(newWindow => {
   console.log('windows.onCreated');
   store.dispatch(createWindow({ newWindow }));
 });  
 
-chrome.tabs.onCreated.addListener((tab) => {
+chrome.tabs.onCreated.addListener(tab => {
   console.log('tabs.onCreated');
   store.dispatch(createTab({ tab }));
   updateNumberOfTabsFromApi();
 });
 
-chrome.tabs.onRemoved.addListener((id) => {
+chrome.tabs.onRemoved.addListener(id => {
   console.log('tabs.onRemoved');
   store.dispatch(removeTab({ id }))
   updateNumberOfTabsFromApi();
 });
 
 chrome.tabs.onActivated.addListener(({ tabId, windowId }) => {
-  console.log('tabs.onActivated: ',tabId, ', windowId:',windowId);
+  console.log('tabs.onActivated:');
   store.dispatch(setTabActive({ id: tabId, windowId }));
 });
 
@@ -83,14 +83,6 @@ chrome.tabs.onDetached.addListener((tabId, { oldWindowId, oldPosition }) => {
   console.log('tabs.onDetached');
   store.dispatch(removeTab({ id: tabId }))
 });
-
-const checkIfAlreadyUpdated = (tabId, windowId, toIndex) => {
-  console.log('tabId:',tabId, 'windowId: ',windowId,'toIndex:', toIndex)
-  const window = store.getState().windows.find(({id}) => id === windowId);
-  const tab = window.tabs.find(({id}) => id === tabId);
-  console.log(tab);
-  return tab.id === tabId && tab.index === toIndex;
-}
 
 const updateBadgeText = (numberOfTabs) => {
   numberOfTabs = numberOfTabs > 999 ? '999+' : `${numberOfTabs}`;

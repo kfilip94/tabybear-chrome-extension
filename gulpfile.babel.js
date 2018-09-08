@@ -57,11 +57,21 @@ gulp.task('copy-manifest', ['clean'], () => {
     .pipe(gulp.dest('./build'));
 });
 
+gulp.task('copy-icon', ['clean'], () => {
+  return gulp.src('img/logoBeta128.png')
+    .pipe(gulp.dest('./build'));
+});
+
+gulp.task('copy-full-icon', ['clean'], () => {
+  return gulp.src('img/logoFullDark.svg')
+    .pipe(gulp.dest('./build'));
+});
+
 gulp.task('clean', (cb) => {
   rimraf('./build', cb);
 });
 
-gulp.task('build', ['copy-manifest', 'popup-js', 'popup-html', 'event-js', 'options-js', 'options-html']);
+gulp.task('build', ['copy-manifest', 'popup-js', 'popup-html', 'event-js', 'options-js', 'options-html', 'copy-icon', 'copy-full-icon']);
 
 gulp.task('watch', ['default'], () => {
   gulp.watch('popup/**/*', ['build']);

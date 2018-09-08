@@ -1,6 +1,5 @@
 import * as promises from '../chrome-services/bookmarks';
 import { uncheckWindow } from '../reducers/checkedTabs';
-import { CREATE_MULTIPLE_BOOKMARKS_REQUEST } from '../../../shared/consts';
 
 const createMultipleBookmarksAlias = ({ windowId, bookmarkDataArr }) => {
   return dispatch => {
@@ -11,5 +10,5 @@ const createMultipleBookmarksAlias = ({ windowId, bookmarkDataArr }) => {
 };
 
 export default {
-  CREATE_MULTIPLE_BOOKMARKS_REQUEST: createMultipleBookmarksAlias,
+  'CREATE_MULTIPLE_BOOKMARKS_REQUEST': createMultipleBookmarksAlias,
 };

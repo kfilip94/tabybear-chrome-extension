@@ -10,7 +10,7 @@ const Navbar = props => (
       title="Open new browser window"
       icon={faPlusSquare}
     />
-    <span className="navbar__title">Tabybara</span>
+    <span className="navbar__logo"></span>
     <Button
       className="button--navbar"
       handleClick={props.handleOpenSettingsPage}

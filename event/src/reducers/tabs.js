@@ -30,7 +30,7 @@ export default handleActions({
   [updateTab]: (state, { payload: { id, updatedTab } }) => {
     return state.map(window => 
       Object.assign({}, window,{
-        'tabs': window.tabs ? window.tabs.map((tab) => {
+        'tabs': window.tabs ? window.tabs.map(tab => {
           if(tab.id === id) 
             return {...tab, ...updatedTab };
           else
@@ -43,7 +43,7 @@ export default handleActions({
   [updateTabs]: (state, { payload: { idArr, updatedTab } }) => {
     return state.map(window => 
       Object.assign({}, window,{
-        'tabs': window.tabs ? window.tabs.map((tab) => {
+        'tabs': window.tabs ? window.tabs.map(tab => {
           if(idArr.includes(tab.id))
             return  { ...tab, ...updatedTab };
           else
@@ -56,7 +56,7 @@ export default handleActions({
   [setTabActive]: (state, { payload: { id, windowId }}) => {
     return state.map(window => {
       if(window.id === windowId) {
-        const tabs = window.tabs.map((tab) =>  ({ ...tab, 'active': tab.id === id }));
+        const tabs = window.tabs.map(tab =>  ({ ...tab, 'active': tab.id === id }));
         return { ...window, tabs };
       } else {
         return window;
@@ -67,7 +67,7 @@ export default handleActions({
   [moveTab]: (state, { payload: { id, windowId, newWindowId, tab }}) => {
     return state.map(window => {
       if(window.id === windowId)
-        return {...window, tabs: window.tabs.filter((tab) => tab.id !== id)};
+        return {...window, tabs: window.tabs.filter(tab => tab.id !== id)};
       else if(window.id === newWindowId)
         return {...window, tabs: [...window.tabs, tab]}
       else
@@ -81,7 +81,7 @@ export default handleActions({
 
     const removedOldTabsState = state.map(window => {
       if(checkedWindowsIdArr.includes(window.id)) 
-        return {...window, tabs: window.tabs.filter((tab) => !checkedTabsIdArr.includes(tab.id))};
+        return {...window, tabs: window.tabs.filter(tab => !checkedTabsIdArr.includes(tab.id))};
         else 
         return window;
       });
@@ -97,7 +97,7 @@ export default handleActions({
   [removeTab]: (state, { payload: { id } }) => {
     return state.map(window => 
       Object.assign({}, window, {
-        'tabs': window.tabs.filter((tab) => tab.id !== id)
+        'tabs': window.tabs.filter(tab => tab.id !== id)
       })
     );
   },
@@ -105,7 +105,7 @@ export default handleActions({
   [removeTabs]: (state, { payload: { idArr } }) => {
     return state.map(window => 
       Object.assign({}, window,{
-        'tabs': window.tabs.filter((tab) => !idArr.includes(tab.id))
+        'tabs': window.tabs.filter(tab => !idArr.includes(tab.id))
       })
     );
   }

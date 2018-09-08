@@ -25,7 +25,7 @@ export default handleActions({
     [updateTabsOrder]: (state, { payload: { windowId, tabsOrderArr } }) => {
       return state.map(window => {
         if(window.id === windowId) {
-          const updatedTabs = window.tabs.map((tab) => {
+          const updatedTabs = window.tabs.map(tab => {
             const updateInfo = tabsOrderArr.find(({ id }) => tab.id === id);
             return {...tab, index: updateInfo.index }  
           });

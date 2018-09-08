@@ -25,9 +25,13 @@
   }
 
   &__close {
-    color: $blue;
+    color: $yellow;
     display: none;
     margin: 0.5rem;
+
+    &:hover {
+      color: $blue;
+    }
   }
 
   &__dragged-counter {

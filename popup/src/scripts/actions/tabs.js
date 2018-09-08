@@ -33,12 +33,10 @@ export const moveTabRequest = (id, windowId, newWindowId, index) => ({
   id, windowId, newWindowId, index
 });
 
-export const moveTabsRequest = (checkedTabs, newWindowId, startIndex) => ({
+export const moveTabsRequest = (checkedTabs, newWindowId, index) => ({
   type: 'MOVE_TABS_REQUEST',
-  checkedTabs, newWindowId, startIndex
+  checkedTabs, newWindowId, index
 });
-
-
 
 export const removeTabRequest = (id) => ({
   type: 'REMOVE_TAB_REQUEST',

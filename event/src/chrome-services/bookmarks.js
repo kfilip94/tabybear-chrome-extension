@@ -2,9 +2,9 @@ import { getBookmarsFolderSetting } from '../../../shared/storage/localStorageAp
 
 export const createBookmarkPromise = (title, url) => new Promise(resolve => 
     getBookmarsFolderSetting()
-      .then((bookmarksFolderId) => {
-        chrome.bookmarks.create({ parentId: bookmarksFolderId, title: title, url: url }, 
-          (bookmarkTreeNode) => resolve(bookmarkTreeNode)
+      .then(bookmarksFolderId => {
+        chrome.bookmarks.create({ parentId: bookmarksFolderId, title, url }, 
+          bookmarkTreeNode => resolve(bookmarkTreeNode)
         );
       })
 );

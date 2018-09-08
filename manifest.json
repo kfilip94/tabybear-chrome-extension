@@ -1,18 +1,21 @@
 {
   "manifest_version": 2,
-  "name": "Tabybara",
+  "name": "Tabybear",
   "description": "Helps you with managing your browser stuff",
   "version": "0.0.0.1",
   "background": {
     "scripts": [
       "event.js"
     ],
-    "persistent": true
+    "persistent": false
+  },
+  "icons": {
+    "128": "logoBeta128.png"
   },
   "browser_action": {
-    "default_title": "Tabybara",
-    "default_popup": "popup.html"
-    // "default_icon": "capybara.png"
+    "default_title": "Tabybear",
+    "default_popup": "popup.html",
+    "default_icon": "logoBeta128.png"
 
   },
   "options_ui": {

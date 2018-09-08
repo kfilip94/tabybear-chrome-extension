@@ -7,8 +7,11 @@
 	padding: 0 3%;
 	z-index: 2;
 
-	&__title {
-		color: $white;
-		// font-size: 12px;
+	&__logo {
+		background-image: url("/logoFullDark.svg");
+		background-repeat: no-repeat;
+		background-size: cover;
+    height: 23px;
+    width: 64px;
 	}
 }
