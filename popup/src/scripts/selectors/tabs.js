@@ -1,16 +1,19 @@
-export default(windows, { text }) => {
-  return windows.filter((chromeWindow) => 
-    chromeWindow.tabs && chromeWindow.tabs.some((tab) => tab.title.toLowerCase().includes(text.toLowerCase())
-  ))
-  .map(chromeWindow => {
-    let newWindow = Object.assign({}, chromeWindow,
+import _ from 'lodash';
+
+export default( tabs, { text }) => {
+  const filteredTabs = tabs.filter(({ title }) => title.toLowerCase().includes(text.toLowerCase()));
+  const groupedTabs = _(filteredTabs)
+    .groupBy(tab => tab.windowId)
+    .map((value, key) => ({windowId: parseInt(key), tabs: value}))
+    .value();
+
+  const sortedTabs = groupedTabs.map(window => {
+    return Object.assign({}, window,
       {
-        'tabs': chromeWindow.tabs.filter((tab) => 
-          tab ? tab.title.toLowerCase().includes(text.toLowerCase()) : false)
-          .sort((tabOne, tabTwo) => tabOne.index > tabTwo.index ? 1 : -1)
+        'tabs': window.tabs.sort((tabOne, tabTwo) => tabOne.index > tabTwo.index ? 1 : -1)
       }
     );
-    return newWindow;
   });
+  console.log(sortedTabs);
+  return sortedTabs;
 };
- 

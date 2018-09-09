@@ -23,6 +23,11 @@ export const setTabActivePromise = (tabId) =>
     chrome.tabs.update(tabId, { active: true }, (updatedTab) => resolve(updatedTab))
   );
 
+export const getAllTabs = () => 
+  new Promise(resolve =>
+    chrome.tabs.query({}, (tabs) => resolve(tabs))
+  )
+
 export const removeTabPromise = (tabId) => 
   new Promise(resolve => 
     chrome.tabs.remove(tabId, () => resolve())
@@ -42,3 +47,10 @@ export const getTabPromise = (tabId) =>
   new Promise(resolve => 
     chrome.tabs.get(tabId, (tab) => resolve(tab))
   );
+
+export const getTabsOrderPromise = (windowId) => new Promise(resolve =>
+  chrome.tabs.query(({ windowId }), (tabs) => {
+    const indexArr = tabs.map(({ id, index }) => ({ id,  index }));
+    resolve(indexArr);
+  })
+);

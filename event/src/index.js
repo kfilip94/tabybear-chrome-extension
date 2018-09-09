@@ -3,15 +3,13 @@ import thunk from 'redux-thunk'
 import aliases from './aliases';
 import rootReducer from './reducers/index';
 import { wrapStore, alias } from 'react-chrome-redux';
-import { createTab, removeTab, setTabActive, updateTab } from './reducers/tabs';
-import { createWindow, removeWindow } from './reducers/windows';
-import { updateTabsOrderRequest } from '../../popup/src/scripts/actions/windows';
-import { attachTabRequest } from '../../popup/src/scripts/actions/tabs';
+import { createTab, moveTab, removeTab, setTabActive, updateTab } from './reducers/tabs';
+import { attachTabRequest, updateTabsOrderRequest } from '../../popup/src/scripts/actions/tabs';
 import { createLogger } from 'redux-logger';
 import { restoreDefaultSettings } from '../../shared/storage/localStorageApi';
 
 const initialState = {
-  windows: [],
+  tabs: [],
   checkedTabs: [],
   filters: {
     text: ''
@@ -36,16 +34,6 @@ wrapStore(store, {
   portName: 'tabsManageStore'
 });
 
-chrome.windows.onRemoved.addListener(windowId => {
-  console.log('windows.onRemoved');
-  store.dispatch(removeWindow({ windowId }));
-});
-
-chrome.windows.onCreated.addListener(newWindow => {
-  console.log('windows.onCreated');
-  store.dispatch(createWindow({ newWindow }));
-});  
-
 chrome.tabs.onCreated.addListener(tab => {
   console.log('tabs.onCreated');
   store.dispatch(createTab({ tab }));
@@ -58,14 +46,14 @@ chrome.tabs.onRemoved.addListener(id => {
   updateNumberOfTabsFromApi();
 });
 
-chrome.tabs.onActivated.addListener(({ tabId, windowId }) => {
+chrome.tabs.onActivated.addListener(({ tabId }) => {
   console.log('tabs.onActivated:');
-  store.dispatch(setTabActive({ id: tabId, windowId }));
+  store.dispatch(setTabActive({ id: tabId }));
 });
 
-chrome.tabs.onUpdated.addListener((id, updatedTab, tab) => {
+chrome.tabs.onUpdated.addListener((id, updatedTab) => {
   console.log('tabs.onUpdated');
-  store.dispatch(updateTab({ id, windowId: tab.windowId, updatedTab }));
+  store.dispatch(updateTab({ id, updatedTab }));
 });
 
 
@@ -74,14 +62,11 @@ chrome.tabs.onMoved.addListener((tabId, movedInfo) => {
   store.dispatch(updateTabsOrderRequest(movedInfo.windowId));
 });
 
-chrome.tabs.onAttached.addListener((tabId, { newWindowId, newPosition }) => {
+chrome.tabs.onAttached.addListener((id = tabId, { newWindowId, newPosition }) => {
   console.log('tabs.onAttached');
-  store.dispatch(attachTabRequest(tabId));
-});
+  store.dispatch(moveTab({ id, windowId: newWindowId }));
+  store.dispatch(updateTabsOrderRequest(newWindowId));
 
-chrome.tabs.onDetached.addListener((tabId, { oldWindowId, oldPosition }) => {
-  console.log('tabs.onDetached');
-  store.dispatch(removeTab({ id: tabId }))
 });
 
 const updateBadgeText = (numberOfTabs) => {

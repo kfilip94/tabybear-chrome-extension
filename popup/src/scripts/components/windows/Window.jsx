@@ -22,7 +22,7 @@ const Window = props => (
   <div className="window">
     <ActionBar 
       windowId={props.windowId}
-      windows={props.windows}
+      filteredTabs={props.filteredTabs}
     />
     <Droppable droppableId={`${props.windowId}`} className="window__tab-list">
       {(provided, snapshot) => 

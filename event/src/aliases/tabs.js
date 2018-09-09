@@ -1,52 +1,49 @@
 import * as actions from '../reducers/tabs';
-import * as actionsWindows from '../reducers/windows';
 import * as promises from '../chrome-services/tabs';
 import * as promisesWindows from '../chrome-services/windows';
 import * as actionsChecked from '../reducers/checkedTabs'
+import { updateTabsOrderRequest } from '../../../popup/src/scripts/actions/tabs';
 
 //CREATE TAB
 const createTabAlias = ({ windowId }) => {
   return dispatch => {
     return promises.createTabPromise(windowId)
-      .then(tab => dispatch(actions.createTab({ tab })));
+      // STORE CHANGES HANDLED BY EVENT LISTENER
   };
 };
 
 //MUTE TAB
-const muteTabAlias = ({ id, windowId, muted }) => {
+const muteTabAlias = ({ id, muted }) => {
   return dispatch => {
     return promises.muteTabPromise(id, muted)
-      .then(updatedTab => dispatch(actions.updateTab({ id, windowId, updatedTab })));
+      // STORE CHANGES HANDLED BY EVENT LISTENER
   };
 };
 
 //PIN TAB
-const pinTabAlias = ({ id, windowId, pinned }) => {
+const pinTabAlias = ({ id, pinned }) => {
   return dispatch => {
     return promises.pinTabPromise(id, pinned)
-      .then(updatedTab => dispatch(actions.updateTab({ id, windowId, updatedTab })));
+      // STORE CHANGES HANDLED BY EVENT LISTENER
   };
 };
 
 //PIN MULTPILE TABS
 const pinMultipleTabsAlias = ({ idArr, pinned, windowId }) => {
   return dispatch => {
+    console.log('idArr:',idArr,', pinned:',pinned);
     const pinTabPromiseArr = idArr.map(id => promises.pinTabPromise(id, pinned));
     return Promise.all(pinTabPromiseArr)
-      .then(() => {
-        const updatedTab = { pinned };
-        return dispatch(actions.updateTabs({ idArr, updatedTab }));
-      })
+      // STORE CHANGES HANDLED BY EVENT LISTENER
   };
 };
 
 //SET TAB ACTIVE
-const setTabActiveAlias = (originalAction) => {
+const setTabActiveAlias = ({ id, windowId }) => {
   return dispatch => {
-    return promises.setTabActivePromise(originalAction.id)
-      .then(updatedTab => dispatch(actions.setTabActive({ id: originalAction.id, windowId: originalAction.windowId })))
-      .then(() => promisesWindows.setWindowActivePromise(originalAction.windowId))
-      .then(({ id }) => dispatch(actionsWindows.setWindowActive({ id })));
+    return promises.setTabActivePromise(id)
+      .then(() => dispatch(actions.setTabActive({ id })))
+      .then(() => promisesWindows.setWindowActivePromise(windowId))
     };
 };
 
@@ -55,16 +52,11 @@ const moveTabAlias = ({ id, windowId, newWindowId, index }) => {
   return dispatch => {
     if(windowId !== newWindowId){
       return promises.moveTabPromise(id, newWindowId, index)
-        .then(tab => dispatch(actions.moveTab({ id: tab.id, windowId, newWindowId, tab })))
         .then(() => dispatch(actionsChecked.updateWindowId({ id, newWindowId })))
-        .then(() => promisesWindows.getTabsOrderPromise(newWindowId))
-        .then(tabsOrderArr => dispatch(actionsWindows.updateTabsOrder({ newWindowId, tabsOrderArr })))
-        .then(() => promisesWindows.getTabsOrderPromise(windowId))
-        .then(tabsOrderArr => dispatch(actionsWindows.updateTabsOrder({ windowId, tabsOrderArr })))
+        .then(() => dispatch(updateTabsOrderRequest(windowId)))
     } else {
       return promises.moveTabPromise(id, newWindowId, index)
-        .then(tab => promisesWindows.getTabsOrderPromise(windowId))
-        .then(tabsOrderArr => dispatch(actionsWindows.updateTabsOrder({ windowId, tabsOrderArr })))
+        // STORE CHANGES HANDLED BY EVENT LISTENER
     }
   };
 };
@@ -72,37 +64,42 @@ const moveTabAlias = ({ id, windowId, newWindowId, index }) => {
 //MOVE MULTIPLE TABS
 const moveTabsAlias = ({ checkedTabs, windowId, newWindowId, index}) => {
   return dispatch => {
-    const tabIdArr = checkedTabs.map(({ id }) => id);
-    const moveTabPromises = tabIdArr.map(id => promises.moveTabPromise(id, newWindowId, index));
-   
-    if(windowId !== newWindowId){
+    const checkedTabsIds = checkedTabs.map(({ id }) => id);
+    const moveTabPromises = checkedTabsIds.map(id => promises.moveTabPromise(id, newWindowId, index));
+    console.log('MOVE TABS windowId:',windowId);
+    if(windowId !== newWindowId) {
       return Promise.all(moveTabPromises)
-        .then(tabArr => dispatch(actions.moveTabs({ checkedTabs, newWindowId, tabArr: tabArr.length === undefined ? [tabArr] : tabArr })))
         .then(() => dispatch(actionsChecked.uncheckAll({ newWindowId })))
-        .then(() => promisesWindows.getTabsOrderPromise(newWindowId))
-        .then(tabsOrderArr => dispatch(actionsWindows.updateTabsOrder({ newWindowId, tabsOrderArr })))
+        .then(() => dispatch(updateTabsOrderRequest(windowId)))
     } else {
       return Promise.all(moveTabPromises)
-        .then(() => promisesWindows.getTabsOrderPromise(newWindowId))
-        .then(tabsOrderArr => dispatch(actionsWindows.updateTabsOrder({ newWindowId, tabsOrderArr })))
+        // STORE CHANGES HANDLED BY EVENT LISTENER
     }
   };
 };
 
-//ATTACH TAB TO WINDOW
-const attachTabAlias = ({ id }) => {
+//UPDATE TAB ORDER IN WINDOW
+const updateTabsOrderAlias = ({ windowId }) => {
   return dispatch => {
-    return promises.getTabPromise(id)
-      .then(tab => dispatch(actions.createTab({ tab })));
+    return promises.getTabsOrderPromise(windowId)
+      .then(tabsOrderArr => dispatch(actions.updateTabsOrder({ windowId, tabsOrderArr }))
+    );
   };
 };
 
+//SET TABS
+const setTabsAlias = () => {
+  return dispatch => {
+    return promises.getAllTabs()
+      .then(tabs => dispatch(actions.setTabs({ tabs }))
+    );
+  };
+};
 
 //REMOVE TAB
 const removeTabAlias = ({ id }) => {
   return dispatch => {
     return promises.removeTabPromise(id)
-      .then(() => dispatch(actions.removeTab({ id })))
       .then(() => dispatch(actionsChecked.uncheckTab({ id })));
   };
 };
@@ -111,7 +108,6 @@ const removeTabAlias = ({ id }) => {
 const removeTabsAlias = ({ idArr }) => {
   return dispatch => {
     return promises.removeTabPromise(idArr)
-      .then(() => dispatch(actions.removeTabs({ idArr })))
       .then(() => dispatch(actionsChecked.uncheckTabs({ idArr })));
   };
 };
@@ -124,7 +120,8 @@ export default {
   'SET_TAB_ACTIVE_REQUEST': setTabActiveAlias,
   'MOVE_TAB_REQUEST': moveTabAlias,
   'MOVE_TABS_REQUEST': moveTabsAlias,
-  'ATTACH_TAB_REQUEST': attachTabAlias,
+  'UPDATE_TABS_ORDER_REQUEST': updateTabsOrderAlias, 
+  'SET_TABS_REQUEST': setTabsAlias,
   'REMOVE_TAB_REQUEST': removeTabAlias,
   'REMOVE_TABS_REQUEST': removeTabsAlias,
 };

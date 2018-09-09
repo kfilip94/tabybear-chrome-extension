@@ -17,8 +17,8 @@ const Tab = props => (
         isChecked={props.isChecked}
         handleCheckTab={() =>  props.checkTab(props.tab.id, props.tab.windowId)}
         handleUncheckTab={() =>  props.uncheckTab(props.tab.id)}
-        handlePinTab={() =>  props.pinTab(props.tab.id, props.tab.windowId, !props.tab.pinned)}
-        handleMuteTab={() =>  props.muteTab(props.tab.id, props.tab.windowId, !props.tab.mutedInfo.muted)}
+        handlePinTab={() =>  props.pinTab(props.tab.id, !props.tab.pinned)}
+        handleMuteTab={() =>  props.muteTab(props.tab.id, !props.tab.mutedInfo.muted)}
       />
       <TabTitle 
         tab={props.tab} 

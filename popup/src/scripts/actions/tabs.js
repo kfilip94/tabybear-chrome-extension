@@ -3,10 +3,9 @@ export const createTabRequest = (windowId) => ({
   windowId
 });
 
-export const pinTabRequest = (id, windowId, pinned) => ({
+export const pinTabRequest = (id, pinned) => ({
   type: 'PIN_TAB_REQUEST',
   id, 
-  windowId,
   pinned
 });
 
@@ -17,10 +16,9 @@ export const pinMultipleTabsRequest = (idArr, pinned, windowId) => ({
   windowId
 });
 
-export const muteTabRequest = (id, windowId, muted) => ({
+export const muteTabRequest = (id, muted) => ({
   type: 'MUTE_TAB_REQUEST',
   id,
-  windowId,
   muted
 });
 
@@ -29,15 +27,23 @@ export const setTabActiveRequest = (id, windowId) => ({
   id, windowId
 });
 
+export const setTabsRequest = () => ({
+  type: 'SET_TABS_REQUEST'
+});
 
 export const moveTabRequest = (id, windowId, newWindowId, index) => ({
   type: 'MOVE_TAB_REQUEST',
   id, windowId, newWindowId, index
 });
 
-export const moveTabsRequest = (checkedTabs, newWindowId, index) => ({
+export const moveTabsRequest = (checkedTabs, windowId, newWindowId, index) => ({
   type: 'MOVE_TABS_REQUEST',
-  checkedTabs, newWindowId, index
+  checkedTabs, windowId, newWindowId, index
+});
+
+export const updateTabsOrderRequest = windowId => ({
+  type: 'UPDATE_TABS_ORDER_REQUEST',
+  windowId
 });
 
 export const removeTabRequest = (id) => ({
@@ -48,9 +54,4 @@ export const removeTabRequest = (id) => ({
 export const removeTabsRequest = (idArr) => ({
   type: 'REMOVE_TABS_REQUEST',
   idArr
-});
-
-export const attachTabRequest = (id) => ({
-  type: 'ATTACH_TAB_REQUEST',
-  id
 });

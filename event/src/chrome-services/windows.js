@@ -14,13 +14,6 @@ export const getWindowPromise = (windowId) => new Promise(resolve =>
   chrome.windows.get(windowId, { populate: true }, (requestedWindow) => resolve(requestedWindow))
 );
 
-export const getTabsOrderPromise = (windowId) => new Promise(resolve =>
-  chrome.tabs.query(({ windowId }), (tabs) => {
-    const indexArr = tabs.map(({id, index}) => ({ id,  index }));
-    resolve(indexArr);
-  })
-);
-
 export const setWindowActivePromise = (windowId) => new Promise(resolve =>
   chrome.windows.update(windowId, { focused: true }, (chromeWindow) => resolve(chromeWindow))
 );

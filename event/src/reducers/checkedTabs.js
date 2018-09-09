@@ -20,15 +20,10 @@ export default handleActions({
     return state.filter(({ id }) => id !== tabId);
   },
 
-  [checkWindow]: (state, { payload: { windowId, tabIdArr, isChecked } }) => {
-    if(isChecked){
-      const checkedTabsArr = tabIdArr.map(id => ({ id, windowId }));
-      const filteredState = state.filter(checkedTab => checkedTab.windowId !== windowId);
-      return [...filteredState, ...checkedTabsArr];
-    }
-    else {
-      return state.filter(({id}) => !tabIdArr.includes(id));
-    }
+  [checkWindow]: (state, { payload: { windowId, tabIds } }) => {
+    const checkedTabsArr = tabIds.map(id => ({ id, windowId }));
+    const filteredState = state.filter(checkedTab => checkedTab.windowId !== windowId);
+    return [ ...filteredState, ...checkedTabsArr ];
   },
 
   [uncheckWindow]: (state, { payload: { windowId: payloadWindowId }}) => {

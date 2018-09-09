@@ -1,10 +1,8 @@
 import { combineReducers } from 'redux';
-import reduceReducers from 'reduce-reducers';
+// import reduceReducers from 'reduce-reducers';
 import filters from './filters';
 import checkedTabs from './checkedTabs';
 import drag from './drag';
-import tabsReducer from './tabs';
-import windowsReducer from './windows';
+import tabs from './tabs';
 
-const windows = reduceReducers(tabsReducer, windowsReducer);
-export default combineReducers({ windows, filters, checkedTabs, drag });
+export default combineReducers({ tabs, filters, checkedTabs, drag });
