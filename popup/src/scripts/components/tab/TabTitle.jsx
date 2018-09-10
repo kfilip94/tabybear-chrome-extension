@@ -7,14 +7,18 @@ const titleClassNames = (isActive, isChecked) =>
     "tab__title--checked": isChecked
   });
 
-const TabTitle = props => (
-  <span 
-    className={titleClassNames(props.tab.active, props.isChecked)}
-    onClick={props.handleClick}
-    title={props.tab.title}
-  >
-    {props.tab.title}
-  </span>
-);
+const TabTitle = props => {
+  const { isChecked, handleClick, tab: { active, title } } = props;
+  
+  return (
+    <span 
+      className={titleClassNames(active, isChecked)}
+      onClick={handleClick}
+      title={title}
+    >
+      {title}
+    </span>
+  );
+};
 
 export default TabTitle;

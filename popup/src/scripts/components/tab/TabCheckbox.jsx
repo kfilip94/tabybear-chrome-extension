@@ -13,38 +13,45 @@ const muteTabClassNames = isMuted =>
     "tab-checkbox__action--enabled": isMuted
   })
 
-const TabCheckbox = props => (
-  <div className="tab-checkbox">
-    {!props.isChecked ? 
-      <img 
-        src={props.tab.favIconUrl} 
-        className="tab-checkbox__favicon"
-        onClick={props.handleCheckTab}
-      />
-      :
-      <FontAwesomeIcon 
-        icon={faCheckCircle} 
-        className="tab-checkbox__favicon"
-        onClick={props.handleUncheckTab}
-      />
-    }
-    <div title="Pin tab">
-      <FontAwesomeIcon 
-        icon={faThumbtack} 
-        className={pinTabBtnClassNames(props.tab.pinned)}
-        onClick={props.handlePinTab}
-      />
-    </div>
+const TabCheckbox = props => {
+  const { isChecked, handleCheckTab, handleMuteTab, handlePinTab, handleUncheckTab, tab } = props;
+  const { favIconUrl, mutedInfo: { muted }, pinned } = tab;
 
-    <div 
-      className={muteTabClassNames(props.tab.mutedInfo.muted)}
-      onClick={props.handleMuteTab}
-      title="Mute tab"
-    >
-      <FontAwesomeIcon icon={faVolumeOff} />
+  return (
+    <div className="tab-checkbox">
+      {!isChecked ? 
+        ( 
+          <img 
+            src={favIconUrl} 
+            className="tab-checkbox__favicon"
+            onClick={handleCheckTab}
+          />
+        )
+        :
+        (
+          <FontAwesomeIcon 
+            icon={faCheckCircle} 
+            className="tab-checkbox__favicon"
+            onClick={handleUncheckTab}
+          />
+        )
+      }
+      <div title="Pin tab">
+        <FontAwesomeIcon 
+          icon={faThumbtack} 
+          className={pinTabBtnClassNames(pinned)}
+          onClick={handlePinTab}
+        />
+      </div>
+      <div 
+        className={muteTabClassNames(muted)}
+        onClick={handleMuteTab}
+        title="Mute tab"
+      >
+        <FontAwesomeIcon icon={faVolumeOff} />
+      </div>
     </div>
-  </div>
-);
-
+  );
+};
 
 export default TabCheckbox;

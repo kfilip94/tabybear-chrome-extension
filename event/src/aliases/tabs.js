@@ -4,52 +4,39 @@ import * as promisesWindows from '../chrome-services/windows';
 import * as actionsChecked from '../reducers/checkedTabs'
 import { updateTabsOrderRequest } from '../../../popup/src/scripts/actions/tabs';
 
-//CREATE TAB
-const createTabAlias = ({ windowId }) => {
-  return dispatch => {
-    return promises.createTabPromise(windowId)
-      // STORE CHANGES HANDLED BY EVENT LISTENER
-  };
-};
+// CREATE TAB
+const createTabAlias = ({ windowId }) => 
+  () => promises.createTabPromise(windowId)
+    // STORE CHANGES HANDLED BY EVENT LISTENER
 
-//MUTE TAB
-const muteTabAlias = ({ id, muted }) => {
-  return dispatch => {
-    return promises.muteTabPromise(id, muted)
-      // STORE CHANGES HANDLED BY EVENT LISTENER
-  };
-};
+// MUTE TAB
+const muteTabAlias = ({ id, muted }) => 
+  () => promises.muteTabPromise(id, muted);
+    // STORE CHANGES HANDLED BY EVENT LISTENER
 
-//PIN TAB
-const pinTabAlias = ({ id, pinned }) => {
-  return dispatch => {
-    return promises.pinTabPromise(id, pinned)
-      // STORE CHANGES HANDLED BY EVENT LISTENER
-  };
-};
+// PIN TAB
+const pinTabAlias = ({ id, pinned }) => 
+  () => promises.pinTabPromise(id, pinned)
+    // STORE CHANGES HANDLED BY EVENT LISTENER
 
-//PIN MULTPILE TABS
-const pinMultipleTabsAlias = ({ idArr, pinned, windowId }) => {
-  return dispatch => {
-    console.log('idArr:',idArr,', pinned:',pinned);
+
+// PIN MULTPILE TABS
+const pinMultipleTabsAlias = ({ idArr, pinned }) => 
+  () => {
     const pinTabPromiseArr = idArr.map(id => promises.pinTabPromise(id, pinned));
     return Promise.all(pinTabPromiseArr)
-      // STORE CHANGES HANDLED BY EVENT LISTENER
+    // STORE CHANGES HANDLED BY EVENT LISTENER
   };
-};
 
-//SET TAB ACTIVE
-const setTabActiveAlias = ({ id, windowId }) => {
-  return dispatch => {
-    return promises.setTabActivePromise(id)
-      .then(() => dispatch(actions.setTabActive({ id })))
-      .then(() => promisesWindows.setWindowActivePromise(windowId))
-    };
-};
+// SET TAB ACTIVE
+const setTabActiveAlias = ({ id, windowId }) => 
+  dispatch => promises.setTabActivePromise(id)
+    .then(() => dispatch(actions.setTabActive({ id })))
+    .then(() => promisesWindows.setWindowActivePromise(windowId))
 
-//MOVE TAB
-const moveTabAlias = ({ id, windowId, newWindowId, index }) => {
-  return dispatch => {
+// MOVE TAB
+const moveTabAlias = ({ id, windowId, newWindowId, index }) =>
+  dispatch => {
     if(windowId !== newWindowId){
       return promises.moveTabPromise(id, newWindowId, index)
         .then(() => dispatch(actionsChecked.updateWindowId({ id, newWindowId })))
@@ -59,14 +46,13 @@ const moveTabAlias = ({ id, windowId, newWindowId, index }) => {
         // STORE CHANGES HANDLED BY EVENT LISTENER
     }
   };
-};
 
-//MOVE MULTIPLE TABS
-const moveTabsAlias = ({ checkedTabs, windowId, newWindowId, index}) => {
-  return dispatch => {
+
+// MOVE MULTIPLE TABS
+const moveTabsAlias = ({ checkedTabs, windowId, newWindowId, index}) =>
+  dispatch => {
     const checkedTabsIds = checkedTabs.map(({ id }) => id);
     const moveTabPromises = checkedTabsIds.map(id => promises.moveTabPromise(id, newWindowId, index));
-    console.log('MOVE TABS windowId:',windowId);
     if(windowId !== newWindowId) {
       return Promise.all(moveTabPromises)
         .then(() => dispatch(actionsChecked.uncheckAll({ newWindowId })))
@@ -76,41 +62,27 @@ const moveTabsAlias = ({ checkedTabs, windowId, newWindowId, index}) => {
         // STORE CHANGES HANDLED BY EVENT LISTENER
     }
   };
-};
 
-//UPDATE TAB ORDER IN WINDOW
-const updateTabsOrderAlias = ({ windowId }) => {
-  return dispatch => {
-    return promises.getTabsOrderPromise(windowId)
-      .then(tabsOrderArr => dispatch(actions.updateTabsOrder({ windowId, tabsOrderArr }))
-    );
-  };
-};
+// UPDATE TAB ORDER IN WINDOW
+const updateTabsOrderAlias = ({ windowId }) =>
+  dispatch => promises.getTabsOrderPromise(windowId)
+    .then(tabsOrderArr => dispatch(actions.updateTabsOrder({ windowId, tabsOrderArr })));
 
-//SET TABS
-const setTabsAlias = () => {
-  return dispatch => {
-    return promises.getAllTabs()
-      .then(tabs => dispatch(actions.setTabs({ tabs }))
-    );
-  };
-};
+// SET TABS
+const setTabsAlias = () =>
+  dispatch => promises.getAllTabs()
+    .then(tabs => dispatch(actions.setTabs({ tabs })));
 
-//REMOVE TAB
-const removeTabAlias = ({ id }) => {
-  return dispatch => {
-    return promises.removeTabPromise(id)
-      .then(() => dispatch(actionsChecked.uncheckTab({ id })));
-  };
-};
+// REMOVE TAB
+const removeTabAlias = ({ id }) =>
+  dispatch => promises.removeTabPromise(id)
+    .then(() => dispatch(actionsChecked.uncheckTab({ id })));
 
-//REMOVE MULTIPLE TABS
-const removeTabsAlias = ({ idArr }) => {
-  return dispatch => {
-    return promises.removeTabPromise(idArr)
-      .then(() => dispatch(actionsChecked.uncheckTabs({ idArr })));
-  };
-};
+// REMOVE MULTIPLE TABS
+const removeTabsAlias = ({ idArr }) => 
+  dispatch => promises.removeTabPromise(idArr)
+    .then(() => dispatch(actionsChecked.uncheckTabs({ idArr })));
+
 
 export default {
   'CREATE_TAB_REQUEST': createTabAlias,

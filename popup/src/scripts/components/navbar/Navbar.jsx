@@ -1,19 +1,19 @@
 import React from "react";
 import { faCog, faPlusSquare } from '@fortawesome/free-solid-svg-icons';
-import Button from "./Button";
+import Button from "../button/Button";
 
-const Navbar = props => (
+const Navbar = ({ handleCreateWindow, handleOpenSettingsPage }) => (
   <div className="navbar">
     <Button
       className="button--navbar"
-      handleClick={props.handleCreateWindow}
+      handleClick={handleCreateWindow}
       title="Open new browser window"
       icon={faPlusSquare}
     />
-    <span className="navbar__logo"></span>
+    <span className="navbar__logo" />
     <Button
       className="button--navbar"
-      handleClick={props.handleOpenSettingsPage}
+      handleClick={handleOpenSettingsPage}
       title="Open settings page"
       icon={faCog}
     />

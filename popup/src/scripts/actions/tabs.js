@@ -9,11 +9,10 @@ export const pinTabRequest = (id, pinned) => ({
   pinned
 });
 
-export const pinMultipleTabsRequest = (idArr, pinned, windowId) => ({
+export const pinMultipleTabsRequest = (idArr, pinned) => ({
   type: 'PIN_MULTIPLE_TABS_REQUEST',
   idArr, 
-  pinned,
-  windowId
+  pinned
 });
 
 export const muteTabRequest = (id, muted) => ({

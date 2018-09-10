@@ -1,10 +1,10 @@
 import React from 'react';
-import Window from './Window';
 import { connect } from 'react-redux';
+import Window from './Window';
 import { createTabRequest } from '../../actions/tabs';
 
 const WindowContainer = props => (
-	<Window { ...props } />
+	 <Window { ...props } />
 );
 
 const mapDispatchToProps = (dispatch) => {

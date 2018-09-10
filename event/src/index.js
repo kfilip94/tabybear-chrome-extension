@@ -66,7 +66,6 @@ chrome.tabs.onAttached.addListener((id = tabId, { newWindowId, newPosition }) =>
   console.log('tabs.onAttached');
   store.dispatch(moveTab({ id, windowId: newWindowId }));
   store.dispatch(updateTabsOrderRequest(newWindowId));
-
 });
 
 const updateBadgeText = (numberOfTabs) => {

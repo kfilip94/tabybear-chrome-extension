@@ -1,6 +1,6 @@
 import React from 'react';
-import Button from '../Button';
 import { faTimes, faThumbtack, faStar } from '@fortawesome/free-solid-svg-icons';
+import Button from '../button/Button';
 
 const TabsActions = props => (
   <div className="action-bar__tabs-actions">
