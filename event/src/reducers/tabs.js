@@ -16,17 +16,14 @@ export const removeTabs = createAction('REMOVE_TABS');
 export const muteTabRequest = createAction('MUTE_TAB_REQUEST');
 
 export default handleActions({
-  [createTab]: (state, { payload: { tab } }) => {
-    return state.every(({ id }) => id !== tab.id) ? [ ...state, tab ] : state;
-  },
+  [createTab]: (state, { payload: { tab } }) => 
+    state.every(({ id }) => id !== tab.id) ? [ ...state, tab ] : state,
 
-  [updateTab]: (state, { payload: { id, updatedTab } }) => {
-    return state.map(tab => tab.id == id ? { ...tab, ...updatedTab } : tab);
-  },
+  [updateTab]: (state, { payload: { id, updatedTab } }) =>
+    state.map(tab => tab.id === id ? { ...tab, ...updatedTab } : tab),
 
-  [updateTabs]: (state, { payload: { idArr, updatedTab } }) => {
-    return state.map(tab => idArr.includes(tab.id) ? { ...tab, ...updatedTab } : tab);
-  },
+  [updateTabs]: (state, { payload: { idArr, updatedTab } }) =>
+    state.map(tab => idArr.includes(tab.id) ? { ...tab, ...updatedTab } : tab),
 
   [updateTabsOrder]: (state, { payload: { windowId, tabsOrderArr } }) => {
     return state.map(tab => {
@@ -39,29 +36,18 @@ export default handleActions({
     });
   },
 
-  [setTabActive]: (state, { payload: { id }}) => {
-    return state.map(tab =>  ({ ...tab, 'active': tab.id === id }));  
-  },
+  [setTabActive]: (state, { payload: { id }}) => 
+    state.map(tab =>  ({ ...tab, 'active': tab.id === id })),
 
-  [moveTab]: (state, { payload: { id, windowId }}) => {
-    return state.map(tab => tab.id === id ? { ...tab, windowId } : tab);
-  },
+  [moveTab]: (state, { payload: { id, windowId }}) =>
+    state.map(tab => tab.id === id ? { ...tab, windowId } : tab),
 
-  [moveTabs]: (state, { payload: { checkedTabs, newWindowId }}) => {
-    // const checkedTabsIds = checkedTabs.map(({ id }) => id);
-    return state.map(tab => checkedTabsIds.includes(tab.id) ? { ...tab, windowId: newWindowId } : tab);
-  },
+  [moveTabs]: (state, { payload: { checkedTabsIds, newWindowId }}) =>
+    state.map(tab => checkedTabsIds.includes(tab.id) ? { ...tab, windowId: newWindowId } : tab),
 
-  [setTabs]: (state, { payload: { tabs } }) => {
-    return tabs;
-  },
+  [setTabs]: (state, { payload: { tabs } }) => tabs,
 
-  [removeTab]: (state, { payload: { id } }) => {
-    return state.filter(tab => tab.id !== id);
-  },
-
-  // [removeTabs]: (state, { payload: { idArr } }) => {
-  //   return state.filter(({ id }) => !idArr.includes(id));
-  // }
+  [removeTab]: (state, { payload: { id } }) => 
+    state.filter(tab => tab.id !== id),
 
 }, defaultWindowsState);

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbtack, faVolumeOff, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
@@ -14,8 +15,7 @@ const muteTabClassNames = isMuted =>
   })
 
 const TabCheckbox = props => {
-  const { isChecked, handleCheckTab, handleMuteTab, handlePinTab, handleUncheckTab, tab } = props;
-  const { favIconUrl, mutedInfo: { muted }, pinned } = tab;
+  const { isChecked, handleCheckTab, handleMuteTab, handlePinTab, handleUncheckTab, favIconUrl, muted, pinned } = props;
 
   return (
     <div className="tab-checkbox">
@@ -25,6 +25,7 @@ const TabCheckbox = props => {
             src={favIconUrl} 
             className="tab-checkbox__favicon"
             onClick={handleCheckTab}
+            alt=""
           />
         )
         :
@@ -52,6 +53,22 @@ const TabCheckbox = props => {
       </div>
     </div>
   );
+};
+
+TabCheckbox.propTypes = {
+  isChecked: PropTypes.bool, 
+  handleCheckTab: PropTypes.func.isRequired,
+  handleMuteTab: PropTypes.func.isRequired,
+  handlePinTab: PropTypes.func.isRequired,
+  handleUncheckTab: PropTypes.func.isRequired,
+  favIconUrl: PropTypes.string,
+  muted: PropTypes.bool.isRequired, 
+  pinned: PropTypes.bool.isRequired,
+};
+
+TabCheckbox.defaultProps = {
+  isChecked: false,
+  favIconUrl: ''
 };
 
 export default TabCheckbox;

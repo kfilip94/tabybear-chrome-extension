@@ -58,6 +58,7 @@ const mapStateToProps = (state, props) => ({
   tabIds: selectors.getTabIdsInWindow(props),
   isWindowChecked: selectors.isWindowChecked(state, props),
   checkedTabsInWindow: selectors.getCheckedTabsInWindow(state.checkedTabs, props),
+  checkedTabsInWindowCounter: selectors.getCheckedTabsInWindow(state.checkedTabs, props).length,
   isWindowPinned: selectors.isWindowPinned(state, props),
 });
 

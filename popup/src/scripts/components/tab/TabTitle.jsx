@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 
 const titleClassNames = (isActive, isChecked) => 
   classNames("tab__title" , {
@@ -8,8 +9,7 @@ const titleClassNames = (isActive, isChecked) =>
   });
 
 const TabTitle = props => {
-  const { isChecked, handleClick, tab: { active, title } } = props;
-  
+  const { isChecked, handleClick, active, title } = props;
   return (
     <span 
       className={titleClassNames(active, isChecked)}
@@ -19,6 +19,19 @@ const TabTitle = props => {
       {title}
     </span>
   );
+};
+
+TabTitle.propTypes = {
+  isChecked: PropTypes.bool,
+  handleClick: PropTypes.func.isRequired,
+  active: PropTypes.bool,
+  title: PropTypes.string
+};
+
+TabTitle.defaultProps = {
+  isChecked: false,
+  active: false,
+  title: ''
 };
 
 export default TabTitle;

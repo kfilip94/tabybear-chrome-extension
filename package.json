@@ -28,6 +28,7 @@
     "eslint-config-google": "^0.10.0",
     "lodash": "^4.17.10",
     "node-sass": "^4.9.2",
+    "prop-types": "^15.6.2",
     "react": "^16.4.2",
     "react-beautiful-dnd": "^9.0.0",
     "react-chrome-redux": "^1.5.0",

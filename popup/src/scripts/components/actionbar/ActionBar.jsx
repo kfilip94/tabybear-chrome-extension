@@ -1,7 +1,8 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import classNames from "classnames";
 import { faCheckCircle, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-import Button from "../button/Button";
+import IconButton from "../iconButton/IconButton";
 import TabsActions from './TabsActions';
 
 const actionBarClassNames = isEditModeEnabled => 
@@ -14,7 +15,7 @@ const buttonClassNames = isEditModeEnabled => isEditModeEnabled ? "button--white
 
 const ActionBar = props => {
   const { 
-    checkedTabsInWindow, 
+    checkedTabsInWindowCounter, 
     isEditModeEnabled, 
     handleAddMultipleBookmarks, 
     handlePinMultipleTabs, 
@@ -27,7 +28,7 @@ const ActionBar = props => {
   return (
     <div className={actionBarClassNames(isEditModeEnabled)}>
       <div className="action-bar-container">
-        <Button
+        <IconButton
           className={`${buttonClassNames(isEditModeEnabled)} button--big`}
           title="Select all tabs in window"
           icon={faCheckCircle}
@@ -48,9 +49,9 @@ const ActionBar = props => {
       </div>
       <div className="action-bar-container">
         <span className={counterClassNames(isEditModeEnabled)} >
-          { isEditModeEnabled ? `${checkedTabsInWindow.length}/${tabsCount}` : tabsCount}
+          { isEditModeEnabled ? `${checkedTabsInWindowCounter}/${tabsCount}` : tabsCount}
         </span>
-        <Button
+        <IconButton
           className={buttonClassNames(isEditModeEnabled)}
           title="Close window with all tabs"
           icon={faTrashAlt}
@@ -59,6 +60,18 @@ const ActionBar = props => {
       </div>
     </div>
   );
+};
+
+ActionBar.propTypes = {
+  checkedTabsInWindowCounter: PropTypes.number.isRequired,
+  isEditModeEnabled: PropTypes.bool.isRequired, 
+  handleAddMultipleBookmarks: PropTypes.func.isRequired, 
+  handlePinMultipleTabs: PropTypes.func.isRequired, 
+  handleRemoveMultipleTabs: PropTypes.func.isRequired, 
+  handleSelectAll: PropTypes.func.isRequired, 
+  removeWindow: PropTypes.func.isRequired,  
+  tabsCount: PropTypes.number.isRequired, 
+  windowId: PropTypes.number.isRequired,
 };
 
 export default ActionBar;

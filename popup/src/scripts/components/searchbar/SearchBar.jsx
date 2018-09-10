@@ -1,25 +1,26 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { faSearch, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Button from '../button/Button';
+import Button from '../iconButton/IconButton';
 
-const Searchbar = ({ clearSelection, filters, setTextFilter }) => (
+const Searchbar = ({ clearSelection, filters: { text }, setTextFilter }) => (
   <div className="searchbar">
-		<FontAwesomeIcon 
-			className="searchbar__icon"
+		<FontAwesomeIcon
+		  className="searchbar__icon"
 			icon={faSearch}
 		/>
     <input 
       type="text" 
       className="searchbar__input"
       placeholder="Type search..."
-      value={filters.text}
+      value={text}
       onChange={(e) => {
         setTextFilter(e.target.value);
         clearSelection();
       }}
     />
-    { filters.text &&
+    {text &&
       (
         <Button 
           className="button button--small"
@@ -31,5 +32,15 @@ const Searchbar = ({ clearSelection, filters, setTextFilter }) => (
     }
   </div>
 );
+
+Searchbar.propTypes = {
+  clearSelection: PropTypes.func.isRequired,
+  filters: PropTypes.shape({ text: PropTypes.string }),
+  setTextFilter: PropTypes.func.isRequired,
+};
+
+Searchbar.defaultProps = {
+  filters: { text: '' },
+};
 
 export default Searchbar;

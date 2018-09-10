@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { DragDropContext } from 'react-beautiful-dnd';
 import Navbar from '../navbar/Navbar';
 import Searchbar from '../searchbar/SearchBarContainer';
@@ -30,12 +31,26 @@ const App = props => {
                   />
                 )
               ) : 
-              <p className="window-list--empty">I didn't find anything :(</p>
+              <p className="window-list--empty">I didn&apos;t find anything :(</p>
           }
         </div>
       </DragDropContext>
     </div>
   );
+};
+
+App.propTypes = {
+  className: PropTypes.string,
+  createWindow: PropTypes.func.isRequired,
+  handleOpenSettingsPage: PropTypes.func.isRequired,
+  onDragStart: PropTypes.func.isRequired,
+  onDragEnd: PropTypes.func.isRequired,
+  windows: PropTypes.arrayOf(PropTypes.shape({ windowId: PropTypes.number, tabs: PropTypes.array })),
+};
+
+App.defaultProps = {
+  className: '',
+  windows: [],
 };
 
 export default App;

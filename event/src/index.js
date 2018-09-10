@@ -51,8 +51,13 @@ chrome.tabs.onActivated.addListener(({ tabId }) => {
   store.dispatch(setTabActive({ id: tabId }));
 });
 
-chrome.tabs.onUpdated.addListener((id, updatedTab) => {
+chrome.tabs.onUpdated.addListener((id, tab) => {
   console.log('tabs.onUpdated');
+  let updatedTab = tab;
+  if(tab.mutedInfo){
+    updatedTab = { ...tab, muted: tab.mutedInfo.muted }
+    delete updatedTab.mutedInfo;
+  }
   store.dispatch(updateTab({ id, updatedTab }));
 });
 
