@@ -9,7 +9,7 @@ const titleClassNames = (isActive, isChecked) =>
   });
 
 const TabTitle = props => {
-  const { isChecked, handleClick, active, title } = props;
+  const { isChecked, handleClick, active, title = '' } = props;
   return (
     <span 
       className={titleClassNames(active, isChecked)}

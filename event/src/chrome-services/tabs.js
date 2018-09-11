@@ -6,7 +6,7 @@ const omitTab = ({ active, favIconUrl, id, index, mutedInfo, pinned, title, url,
 const omitTabs = tabs => 
   tabs.map(tab => omitTab(tab));
 
-export const createTabPromise = (windowId) => 
+export const createTabPromise = windowId => 
   new Promise(resolve =>
     getNewTabUrlSetting()
       .then((newTabUrl) => 
@@ -22,41 +22,41 @@ export const muteTabPromise = (tabId, muted) =>
 
 export const pinTabPromise = (tabId, pinned) => 
   new Promise(resolve => 
-    chrome.tabs.update(tabId, { pinned }, (updatedTab) => resolve(updatedTab))
+    chrome.tabs.update(tabId, { pinned }, updatedTab => resolve(updatedTab))
   );
 
-export const setTabActivePromise = (tabId) => 
+export const setTabActivePromise = tabId => 
   new Promise(resolve => 
-    chrome.tabs.update(tabId, { active: true }, (updatedTab) => resolve(updatedTab))
+    chrome.tabs.update(tabId, { active: true }, updatedTab => resolve(updatedTab))
   );
 
 export const getAllTabs = () => 
   new Promise(resolve =>
-    chrome.tabs.query({}, (tabs) => resolve(omitTabs(tabs)))
+    chrome.tabs.query({}, tabs => resolve(omitTabs(tabs)))
   )
 
-export const removeTabPromise = (tabId) => 
+export const removeTabPromise = tabId => 
   new Promise(resolve => 
     chrome.tabs.remove(tabId, () => resolve())
   );
 
 export const moveTabPromise = (tabId, windowId, index) =>
   new Promise(resolve => 
-    chrome.tabs.move(tabId, {windowId, index}, (tab) => resolve(omitTab(tab)))
+    chrome.tabs.move(tabId, {windowId, index}, tab => resolve(omitTab(tab)))
   );
 
 export const moveTabsPromise = (tabIdArr, windowId, index) =>
   new Promise(resolve => {
-    chrome.tabs.move(tabIdArr, {windowId, index}, (tabArr) => resolve(omitTabs(tabArr)));
+    chrome.tabs.move(tabIdArr, {windowId, index}, tabArr => resolve(omitTabs(tabArr)));
   });
 
-export const getTabPromise = (tabId) =>
+export const getTabPromise = tabId =>
   new Promise(resolve => 
-    chrome.tabs.get(tabId, (tab) => resolve(omitTab(tab)))
+    chrome.tabs.get(tabId, tab => resolve(omitTab(tab)))
   );
 
-export const getTabsOrderPromise = (windowId) => new Promise(resolve =>
-  chrome.tabs.query(({ windowId }), (tabs) => {
+export const getTabsOrderPromise = windowId => new Promise(resolve =>
+  chrome.tabs.query(({ windowId }), tabs => {
     const indexArr = tabs.map(({ id, index }) => ({ id,  index }));
     resolve(indexArr);
   })

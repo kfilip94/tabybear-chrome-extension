@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { removeWindowRequest } from "../../actions/windows";
 import { checkWindow, uncheckWindow } from '../../../../../event/src/reducers/checkedTabs';
 import { pinMultipleTabsRequest, removeTabsRequest } from '../../actions/tabs';
-import { createMultipleBookmarksRequest } from '../../actions/bookmarks';
+import createMultipleBookmarksRequest from '../../actions/bookmarks';
 
 class ActionBarContainer extends React.Component {
   handleSelectAll = () => {
@@ -42,12 +42,11 @@ class ActionBarContainer extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  checkWindow: (windowId, tabIds) => { dispatch(checkWindow({ windowId, tabIds })) },
+  checkWindow: (windowId, ids) => { dispatch(checkWindow({ windowId, ids })) },
   uncheckWindow: (windowId) => { dispatch(uncheckWindow({ windowId })) },
-  clearWindowCheck: (windowId) => { dispatch(uncheckWindow({ windowId })) },
-  createBookmarks: (bookmarkDataArr, windowId) => { dispatch(createMultipleBookmarksRequest(bookmarkDataArr, windowId)) },
-  pinMultipleTabs: (idArr, areChecked) => { dispatch(pinMultipleTabsRequest(idArr, !areChecked)) },
-  removeMultipleTabs: (checkedTabsIds) => { dispatch(removeTabsRequest(checkedTabsIds)) },
+  createBookmarks: (bookmarksData, windowId) => { dispatch(createMultipleBookmarksRequest(bookmarksData, windowId)) },
+  pinMultipleTabs: (ids, isChecked) => { dispatch(pinMultipleTabsRequest(ids, !isChecked)) },
+  removeMultipleTabs: (checkedTabIds) => { dispatch(removeTabsRequest(checkedTabIds)) },
   removeWindow: (windowId) => { dispatch(removeWindowRequest(windowId)) }
 });
 
@@ -58,7 +57,7 @@ const mapStateToProps = (state, props) => ({
   tabIds: selectors.getTabIdsInWindow(props),
   isWindowChecked: selectors.isWindowChecked(state, props),
   checkedTabsInWindow: selectors.getCheckedTabsInWindow(state.checkedTabs, props),
-  checkedTabsInWindowCounter: selectors.getCheckedTabsInWindow(state.checkedTabs, props).length,
+  checkedTabsInWindowLength: selectors.getCheckedTabsInWindow(state.checkedTabs, props).length,
   isWindowPinned: selectors.isWindowPinned(state, props),
 });
 

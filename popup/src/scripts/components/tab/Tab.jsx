@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import TabCheckbox from './TabCheckbox';
-import Button from '../iconButton/IconButton';
+import FontAwesomeButton from 'button/FontAwesomeButton';
 import TabTitle from './TabTitle';
 
 const tabClassNames = isInDraggedGroup => 
@@ -33,7 +33,7 @@ const Tab = props => {
         isChecked={isChecked}
         handleClick={() => setTabActive(id, windowId)} 
       />
-      <Button 
+      <FontAwesomeButton 
         className="tab__close"
         icon={faTimes}
         handleClick={() => removeTab(id)}

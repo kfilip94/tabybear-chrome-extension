@@ -14,7 +14,16 @@ module.exports = {
 
   resolve: {
     extensions: ['.js', '.jsx', '.scss', '.json'],
-    modules: ['node_modules']
+    modules: ['node_modules'],
+    alias: {
+      actionbar:  path.resolve(__dirname, 'src/scripts/components/actionbar'),
+      app:  path.resolve(__dirname, 'src/scripts/components/app'),
+      button:  path.resolve(__dirname, 'src/scripts/components/button'),
+      navbar:  path.resolve(__dirname, 'src/scripts/components/navbar'),
+      searchbar:  path.resolve(__dirname, 'src/scripts/components/searchbar'),
+      tab:  path.resolve(__dirname, 'src/scripts/components/tab'),
+      window:  path.resolve(__dirname, 'src/scripts/components/window'),
+    }
   },
   module: {
     loaders: [

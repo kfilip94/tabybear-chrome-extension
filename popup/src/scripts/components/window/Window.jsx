@@ -1,5 +1,5 @@
 import React from 'react';
-import ActionBar from '../actionbar/ActionBarContainer';
+import ActionBar from 'actionbar/ActionBarContainer';
 import WindowTabList from './WindowTabList';
 
 const Window = props => {

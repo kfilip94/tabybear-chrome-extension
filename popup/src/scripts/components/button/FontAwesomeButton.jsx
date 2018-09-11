@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const IconButton = ({ className, handleClick, icon, title }) => (
+const FontawesomeButton = ({ className, handleClick, icon, title }) => (
   <button
     className={`button ${className}`}
     onClick={handleClick}
@@ -13,17 +13,17 @@ const IconButton = ({ className, handleClick, icon, title }) => (
   </button>
 );
 
-IconButton.propTypes = {
+FontawesomeButton.propTypes = {
   className: PropTypes.string,
   handleClick: PropTypes.func,
-  icon: PropTypes.instanceOf().isRequired,
+  icon: PropTypes.object.isRequired,
   title: PropTypes.string,
 };
 
-IconButton.defaultProps = {
+FontawesomeButton.defaultProps = {
   className: '',
   handleClick: () => {},
   title: ''
 };
 
-export default IconButton;
+export default FontawesomeButton;

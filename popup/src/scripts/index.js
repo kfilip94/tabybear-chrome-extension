@@ -2,7 +2,7 @@ import React from 'react';
 import { render} from 'react-dom';
 import { Store } from 'react-chrome-redux';
 import { Provider } from 'react-redux';
-import App from './components/app/AppContainer';
+import App from 'app/AppContainer';
 import '../styles/style.scss';
 
 const proxyStore = new Store({

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
-import Tab from '../tab/TabContainer';
+import Tab from 'tab/TabContainer';
 
 const getListStyle = isDraggingOver => ({
 	border: isDraggingOver ? '2px solid #CCA43B' : '0',

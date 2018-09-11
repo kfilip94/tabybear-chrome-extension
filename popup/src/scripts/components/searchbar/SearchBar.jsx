@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { faSearch, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Button from '../iconButton/IconButton';
+import FontAwesomeButton from 'button/FontAwesomeButton';
 
 const Searchbar = ({ clearSelection, filters: { text }, setTextFilter }) => (
   <div className="searchbar">
@@ -22,7 +22,7 @@ const Searchbar = ({ clearSelection, filters: { text }, setTextFilter }) => (
     />
     {text &&
       (
-        <Button 
+        <FontAwesomeButton 
           className="button button--small"
           title="Clear"
           icon={faTimesCircle}

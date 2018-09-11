@@ -9,9 +9,9 @@ export const pinTabRequest = (id, pinned) => ({
   pinned
 });
 
-export const pinMultipleTabsRequest = (idArr, pinned) => ({
+export const pinMultipleTabsRequest = (ids, pinned) => ({
   type: 'PIN_MULTIPLE_TABS_REQUEST',
-  idArr, 
+  ids, 
   pinned
 });
 
@@ -50,7 +50,7 @@ export const removeTabRequest = (id) => ({
   id
 });
 
-export const removeTabsRequest = (idArr) => ({
+export const removeTabsRequest = (ids) => ({
   type: 'REMOVE_TABS_REQUEST',
-  idArr
+  ids
 });

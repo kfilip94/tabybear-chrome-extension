@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { DragDropContext } from 'react-beautiful-dnd';
-import Navbar from '../navbar/Navbar';
-import Searchbar from '../searchbar/SearchBarContainer';
-import Window from '../windows/WindowContainer'
+import Navbar from 'navbar/Navbar';
+import Searchbar from 'searchbar/SearchBarContainer';
+import Window from 'window/WindowContainer'
 
 const App = props => {
   const { className, createWindow, handleOpenSettingsPage, onDragStart, onDragEnd, windows } = props;

@@ -1,5 +1,5 @@
-export default (bookmarkDataArr, windowId) => ({ 
+export default (bookmarksData, windowId) => ({ 
   type: 'CREATE_MULTIPLE_BOOKMARKS_REQUEST',
-  bookmarkDataArr,
+  bookmarksData,
   windowId
 });

@@ -1,7 +1,7 @@
-import * as actions from '../reducers/tabs';
-import * as promises from '../chrome-services/tabs';
-import * as promisesWindows from '../chrome-services/windows';
-import * as actionsChecked from '../reducers/checkedTabs'
+import * as actions from 'reducers/tabs';
+import * as promises from 'chromeServices/tabs';
+import { setWindowActivePromise } from 'chromeServices/windows';
+import { updateWindowId, uncheckAll, uncheckTab, uncheckTabs,  } from 'reducers/checkedTabs'
 import { updateTabsOrderRequest } from '../../../popup/src/scripts/actions/tabs';
 
 // CREATE TAB
@@ -21,10 +21,10 @@ const pinTabAlias = ({ id, pinned }) =>
 
 
 // PIN MULTPILE TABS
-const pinMultipleTabsAlias = ({ idArr, pinned }) => 
+const pinMultipleTabsAlias = ({ ids, pinned }) => 
   () => {
-    const pinTabPromiseArr = idArr.map(id => promises.pinTabPromise(id, pinned));
-    return Promise.all(pinTabPromiseArr)
+    const pinTabPromises = ids.map(id => promises.pinTabPromise(id, pinned));
+    return Promise.all(pinTabPromises)
     // STORE CHANGES HANDLED BY EVENT LISTENER
   };
 
@@ -32,41 +32,37 @@ const pinMultipleTabsAlias = ({ idArr, pinned }) =>
 const setTabActiveAlias = ({ id, windowId }) => 
   dispatch => promises.setTabActivePromise(id)
     .then(() => dispatch(actions.setTabActive({ id })))
-    .then(() => promisesWindows.setWindowActivePromise(windowId))
+    .then(() => setWindowActivePromise(windowId))
 
 // MOVE TAB
 const moveTabAlias = ({ id, windowId, newWindowId, index }) =>
-  dispatch => {
-    if(windowId !== newWindowId){
-      return promises.moveTabPromise(id, newWindowId, index)
-        .then(() => dispatch(actionsChecked.updateWindowId({ id, newWindowId })))
+  dispatch =>
+    windowId !== newWindowId ?
+      promises.moveTabPromise(id, newWindowId, index)
+        .then(() => dispatch(updateWindowId({ id, newWindowId })))
         .then(() => dispatch(updateTabsOrderRequest(windowId)))
-    } else {
-      return promises.moveTabPromise(id, newWindowId, index)
+      :
+      promises.moveTabPromise(id, newWindowId, index)
         // STORE CHANGES HANDLED BY EVENT LISTENER
-    }
-  };
-
 
 // MOVE MULTIPLE TABS
 const moveTabsAlias = ({ checkedTabs, windowId, newWindowId, index}) =>
   dispatch => {
     const checkedTabsIds = checkedTabs.map(({ id }) => id);
     const moveTabPromises = checkedTabsIds.map(id => promises.moveTabPromise(id, newWindowId, index));
-    if(windowId !== newWindowId) {
-      return Promise.all(moveTabPromises)
-        .then(() => dispatch(actionsChecked.uncheckAll({ newWindowId })))
+    return windowId !== newWindowId ?
+      Promise.all(moveTabPromises)
+        .then(() => dispatch(uncheckAll({ newWindowId })))
         .then(() => dispatch(updateTabsOrderRequest(windowId)))
-    } else {
-      return Promise.all(moveTabPromises)
+      :
+      Promise.all(moveTabPromises)
         // STORE CHANGES HANDLED BY EVENT LISTENER
-    }
-  };
+    };
 
 // UPDATE TAB ORDER IN WINDOW
 const updateTabsOrderAlias = ({ windowId }) =>
   dispatch => promises.getTabsOrderPromise(windowId)
-    .then(tabsOrderArr => dispatch(actions.updateTabsOrder({ windowId, tabsOrderArr })));
+    .then(tabsOrder => dispatch(actions.updateTabsOrder({ windowId, tabsOrder })));
 
 // SET TABS
 const setTabsAlias = () =>
@@ -76,12 +72,12 @@ const setTabsAlias = () =>
 // REMOVE TAB
 const removeTabAlias = ({ id }) =>
   dispatch => promises.removeTabPromise(id)
-    .then(() => dispatch(actionsChecked.uncheckTab({ id })));
+    .then(() => dispatch(uncheckTab({ id })));
 
 // REMOVE MULTIPLE TABS
-const removeTabsAlias = ({ idArr }) => 
-  dispatch => promises.removeTabPromise(idArr)
-    .then(() => dispatch(actionsChecked.uncheckTabs({ idArr })));
+const removeTabsAlias = ({ ids }) => 
+  dispatch => promises.removeTabPromise(ids)
+    .then(() => dispatch(uncheckTabs({ ids })));
 
 
 export default {

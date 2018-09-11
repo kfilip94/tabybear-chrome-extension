@@ -13,7 +13,11 @@ module.exports = {
 
   resolve: {
     extensions: ['.js', '.json'],
-    modules: ['node_modules']
+    modules: ['node_modules'],
+    alias: {
+      chromeServices:  path.resolve(__dirname, 'src/chrome-services'),
+      reducers:  path.resolve(__dirname, 'src/reducers'),
+    }
   },
 
   module: {

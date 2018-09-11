@@ -1,11 +1,13 @@
-import * as promises from '../chrome-services/windows';
+import { createWindowPromise, removeWindowPromise } from 'chromeServices/windows';
 
 // CREATE WINDOW
-const createWindowAlias = () => promises.createWindowPromise();
+const createWindowAlias = () => 
+  () => createWindowPromise();
   // STORE CHANGES HANDLED BY EVENT LISTENER
 
 // REMOVE WINDOW
-const removeWindowAlias = ({ id }) => promises.removeWindowPromise(id);
+const removeWindowAlias = ({ id }) => 
+  () => removeWindowPromise(id);
   // STORE CHANGES HANDLED BY EVENT LISTENER
   
 export default {

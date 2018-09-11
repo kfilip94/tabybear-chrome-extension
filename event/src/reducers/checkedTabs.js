@@ -12,29 +12,29 @@ export const updateMultipleWindowId = createAction('UPDATE_MULTIPLE_WINDOW_ID');
 export const updateWindowId = createAction('UPDATE_WINDOW_ID');
  
 export default handleActions({
-  [checkTab]: (state, { payload: { tabId, windowId } }) =>
-    [ ...state, { id: tabId, windowId }],
+  [checkTab]: (state, { payload: { id, windowId } }) =>
+    [ ...state, { id, windowId }],
 
-  [uncheckTab]: (state, { payload: { tabId } }) =>
+  [uncheckTab]: (state, { payload: { id: tabId } }) =>
     state.filter(({ id }) => id !== tabId),
 
-  [checkWindow]: (state, { payload: { windowId, tabIds } }) => {
-    const checkedTabsArr = tabIds.map(id => ({ id, windowId }));
+  [checkWindow]: (state, { payload: { windowId, ids } }) => {
+    const checkedTabs = ids.map(id => ({ id, windowId }));
     const filteredState = state.filter(checkedTab => checkedTab.windowId !== windowId);
-    return [ ...filteredState, ...checkedTabsArr ];
+    return [ ...filteredState, ...checkedTabs ];
   },
 
-  [uncheckWindow]: (state, { payload: { windowId: payloadWindowId }}) =>
-    state.filter(({ windowId }) => windowId !== payloadWindowId),
+  [uncheckWindow]: (state, { payload: { windowId: aliasWindowId }}) =>
+    state.filter(({ windowId }) => windowId !== aliasWindowId),
 
-  [uncheckTabs]: (state, { payload: { idArr } }) =>
-    state.filter(({ id }) => !idArr.includes(id)),
+  [uncheckTabs]: (state, { payload: { ids } }) =>
+    state.filter(({ id }) => !ids.includes(id)),
 
   [uncheckAll]: () => [],
 
-  [updateMultipleWindowId]: (state, { payload: { idArr, windowId } }) =>
+  [updateMultipleWindowId]: (state, { payload: { ids, windowId } }) =>
     state.map(checkedTab =>
-      idArr.includes(checkedTab.id) ? { id: checkedTab.id, windowId } : checkedTab
+      ids.includes(checkedTab.id) ? { id: checkedTab.id, windowId } : checkedTab
     ),
 
   [updateWindowId]: (state, { payload: { id, windowId } }) =>

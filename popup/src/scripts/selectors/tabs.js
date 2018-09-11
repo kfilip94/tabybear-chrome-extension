@@ -8,8 +8,8 @@ export default( tabs, { text }) => {
     .value();
 
   const sortedTabs = groupedTabs.map(window => {
-    const sortedWindowtabs = window.tabs.sort((tabOne, tabTwo) => tabOne.index > tabTwo.index ? 1 : -1);
-    return { ...window, tabs: sortedWindowtabs }
+    const sortedTabsInWindow = window.tabs.sort((tabOne, tabTwo) => tabOne.index > tabTwo.index ? 1 : -1);
+    return { ...window, tabs: sortedTabsInWindow }
   });
   return sortedTabs;
 };
