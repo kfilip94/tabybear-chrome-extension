@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Tab from './Tab';
-import { removeTabRequest, setTabActiveRequest, pinTabRequest, muteTabRequest } from '../../actions/tabs';
-import { checkTab, uncheckTab } from '../../../../../event/src/reducers/checkedTabs';
+import { removeTabRequest, setTabActiveRequest, pinTabRequest, muteTabRequest } from 'requestActions/tabs';
+import { checkTab, uncheckTab } from 'reducers/checkedTabs';
 
 const TabContainer = props => (
   <Tab {...props} />

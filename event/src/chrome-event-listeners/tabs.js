@@ -1,5 +1,5 @@
 import { createTab, moveTab, removeTab, setTabActive, updateTab } from 'reducers/tabs';
-import { updateTabsOrderRequest } from '../../../popup/src/scripts/actions/tabs';
+import { updateTabsOrderRequest } from 'requestActions/tabs';
 
 const destructureMutedInfoTab = tab => 
   ({ ...tab, muted: tab.mutedInfo.muted });

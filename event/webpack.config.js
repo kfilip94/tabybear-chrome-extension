@@ -17,6 +17,8 @@ module.exports = {
     alias: {
       chromeServices:  path.resolve(__dirname, 'src/chrome-services'),
       reducers:  path.resolve(__dirname, 'src/reducers'),
+      requestActions:  path.resolve(__dirname, 'src/request-actions'),
+      storage:  path.resolve(__dirname, '../', 'shared/storage')
     }
   },
 

@@ -2,7 +2,7 @@ import * as actions from 'reducers/tabs';
 import * as promises from 'chromeServices/tabs';
 import { setWindowActivePromise } from 'chromeServices/windows';
 import { updateWindowId, uncheckAll, uncheckTab, uncheckTabs,  } from 'reducers/checkedTabs'
-import { updateTabsOrderRequest } from '../../../popup/src/scripts/actions/tabs';
+import { updateTabsOrderRequest } from 'requestActions/tabs';
 
 // CREATE TAB
 const createTabAlias = ({ windowId }) => 

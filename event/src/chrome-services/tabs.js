@@ -1,4 +1,4 @@
-import { getNewTabUrlSetting } from '../../../shared/storage/localStorageApi';
+import { getNewTabUrlSetting } from 'storage/localStorageApi';
 
 const omitTab = ({ active, favIconUrl, id, index, mutedInfo, pinned, title, url, windowId }) => 
   ({ active, favIconUrl, id, index, muted: mutedInfo.muted, pinned, title, url, windowId });

@@ -23,6 +23,8 @@ module.exports = {
       searchbar:  path.resolve(__dirname, 'src/scripts/components/searchbar'),
       tab:  path.resolve(__dirname, 'src/scripts/components/tab'),
       window:  path.resolve(__dirname, 'src/scripts/components/window'),
+      requestActions:  path.resolve(__dirname, '../', 'event/src/request-actions'),
+      reducers: path.resolve(__dirname, '../', 'event/src/reducers')
     }
   },
   module: {

@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import SearchBar from './SearchBar';
-import { clearTextFilter, setTextFilter } from '../../../../../event/src/reducers/filters';
-import { uncheckAll } from '../../../../../event/src/reducers/checkedTabs';
+import { clearTextFilter, setTextFilter } from 'reducers/filters';
+import { uncheckAll } from 'reducers/checkedTabs';
 
 const SearchBarContainer = props => (
   <SearchBar {...props} />

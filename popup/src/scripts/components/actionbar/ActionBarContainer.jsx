@@ -2,10 +2,10 @@ import React from "react";
 import ActionBar from "./ActionBar";
 import * as selectors from "./ActiobBarSelectors";
 import { connect } from "react-redux";
-import { removeWindowRequest } from "../../actions/windows";
-import { checkWindow, uncheckWindow } from '../../../../../event/src/reducers/checkedTabs';
-import { pinMultipleTabsRequest, removeTabsRequest } from '../../actions/tabs';
-import createMultipleBookmarksRequest from '../../actions/bookmarks';
+import { removeWindowRequest } from "requestActions/windows";
+import { checkWindow, uncheckWindow } from 'reducers/checkedTabs';
+import { pinMultipleTabsRequest, removeTabsRequest } from 'requestActions/tabs';
+import createMultipleBookmarksRequest from 'requestActions/bookmarks';
 
 class ActionBarContainer extends React.Component {
   handleSelectAll = () => {

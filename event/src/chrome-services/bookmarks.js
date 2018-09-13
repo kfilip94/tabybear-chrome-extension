@@ -1,4 +1,4 @@
-import { getBookmarsFolderSetting } from '../../../shared/storage/localStorageApi';
+import { getBookmarsFolderSetting } from 'storage/localStorageApi';
 
 export const createBookmarkPromise = (title, url) => new Promise(resolve => 
     getBookmarsFolderSetting()

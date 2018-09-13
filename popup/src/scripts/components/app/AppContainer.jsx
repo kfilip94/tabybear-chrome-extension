@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { createWindowRequest } from '../../actions/windows';
-import { moveTabRequest, moveTabsRequest, setTabsRequest } from '../../actions/tabs';
+import { createWindowRequest } from 'requestActions/windows';
+import { moveTabRequest, moveTabsRequest, setTabsRequest } from 'requestActions/tabs';
 import App from './App';
-import selectTabs from '../../selectors/tabs';
-import * as actionsDrag from '../../../../../event/src/reducers/drag';
+import selectWindows from './AppSelectors';
+import * as actionsDrag from 'reducers/drag';
 
 class AppContainer extends React.Component {
   componentDidMount() {
@@ -68,7 +68,7 @@ const mapStateToProps = (state) => {
   return {
     checkedTabs: state.checkedTabs,
     checkeTabsIds: state.checkedTabs.map(({id}) => id),
-    windows: selectTabs(state.tabs, state.filters),
+    windows: selectWindows(state.tabs, state.filters),
   };
 };
 

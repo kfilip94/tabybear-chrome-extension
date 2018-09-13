@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { faTimes, faThumbtack, faStar } from '@fortawesome/free-solid-svg-icons';
-import FontAwesomeButton from '../button/FontAwesomeButton';
+import FontAwesomeButton from 'button/FontAwesomeButton';
 
 const TabsActions = ({ handlePinMultipleTabs, handleAddMultipleBookmarks, handleRemoveMultipleTabs }) => (
   <div className="action-bar__tabs-actions">

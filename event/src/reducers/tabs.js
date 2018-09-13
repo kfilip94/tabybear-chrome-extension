@@ -46,4 +46,5 @@ export default handleActions({
   [removeTab]: (state, { payload: { id } }) => 
     state.filter(tab => tab.id !== id),
 
+    // [muteTabRequest]: state => state
 }, defaultWindowsState);
